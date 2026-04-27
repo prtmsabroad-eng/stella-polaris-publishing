@@ -242,8 +242,8 @@
 // ─── Supabase config ────────────────────────────────────────────────
 // Replace these two values with your project credentials from:
 // Supabase Dashboard → Project Settings → API
-const SUPABASE_URL  = 'YOUR_SUPABASE_URL';
-const SUPABASE_KEY  = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL  = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
 // ────────────────────────────────────────────────────────────────────
 
 let sb, currentUser;
@@ -259,11 +259,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     const col = r < 0.1 ? '#C9A84C' : r < 0.15 ? '#3BBFB0' : r < 0.18 ? '#D4547A' : 'white';
     s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:${col};--d:${(Math.random()*4+2).toFixed(1)}s;--o:${(Math.random()*0.5+0.08).toFixed(2)};animation-delay:${(Math.random()*8).toFixed(1)}s;`;
     sf.appendChild(s);
-  }
-
-  if (SUPABASE_URL === 'YOUR_SUPABASE_URL') {
-    show('login');
-    return;
   }
 
   try {
@@ -336,8 +331,8 @@ async function loadDashboard() {
   try {
     const { data: readings, error } = await sb
       .from('readings')
-      .select('id, title, reading_type, created_at')
-      .eq('user_id', currentUser.id)
+      .select('id, title, created_at')
+      .eq('client_id', currentUser.id)
       .order('created_at', { ascending: false });
 
     if (error) throw error;
@@ -350,7 +345,7 @@ async function loadDashboard() {
         card.className = 'reading-card';
         card.href = '#';
         card.innerHTML = `
-          <div class="reading-type">${r.reading_type || 'Reading'}</div>
+          <div class="reading-type">Private Reading</div>
           <div class="reading-title">${escHtml(r.title)}</div>
           <div class="reading-date">${formatDate(r.created_at)}</div>`;
         card.addEventListener('click', async (e) => {
@@ -373,12 +368,12 @@ async function openReading(id, title) {
   try {
     const { data, error } = await sb
       .from('readings')
-      .select('content')
+      .select('html_content')
       .eq('id', id)
-      .eq('user_id', currentUser.id)
+      .eq('client_id', currentUser.id)
       .single();
     if (error) throw error;
-    document.getElementById('reading-content').innerHTML = data.content;
+    document.getElementById('reading-content').innerHTML = data.html_content;
     show('reading');
   } catch (err) {
     console.error(err);
