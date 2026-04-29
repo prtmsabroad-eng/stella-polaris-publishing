@@ -234,6 +234,27 @@
     }
     .security-bar svg { flex-shrink: 0; opacity: 0.45; }
 
+    /* pay button */
+    .pay-btn {
+      display: block; width: 100%; max-width: 440px;
+      margin-top: 1.2rem; padding: 0.95rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--gold-light);
+      font-family: 'Josefin Sans', sans-serif;
+      font-size: 0.62rem; font-weight: 300;
+      letter-spacing: 0.32em; text-transform: uppercase;
+      text-align: center; text-decoration: none;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s, color 0.25s;
+      opacity: 0; animation: fadeUp 0.8s ease forwards 0.65s;
+    }
+    .pay-btn:hover {
+      background: var(--gold-dim);
+      border-color: rgba(200, 169, 110, 0.5);
+      color: var(--gold-light);
+    }
+
     /* footer */
     .footer {
       margin-top: 1.8rem; font-size: 0.56rem; letter-spacing: 0.28em;
@@ -377,6 +398,10 @@
     </div>
 
   </div>
+
+  <a href="/checkout.html" class="pay-btn">
+    Book a Clarity Call &nbsp;·&nbsp; $97
+  </a>
 
   <div class="footer">
     <a href="/">← Return to Stella Polaris</a>
