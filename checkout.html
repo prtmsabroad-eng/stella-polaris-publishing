@@ -327,6 +327,7 @@ body::after {
 // with your actual Supabase project reference ID (found in Project Settings).
 const EDGE_FUNCTION_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co/functions/v1/clever-function';
 const STRIPE_KEY = 'pk_live_51TRLvLJrtC9XNuwORm21TkTn1M4bHs8r2GUX3xqLOFQ383vf8r7teiDJLKdIPcIvTb2IgD7TcrIb74YOKdbwEXjh00U5kkVltI';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
 // ────────────────────────────────────────────────────────────────────────────
 
 const stripe = Stripe(STRIPE_KEY);
@@ -334,7 +335,10 @@ let elements;
 
 async function initCheckout() {
   try {
-    const res = await fetch(EDGE_FUNCTION_URL, { method: 'POST' });
+    const res = await fetch(EDGE_FUNCTION_URL, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' }
+    });
     if (!res.ok) throw new Error('Network error');
     const { clientSecret, error } = await res.json();
     if (error) throw new Error(error);
