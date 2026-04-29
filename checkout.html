@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book Your Clarity Call · Stella Polaris Publishing™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --void: #07050f;
+  --deep: #0d0a1a;
+  --plum-dark: #160c2a;
+  --plum: #2a1650;
+  --plum-mid: #3d2070;
+  --plum-rich: #4a1a7a;
+  --royal: #5c1fa8;
+  --gold: #c9a84c;
+  --gold-bright: #e8cc80;
+  --gold-pale: #f0e0b0;
+  --gold-dim: #a07830;
+  --cream: #f0ece0;
+  --mist: #d4ccee;
+  --mist-dim: #a090c8;
+  --body-color: #c8bfe0;
+}
+
+body {
+  background: var(--void);
+  color: var(--body-color);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03; pointer-events: none; z-index: 999;
+}
+
+/* subtle background glow */
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(74,26,122,0.35) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.checkout-card {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(160deg, rgba(22,12,42,0.95) 0%, rgba(13,10,26,0.98) 100%);
+  border: 1px solid rgba(201,168,76,0.18);
+  border-radius: 18px;
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 460px;
+  box-shadow:
+    0 24px 80px rgba(0,0,0,0.7),
+    0 0 0 1px rgba(201,168,76,0.06),
+    inset 0 1px 0 rgba(201,168,76,0.08);
+}
+
+/* Brand header */
+.brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.brand-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+}
+
+.divider {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 14px auto 0;
+}
+
+/* Service summary */
+.service-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--gold-pale);
+  text-align: center;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.service-subtitle {
+  font-size: 12px;
+  color: var(--mist-dim);
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.price-badge {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.price-dollar {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: var(--gold);
+  margin-top: 6px;
+}
+
+.price-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 600;
+  color: var(--gold-bright);
+  line-height: 1;
+}
+
+/* Loading state */
+#payment-element-loading {
+  text-align: center;
+  padding: 28px 0;
+  color: var(--mist-dim);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.loading-dots::after {
+  content: '';
+  animation: dots 1.4s infinite;
+}
+@keyframes dots {
+  0%, 20%  { content: '.'; }
+  40%      { content: '..'; }
+  60%,100% { content: '...'; }
+}
+
+/* Stripe element mount point */
+#payment-element {
+  margin-bottom: 20px;
+}
+
+/* Pay button */
+.pay-btn {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--plum-rich) 0%, var(--royal) 100%);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 8px;
+  color: var(--gold-pale);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.pay-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--royal) 0%, var(--plum-mid) 100%);
+  border-color: rgba(201,168,76,0.45);
+  box-shadow: 0 0 28px rgba(92,31,168,0.45);
+}
+
+.pay-btn:focus-visible {
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.3);
+}
+
+.pay-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Error message */
+#error-msg {
+  color: #f87171;
+  font-size: 13px;
+  text-align: center;
+  margin-top: 14px;
+  line-height: 1.5;
+  display: none;
+}
+
+/* Secure badge */
+.secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 11px;
+  color: var(--mist-dim);
+  opacity: 0.5;
+  letter-spacing: 0.07em;
+}
+
+/* Success state */
+#success-view {
+  text-align: center;
+  display: none;
+  padding: 8px 0;
+}
+
+.success-icon {
+  width: 60px;
+  height: 60px;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 22px;
+  font-size: 22px;
+  color: var(--gold);
+  animation: fadeIn 0.5s ease;
+}
+
+.success-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--gold-pale);
+  margin-bottom: 10px;
+  animation: fadeIn 0.5s ease 0.1s both;
+}
+
+.success-msg {
+  font-size: 14px;
+  color: var(--mist-dim);
+  line-height: 1.7;
+  animation: fadeIn 0.5s ease 0.2s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 500px) {
+  .checkout-card { padding: 36px 24px; }
+  .service-title { font-size: 24px; }
+  .price-amount  { font-size: 44px; }
+}
+</style>
+</head>
+<body>
+
+<div class="checkout-card">
+
+  <!-- Brand -->
+  <div class="brand">
+    <div class="brand-name">Stella Polaris Publishing™</div>
+    <div class="divider"></div>
+  </div>
+
+  <!-- Service info — visible in both states -->
+  <div class="service-title">30-Minute Publishing<br>Clarity Call</div>
+  <div class="service-subtitle">Private Advisory · One-on-One Session</div>
+  <div class="price-badge">
+    <span class="price-dollar">$</span>
+    <span class="price-amount">97</span>
+  </div>
+
+  <!-- Payment form -->
+  <div id="payment-view">
+    <div id="payment-element-loading">
+      <span class="loading-dots">Preparing secure checkout</span>
+    </div>
+    <div id="payment-element"></div>
+    <button id="pay-btn" class="pay-btn" disabled>Pay $97</button>
+    <div id="error-msg"></div>
+    <div class="secure-note">
+      <svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+        <path d="M5 0L0 2V5.5C0 8.3 2.15 10.9 5 11.5C7.85 10.9 10 8.3 10 5.5V2L5 0Z" opacity="0.8"/>
+      </svg>
+      Secured by Stripe
+    </div>
+  </div>
+
+  <!-- Success state -->
+  <div id="success-view">
+    <div class="success-icon">✦</div>
+    <div class="success-title">Payment Confirmed</div>
+    <div class="success-msg">
+      Your clarity call is booked.<br>
+      You'll receive a confirmation shortly.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────────────────────────────
+// After deploying the Supabase Edge Function, replace YOUR_PROJECT_REF below
+// with your actual Supabase project reference ID (found in Project Settings).
+const EDGE_FUNCTION_URL = 'https://YOUR_PROJECT_REF.supabase.co/functions/v1/create-payment-intent';
+const STRIPE_KEY = 'pk_test_51TRLviJ8SbwsmNzTu9knLclVgjXce6DINaxLe8yCwnodYmQ1j9pEawl5LZ1BgsbkLAo0YdbJrD5ktU2wud20s4f400iQQtP09Y';
+// ────────────────────────────────────────────────────────────────────────────
+
+const stripe = Stripe(STRIPE_KEY);
+let elements;
+
+async function initCheckout() {
+  try {
+    const res = await fetch(EDGE_FUNCTION_URL, { method: 'POST' });
+    if (!res.ok) throw new Error('Network error');
+    const { clientSecret, error } = await res.json();
+    if (error) throw new Error(error);
+
+    elements = stripe.elements({
+      clientSecret,
+      appearance: {
+        theme: 'night',
+        variables: {
+          colorPrimary:     '#c9a84c',
+          colorBackground:  '#0d0a1a',
+          colorText:        '#c8bfe0',
+          colorTextSecondary: '#a090c8',
+          colorDanger:      '#f87171',
+          fontFamily:       "'Jost', sans-serif",
+          borderRadius:     '8px',
+          spacingUnit:      '4px',
+        },
+        rules: {
+          '.Input': {
+            border: '1px solid rgba(201,168,76,0.2)',
+            backgroundColor: '#0d0a1a',
+          },
+          '.Input:focus': {
+            border: '1px solid rgba(201,168,76,0.5)',
+            boxShadow: '0 0 0 3px rgba(201,168,76,0.08)',
+          },
+          '.Label': {
+            color: '#a090c8',
+            fontSize: '12px',
+            letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+          },
+        }
+      }
+    });
+
+    document.getElementById('payment-element-loading').style.display = 'none';
+    elements.create('payment').mount('#payment-element');
+
+    const btn = document.getElementById('pay-btn');
+    btn.disabled = false;
+
+  } catch (err) {
+    document.getElementById('payment-element-loading').textContent =
+      'Unable to load checkout. Please refresh or contact us directly.';
+  }
+}
+
+document.getElementById('pay-btn').addEventListener('click', async () => {
+  const btn    = document.getElementById('pay-btn');
+  const errDiv = document.getElementById('error-msg');
+
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+  errDiv.style.display = 'none';
+
+  const { error } = await stripe.confirmPayment({
+    elements,
+    confirmParams: {
+      return_url: window.location.origin + '/checkout.html?success=true',
+    },
+    redirect: 'if_required',
+  });
+
+  if (error) {
+    errDiv.textContent = error.message;
+    errDiv.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Pay $97';
+  } else {
+    showSuccess();
+  }
+});
+
+function showSuccess() {
+  document.getElementById('payment-view').style.display = 'none';
+  document.getElementById('success-view').style.display = 'block';
+}
+
+// Handle redirect-back after 3DS / bank redirect
+if (new URLSearchParams(window.location.search).get('success') === 'true') {
+  showSuccess();
+} else {
+  initCheckout();
+}
+</script>
+
+</body>
+</html>
