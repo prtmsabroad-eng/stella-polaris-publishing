@@ -1,0 +1,31 @@
+name: Keepalive
+
+# Runs every 6 hours to prevent Supabase from pausing and to confirm
+# the site is reachable. Trigger manually any time via workflow_dispatch.
+on:
+  schedule:
+    - cron: '0 */6 * * *'   # 00:00, 06:00, 12:00, 18:00 UTC daily
+  workflow_dispatch:
+
+jobs:
+  ping:
+    name: Ping site + Supabase
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Ping ispublishing.com
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://ispublishing.com/ping.html)
+          echo "ispublishing.com/ping.html → HTTP $STATUS"
+          [ "$STATUS" = "200" ] || exit 1
+
+      - name: Ping Supabase REST API
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
+            "https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/")
+          echo "Supabase REST API → HTTP $STATUS"
+          # 200 or 401 both confirm Supabase is awake; only network/5xx is a failure
+          [[ "$STATUS" =~ ^(200|400|401|403)$ ]] || exit 1
