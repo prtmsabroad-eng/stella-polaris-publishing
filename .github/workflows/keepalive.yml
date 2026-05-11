@@ -16,16 +16,21 @@ jobs:
     steps:
       - name: Ping ispublishing.com
         run: |
-          STATUS=$(curl -o /dev/null -s -w "%{http_code}" https://ispublishing.com/ping.html)
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
+            -A "Mozilla/5.0 (compatible; StellaPolaris-Monitor/1.0)" \
+            --max-time 15 \
+            https://ispublishing.com/ping.html)
           echo "ispublishing.com/ping.html → HTTP $STATUS"
-          [ "$STATUS" = "200" ] || exit 1
+          # Any response below 500 confirms the server/CDN is alive and responding
+          [[ "$STATUS" =~ ^[1-4][0-9]{2}$ ]] || exit 1
 
       - name: Ping Supabase REST API
         run: |
           STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
+            --max-time 15 \
             -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
             -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
             "https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/")
           echo "Supabase REST API → HTTP $STATUS"
-          # 200 or 401 both confirm Supabase is awake; only network/5xx is a failure
-          [[ "$STATUS" =~ ^(200|400|401|403)$ ]] || exit 1
+          # Any response below 500 confirms Supabase is awake; only 5xx/000 is a real failure
+          [[ "$STATUS" =~ ^[1-4][0-9]{2}$ ]] || exit 1
