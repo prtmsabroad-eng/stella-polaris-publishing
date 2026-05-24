@@ -601,7 +601,7 @@
         <p class="email-banner-sub">7 conversation cards for parents raising children outside doctrine but inside something sacred</p>
       </div>
       <div class="email-banner-form">
-        <button data-formkit-subscribe-form="43b7a70155" class="email-banner-btn-gold">Get Free Download</button>
+        <button onclick="openKitModal()" class="email-banner-btn-gold">Get Free Download</button>
         <p class="email-banner-note">Instant access. No spam. Ever.</p>
       </div>
     </div>
@@ -898,6 +898,35 @@ document.addEventListener('keydown', function(e) {
   if(e.key === 'Escape') closeModal();
 });
 </script>
-<script async data-uid="43b7a70155" src="https://stella-polaris-publishing.kit.com/43b7a70155/index.js"></script>
+
+<!-- KIT FORM MODAL -->
+<div id="kit-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(8,5,26,0.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;">
+  <div style="position:relative;width:92%;max-width:680px;max-height:90vh;border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,0.7);">
+    <button onclick="closeKitModal()" style="position:absolute;top:10px;right:14px;z-index:10;background:rgba(0,0,0,0.5);border:none;color:#fff;font-size:18px;width:32px;height:32px;border-radius:50%;cursor:pointer;line-height:32px;text-align:center;">✕</button>
+    <iframe id="kit-iframe" src="" style="width:100%;height:85vh;border:none;display:block;" allow="clipboard-write"></iframe>
+  </div>
+</div>
+<script>
+function openKitModal() {
+  var m = document.getElementById('kit-modal');
+  var f = document.getElementById('kit-iframe');
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  if (!f.src || f.src === window.location.href) {
+    f.src = 'https://stella-polaris-publishing.kit.com/43b7a70155';
+  }
+}
+function closeKitModal() {
+  document.getElementById('kit-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+document.getElementById('kit-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeKitModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeKitModal();
+});
+</script>
+<!-- END KIT FORM MODAL -->
 </body>
 </html>
