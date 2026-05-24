@@ -594,7 +594,11 @@
       <p class="email-banner-sub">7 conversation cards for parents raising children outside doctrine but inside something sacred</p>
     </div>
     <div class="email-banner-form">
-      <script async data-uid="a9796e70b2" src="https://stella-polaris-publishing.kit.com/a9796e70b2/index.js"></script>
+      <form action="https://app.convertkit.com/forms/a9796e70b2/subscriptions" method="POST" class="email-banner-kit-form" target="_blank">
+        <input type="email" name="email_address" placeholder="Your email address" required
+               class="email-banner-input" />
+        <button type="submit" class="email-banner-btn-gold">Download Free Guide</button>
+      </form>
       <p class="email-banner-note">Instant access. No spam. Ever.</p>
     </div>
   </div>
@@ -655,23 +659,20 @@
   }
   .email-banner-input::placeholder { color: rgba(245,237,216,0.35); }
   .email-banner-input:focus { border-color: rgba(201,168,76,0.6); }
-  .email-banner-btn {
+  .email-banner-btn-gold {
     font-family: 'Cinzel', serif;
-    font-size: 7.5px; letter-spacing: 0.22em;
+    font-size: 7.5px; letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--gold);
-    background: rgba(201,168,76,0.1);
-    border: 1px solid rgba(201,168,76,0.38);
-    border-radius: 4px;
-    padding: 11px 20px;
+    color: var(--void);
+    background: var(--gold);
+    border: none;
+    border-radius: 2px;
+    padding: 11px 22px;
     cursor: pointer;
     white-space: nowrap;
-    transition: background 0.25s, border-color 0.25s;
+    transition: opacity 0.2s;
   }
-  .email-banner-btn:hover {
-    background: rgba(201,168,76,0.22);
-    border-color: rgba(201,168,76,0.65);
-  }
+  .email-banner-btn-gold:hover { opacity: 0.85; }
   .email-banner-note {
     font-family: 'Cormorant Garamond', serif;
     font-size: 11px; font-style: italic;
