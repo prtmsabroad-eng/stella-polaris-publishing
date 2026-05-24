@@ -920,11 +920,12 @@ function closeKitModal() {
   document.getElementById('kit-modal').style.display = 'none';
   document.body.style.overflow = '';
 }
-document.getElementById('kit-modal').addEventListener('click', function(e) {
-  if (e.target === this) closeKitModal();
-});
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeKitModal();
+});
+// Open automatically on page load
+window.addEventListener('load', function() {
+  openKitModal();
 });
 </script>
 <!-- END KIT FORM MODAL -->
