@@ -941,12 +941,12 @@ document.addEventListener('keydown', function(e) {
       );
       if (res.ok || res.status === 201) {
         sessionStorage.setItem('fof_submitted', '1');
-        window.location.href = 'https://stellapolarispublishing.com/foundations-of-faith-final.pdf';
+        window.location.href = '/foundations-of-faith-final.pdf';
       } else {
         var err = await res.json().catch(function(){return {}});
         // If duplicate email, still send to PDF
         if (res.status === 409 || (err.code && err.code === '23505')) {
-          window.location.href = 'https://stellapolarispublishing.com/foundations-of-faith-final.pdf';
+          window.location.href = '/foundations-of-faith-final.pdf';
         } else {
           throw new Error(err.message || 'Submission failed');
         }
