@@ -21,15 +21,17 @@ export async function onRequestPost(context) {
   const origin = context.request.headers.get('Origin') || 'https://stellapolarispublishing.com';
   const returnUrl = `${origin}/advisory-portal-payment.html?success=true`;
 
-  const body = new URLSearchParams({
-    'ui_mode': 'embedded',
-    'line_items[0][price_data][currency]': 'usd',
-    'line_items[0][price_data][product]': 'prod_Ua13BdcOHo17Ay',
-    'line_items[0][price_data][unit_amount]': '49700',
-    'line_items[0][quantity]': '1',
-    'mode': 'payment',
-    'return_url': returnUrl,
-  });
+  // Build body manually so bracket keys are NOT percent-encoded
+  const params = [
+    ['ui_mode', 'embedded'],
+    ['line_items[0][price_data][currency]', 'usd'],
+    ['line_items[0][price_data][product]', 'prod_Ua13BdcOHo17Ay'],
+    ['line_items[0][price_data][unit_amount]', '49700'],
+    ['line_items[0][quantity]', '1'],
+    ['mode', 'payment'],
+    ['return_url', returnUrl],
+  ];
+  const body = params.map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
 
   const stripeRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
     method: 'POST',
@@ -37,7 +39,7 @@ export async function onRequestPost(context) {
       'Authorization': `Bearer ${STRIPE_SECRET_KEY}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: body.toString(),
+    body,
   });
 
   const session = await stripeRes.json();
