@@ -824,6 +824,7 @@ body {
     <div id="checkout-loading"><span class="loading-dots">Preparing secure checkout</span></div>
     <div id="stripe-checkout"></div>
     <div id="checkout-error"></div>
+    <button id="pay-btn" style="display:none;width:100%;margin-top:20px;padding:16px;background:linear-gradient(135deg,#7B2D9E,#4a1a7a);border:1px solid rgba(200,146,42,0.3);border-radius:8px;color:#f5edd8;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;" >Complete Payment — $497</button>
   </div>
 
   <!-- Success state -->
@@ -956,11 +957,15 @@ setInterval(spawnDust, 2200);
 
 
 <script>
-// Publishable key (safe to expose in frontend)
 const STRIPE_PK = 'pk_live_51TRLvLJrtC9XNuwORm21TkTn1M4bHs8r2GUX3xqLOFQ383vf8r7teiDJLKdIPcIvTb2IgD7TcrIb74YOKdbwEXjh00U5kkVltI';
+const EDGE_FN_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co/functions/v1/advisory-checkout';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+
+const stripe = Stripe(STRIPE_PK);
+let elements;
 
 function showSuccess() {
-  document.getElementById('pre-checkout')  && (document.getElementById('pre-checkout').style.display = 'none');
+  document.getElementById('pre-checkout') && (document.getElementById('pre-checkout').style.display = 'none');
   document.getElementById('checkout-section').style.display = 'none';
   document.querySelectorAll('.price-block, .body-copy, .card').forEach(el => el.style.display = 'none');
   document.getElementById('success-view').style.display = 'block';
@@ -975,18 +980,42 @@ async function startCheckout() {
   document.getElementById('pre-checkout').style.display = 'none';
 
   try {
-    const stripe = Stripe(STRIPE_PK);
-    const checkout = await stripe.initEmbeddedCheckout({
-      fetchClientSecret: async () => {
-        const res = await fetch('/create-checkout-session', { method: 'POST' });
-        if (!res.ok) throw new Error('Failed to initialize checkout');
-        const { clientSecret, error } = await res.json();
-        if (error) throw new Error(error);
-        return clientSecret;
-      },
+    const res = await fetch(EDGE_FN_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json'
+      }
     });
+    if (!res.ok) throw new Error('Network error');
+    const { clientSecret, error } = await res.json();
+    if (error) throw new Error(error);
+
+    elements = stripe.elements({ clientSecret,
+      appearance: {
+        theme: 'night',
+        variables: {
+          colorPrimary: '#c9a84c',
+          colorBackground: '#0d0a1a',
+          colorText: '#f5edd8',
+          colorTextSecondary: '#a090c8',
+          colorDanger: '#f87171',
+          fontFamily: "'EB Garamond', Georgia, serif",
+          borderRadius: '8px',
+        },
+        rules: {
+          '.Input': { border: '1px solid rgba(200,146,42,0.25)', backgroundColor: '#0d0a1a' },
+          '.Input:focus': { border: '1px solid rgba(200,146,42,0.6)', boxShadow: '0 0 0 3px rgba(200,146,42,0.1)' },
+          '.Label': { color: '#a090c8', fontSize: '11px', letterSpacing: '0.08em', textTransform: 'uppercase' },
+        }
+      }
+    });
+
     document.getElementById('checkout-loading').style.display = 'none';
-    checkout.mount('#stripe-checkout');
+    elements.create('payment').mount('#stripe-checkout');
+
+    document.getElementById('pay-btn').style.display = 'block';
+
   } catch (err) {
     document.getElementById('checkout-loading').style.display = 'none';
     const errEl = document.getElementById('checkout-error');
@@ -995,7 +1024,29 @@ async function startCheckout() {
   }
 }
 
-// Show success if redirected back after payment
+document.getElementById('pay-btn') && document.getElementById('pay-btn').addEventListener('click', async () => {
+  const btn = document.getElementById('pay-btn');
+  const errEl = document.getElementById('checkout-error');
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+  errEl.style.display = 'none';
+
+  const { error } = await stripe.confirmPayment({
+    elements,
+    confirmParams: { return_url: window.location.origin + '/advisory-portal-payment.html?success=true' },
+    redirect: 'if_required'
+  });
+
+  if (error) {
+    errEl.textContent = error.message;
+    errEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Complete Payment';
+  } else {
+    showSuccess();
+  }
+});
+
 if (new URLSearchParams(window.location.search).get('success') === 'true') {
   showSuccess();
 }
