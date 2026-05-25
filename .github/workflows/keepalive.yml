@@ -14,13 +14,13 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - name: Ping ispublishing.com
+      - name: Ping stellapolarispublishing.com
         run: |
           STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
             -A "Mozilla/5.0 (compatible; StellaPolaris-Monitor/1.0)" \
             --max-time 15 \
-            https://ispublishing.com/ping.html)
-          echo "ispublishing.com/ping.html → HTTP $STATUS"
+            https://stellapolarispublishing.com/ping.html)
+          echo "stellapolarispublishing.com/ping.html → HTTP $STATUS"
           # Any response below 500 confirms the server/CDN is alive and responding
           [[ "$STATUS" =~ ^[1-4][0-9]{2}$ ]] || exit 1
 
