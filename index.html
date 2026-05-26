@@ -8,6 +8,72 @@
   <link rel="manifest" href="/manifest.json">
 <title>Stella Polaris Publishing™ · Nova & the Magic of Faith</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════════
+     ANALYTICS STACK
+     Replace each placeholder ID before going live.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Google Analytics 4
+     1. Go to analytics.google.com
+     2. Admin → Data Streams → your web stream → Measurement ID (starts with G-)
+     3. Replace both instances of G-XXXXXXXXXX below -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P40MQCBTP9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-P40MQCBTP9');
+</script>
+
+<!-- Microsoft Clarity
+     1. Go to clarity.microsoft.com → New Project
+     2. Copy the 10-character project ID from the setup snippet
+     3. Replace XXXXXXXXXX below -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window,document,"clarity","script","XXXXXXXXXX");
+</script>
+
+<!-- Meta (Facebook) Pixel
+     1. Go to business.facebook.com → Events Manager → Connect Data Sources → Web
+     2. Replace both instances of 0000000000000000 below with your Pixel ID -->
+<script>
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init','0000000000000000');
+  fbq('track','PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=0000000000000000&ev=PageView&noscript=1"/></noscript>
+
+<!-- TikTok Pixel
+     1. Go to ads.tiktok.com → Assets → Events → Manage → Website Pixel → Set Up Pixel
+     2. Replace C0000000000000000000 below with your Pixel ID -->
+<script>
+  !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+  ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
+  ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+  for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+  ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+  ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+  ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._r=ttq._r||{},ttq._r[e]=n,
+  ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+  var o=document.createElement("script");o.type="text/javascript",o.async=!0;
+  o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];
+  a.parentNode.insertBefore(o,a)};
+  ttq.load('C0000000000000000000');
+  ttq.page();
+  }(window,document,'ttq');
+</script>
+<!-- ═══════════════════════════════════════════════════════════ -->
+
 <style>
   :root {
     --void: #08051A;
@@ -960,17 +1026,27 @@ document.addEventListener('keydown', function(e) {
 
 <script>
 (function() {
+  // Build a source string from UTM params for conversion attribution.
+  // Format: "utm_source/utm_medium/utm_campaign" — empty parts are dropped.
+  // Falls back to "foundations-of-faith" when no UTM params are present.
+  function getUtmSource() {
+    var p = new URLSearchParams(window.location.search);
+    var src = p.get('utm_source');
+    var med = p.get('utm_medium');
+    var cam = p.get('utm_campaign');
+    if (src) return [src, med, cam].filter(Boolean).join('/');
+    return 'foundations-of-faith';
+  }
+
   var shown = false;
   function showFofPopup() {
     if (shown) return;
-    // Don't show again if already submitted this session
     if (sessionStorage.getItem('fof_submitted')) return;
     shown = true;
     var el = document.getElementById('fof-overlay');
     el.style.display = 'flex';
     document.body.style.overflow = 'hidden';
   }
-  // Show after 8 seconds
   setTimeout(showFofPopup, 1500);
 
   window.closeFofPopup = function() {
@@ -978,7 +1054,6 @@ document.addEventListener('keydown', function(e) {
     document.body.style.overflow = '';
   };
 
-  // Click outside modal to close
   document.getElementById('fof-overlay').addEventListener('click', function(e) {
     if (e.target === this) closeFofPopup();
   });
@@ -996,6 +1071,8 @@ document.addEventListener('keydown', function(e) {
     btn.textContent = 'Sending...';
     msg.textContent = '';
 
+    var trafficSource = getUtmSource();
+
     try {
       var res = await fetch(
         'https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/subscribers',
@@ -1009,22 +1086,37 @@ document.addEventListener('keydown', function(e) {
           },
           body: JSON.stringify({
             email: email,
-            source: 'foundations-of-faith',
+            source: trafficSource,
             created_at: new Date().toISOString()
           })
         }
       );
-      if (res.ok || res.status === 201) {
-        sessionStorage.setItem('fof_submitted', '1');
-        window.location.href = '/foundations-of-faith-final.pdf';
-      } else {
+
+      var success = res.ok || res.status === 201;
+      if (!success) {
         var err = await res.json().catch(function(){return {}});
-        // If duplicate email, still send to PDF
         if (res.status === 409 || (err.code && err.code === '23505')) {
-          window.location.href = '/foundations-of-faith-final.pdf';
+          success = true; // duplicate email — still grant access
         } else {
           throw new Error(err.message || 'Submission failed');
         }
+      }
+
+      if (success) {
+        sessionStorage.setItem('fof_submitted', '1');
+        // GA4 conversion event
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', {
+            event_category: 'email_capture',
+            event_label: 'foundations_of_faith_popup',
+            traffic_source: trafficSource
+          });
+        }
+        // Meta Pixel conversion event
+        if (typeof fbq === 'function') fbq('track', 'Lead');
+        // TikTok Pixel conversion event
+        if (typeof ttq !== 'undefined') ttq.track('SubmitForm');
+        window.location.href = '/foundations-of-faith-final.pdf';
       }
     } catch(err) {
       msg.textContent = 'Something went wrong. Please try again.';
