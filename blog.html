@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notes from the North Star — Tashia Monique | Stella Polaris Publishing</title>
+<meta name="description" content="Essays on universal laws, intentional parenting, neurodivergent life, theology, and expat living by Tashia Monique, founder of Stella Polaris Publishing.">
+<meta name="keywords" content="intentional parenting, universal laws, neurodivergent parenting, theology, expat life, Black homeschool, Stella Polaris Publishing, Tashia Monique, Notes from the North Star">
+<meta name="author" content="Tashia Monique">
+<link rel="canonical" href="https://stellapolarispublishing.com/blog.html">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Notes from the North Star — Tashia Monique">
+<meta property="og:description" content="Essays on universal laws, intentional parenting, neurodivergent life, and what happens when you stop waiting for permission.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://stellapolarispublishing.com/blog.html">
+<meta property="og:site_name" content="Stella Polaris Publishing">
+<meta property="og:locale" content="en_US">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Notes from the North Star — Tashia Monique">
+<meta name="twitter:description" content="Essays on universal laws, intentional parenting, neurodivergent life, and what happens when you stop waiting for permission.">
+<meta name="twitter:site" content="@StellaPolarisPublishing">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FFF8F0;
+  --parchment: #F5EDD8;
+  --gold: #C9A84C;
+  --gold-light: #E2C47A;
+  --ordained: #4A0D5C;
+  --purple: #2D0A3E;
+  --purple-mid: #7B2D9E;
+  --pink: #D4547A;
+  --teal: #3BBFB0;
+  --dark: #1A0A2E;
+  --text: #2A1A3E;
+  --text-light: #5A4A6E;
+  --border: rgba(201,168,76,0.2);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); }
+
+/* NAV */
+nav {
+  background:var(--dark); padding:18px 24px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid rgba(201,168,76,0.3);
+}
+.nav-logo { font-family:'Playfair Display',serif; color:var(--gold-light); font-size:1rem; letter-spacing:2px; text-decoration:none; }
+.nav-back { color:rgba(255,255,255,0.5); font-size:0.8rem; text-decoration:none; transition:color 0.2s; }
+.nav-back:hover { color:var(--gold-light); }
+
+/* HEADER */
+.blog-header {
+  background:linear-gradient(135deg, var(--ordained) 0%, var(--purple) 60%, #0D0520 100%);
+  padding:64px 24px 48px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.blog-header::before {
+  content:'✦';
+  position:absolute; top:20px; left:50%; transform:translateX(-50%);
+  font-size:1rem; color:var(--gold); opacity:0.6; letter-spacing:20px;
+}
+.blog-header h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.2rem,6vw,3.5rem);
+  color:white;
+  line-height:1.1;
+  margin-bottom:12px;
+}
+.blog-header p {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.1rem;
+  color:rgba(255,255,255,0.6);
+  max-width:480px;
+  margin:0 auto;
+  line-height:1.6;
+}
+
+/* BLOG INDEX */
+.blog-index {
+  max-width:760px;
+  margin:0 auto;
+  padding:48px 24px;
+}
+
+.post-card {
+  border-bottom:1px solid var(--border);
+  padding:36px 0;
+  cursor:pointer;
+  transition:all 0.2s;
+}
+.post-card:first-child { padding-top:0; }
+.post-card:last-child { border-bottom:none; }
+.post-card:hover .post-title { color:var(--purple-mid); }
+
+.post-meta {
+  display:flex; align-items:center; gap:12px;
+  margin-bottom:10px;
+}
+.post-num {
+  font-size:0.7rem;
+  font-weight:700;
+  color:var(--gold);
+  letter-spacing:2px;
+  font-family:'DM Sans',monospace;
+}
+.post-tag {
+  font-size:0.68rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  padding:3px 10px;
+  border-radius:20px;
+  background:rgba(74,13,92,0.08);
+  color:var(--ordained);
+}
+.post-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.4rem,3.5vw,1.9rem);
+  line-height:1.2;
+  color:var(--dark);
+  margin-bottom:10px;
+  transition:color 0.2s;
+}
+.post-excerpt {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;
+  color:var(--text-light);
+  line-height:1.7;
+}
+.read-link {
+  display:inline-block;
+  margin-top:14px;
+  font-size:0.8rem;
+  font-weight:700;
+  color:var(--gold);
+  text-decoration:none;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  border-bottom:1px solid var(--gold);
+  padding-bottom:2px;
+  transition:all 0.2s;
+}
+.read-link:hover { color:var(--ordained); border-color:var(--ordained); }
+
+/* BOOKS STRIP */
+.books-strip {
+  margin-top:56px;
+  padding:40px 0 0;
+  border-top:1px solid var(--border);
+}
+.books-strip-label {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.68rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--gold);
+  margin-bottom:20px;
+}
+.books-strip-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:16px;
+}
+.book-strip-card {
+  display:flex; flex-direction:column; gap:8px;
+  border:1px solid var(--border);
+  padding:20px 18px;
+  text-decoration:none;
+  transition:all 0.2s;
+  background:rgba(74,13,92,0.03);
+}
+.book-strip-card:hover {
+  border-color:rgba(201,168,76,0.45);
+  background:rgba(74,13,92,0.07);
+}
+.book-strip-format {
+  font-size:0.65rem;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--teal);
+}
+.book-strip-title {
+  font-family:'Playfair Display',serif;
+  font-size:1rem;
+  color:var(--dark);
+  line-height:1.3;
+}
+.book-strip-cta {
+  font-size:0.75rem;
+  font-weight:600;
+  color:var(--gold);
+  margin-top:4px;
+}
+.affiliate-note {
+  font-size:0.7rem;
+  color:var(--text-light);
+  font-style:italic;
+  line-height:1.5;
+  margin-top:8px;
+}
+@media (max-width:520px) {
+  .books-strip-grid { grid-template-columns:1fr; }
+}
+
+/* SINGLE POST */
+.post-single { display:none; max-width:680px; margin:0 auto; padding:48px 24px 80px; }
+.post-single.active { display:block; }
+.blog-index.hidden { display:none; }
+
+.post-single-meta {
+  display:flex; align-items:center; gap:12px; margin-bottom:20px;
+}
+.back-btn {
+  background:none; border:none; cursor:pointer;
+  font-size:0.8rem; color:var(--gold); font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; padding:0;
+  font-family:'DM Sans',sans-serif; display:flex; align-items:center; gap:6px;
+  transition:color 0.2s;
+}
+.back-btn:hover { color:var(--ordained); }
+.post-single h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,5vw,2.6rem);
+  line-height:1.15;
+  color:var(--dark);
+  margin-bottom:20px;
+}
+.post-divider {
+  width:48px; height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin-bottom:28px;
+}
+.post-body {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;
+  line-height:1.85;
+  color:var(--text);
+}
+.post-body p { margin-bottom:20px; }
+.post-body p:last-child { margin-bottom:0; }
+.post-body strong {
+  font-weight:600;
+  color:var(--dark);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.95rem;
+}
+.post-body em { font-style:italic; color:var(--ordained); }
+.pull-quote {
+  border-left:3px solid var(--gold);
+  padding:16px 20px;
+  margin:28px 0;
+  background:rgba(201,168,76,0.05);
+  border-radius:0 8px 8px 0;
+}
+.pull-quote p {
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;
+  font-style:italic;
+  color:var(--ordained);
+  line-height:1.5;
+  margin:0 !important;
+}
+
+/* BOOK RECOMMENDATION (in-post) */
+.book-rec {
+  margin:36px 0 0;
+  padding:20px 20px;
+  background:rgba(74,13,92,0.05);
+  border:1px solid var(--border);
+  border-radius:6px;
+  display:flex; flex-direction:column; gap:6px;
+}
+.book-rec-label {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.65rem; font-weight:700;
+  text-transform:uppercase; letter-spacing:1.5px;
+  color:var(--teal);
+}
+.book-rec-title {
+  font-family:'Playfair Display',serif;
+  font-size:0.95rem;
+  color:var(--dark);
+  line-height:1.3;
+}
+.book-rec-price {
+  font-size:0.75rem;
+  color:var(--text-light);
+}
+.book-rec-link {
+  display:inline-block;
+  margin-top:6px;
+  font-size:0.78rem; font-weight:600;
+  color:var(--gold); text-decoration:none;
+  border-bottom:1px solid rgba(201,168,76,0.35);
+  padding-bottom:2px;
+  transition:all 0.2s; width:fit-content;
+}
+.book-rec-link:hover { color:var(--ordained); border-color:var(--ordained); }
+
+.post-footer {
+  margin-top:48px;
+  padding-top:28px;
+  border-top:1px solid var(--border);
+  display:flex; align-items:center; gap:14px;
+}
+.author-dot {
+  width:44px; height:44px; border-radius:50%;
+  background:linear-gradient(135deg,var(--ordained),var(--purple-mid));
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold-light); font-family:'Playfair Display',serif;
+  font-size:1rem; flex-shrink:0;
+}
+.author-name { font-size:0.85rem; font-weight:600; color:var(--dark); }
+.author-sub { font-size:0.75rem; color:#888; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">STELLA POLARIS</a>
+  <a href="index.html" class="nav-back">← Back to site</a>
+</nav>
+
+<div class="blog-header">
+  <h1>Notes from the North Star</h1>
+  <p>On universal laws, intentional parenting, and what happens when you stop waiting for permission.</p>
+</div>
+
+<!-- INDEX -->
+<div class="blog-index" id="blog-index">
+
+  <div class="post-card" onclick="openPost('post1')">
+    <div class="post-meta"><span class="post-num">01</span><span class="post-tag">Neurodivergent Life</span></div>
+    <div class="post-title">What Nobody Told Me About Cleaning With a Neurodivergent Brain</div>
+    <div class="post-excerpt">My mother's approach to cleaning was a demand, not a practice. Here is how I'm rewriting that script — and why a clean space is a mental health decision, not a performance.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post1')">Read →</a>
+  </div>
+
+  <div class="post-card" onclick="openPost('post2')">
+    <div class="post-meta"><span class="post-num">02</span><span class="post-tag">Universal Laws</span></div>
+    <div class="post-title">The Law of Love Is Not an Emotion</div>
+    <div class="post-excerpt">Most people think love is something you feel. Nova taught me it is something you do. Here is how I teach my daughter to live inside a law instead of around it.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post2')">Read →</a>
+  </div>
+
+  <div class="post-card" onclick="openPost('post3')">
+    <div class="post-meta"><span class="post-num">03</span><span class="post-tag">Theology</span></div>
+    <div class="post-title">She Was Never a Sinner</div>
+    <div class="post-excerpt">Mary Magdalene was the closest person to the most important teacher in Western history. The story they told about her was always about controlling what women know.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post3')">Read →</a>
+  </div>
+
+  <div class="post-card" onclick="openPost('post4')">
+    <div class="post-meta"><span class="post-num">04</span><span class="post-tag">Expat Life</span></div>
+    <div class="post-title">Why I Left and What I Needed My Daughter to See Before I Did</div>
+    <div class="post-excerpt">This is not an inspiration post. This is the real reasons. What changes when you stop tolerating geography as your default setting.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post4')">Read →</a>
+  </div>
+
+  <div class="post-card" onclick="openPost('post5')">
+    <div class="post-meta"><span class="post-num">05</span><span class="post-tag">Theology</span></div>
+    <div class="post-title">114 Sayings. No Miracles. No Story. Just Instructions.</div>
+    <div class="post-excerpt">The Gospel of Thomas is not narrative. There is no resurrection, no miracles, no arc. Just 114 direct transmissions. Here is why that is the most radical document in the canon.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post5')">Read →</a>
+  </div>
+
+  <div class="post-card" onclick="openPost('post6')">
+    <div class="post-meta"><span class="post-num">06</span><span class="post-tag">Intentional Parenting</span></div>
+    <div class="post-title">What I Heal in Me, She Never Has to Carry</div>
+    <div class="post-excerpt">The Law of Correspondence through a parenting lens. The most spiritual work I have ever done is not in a church or on an altar. It is in my own nervous system.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post6')">Read →</a>
+  </div>
+
+  <!-- READ THE BOOKS STRIP -->
+  <div class="books-strip">
+    <div class="books-strip-label">Read the Books</div>
+    <div class="books-strip-grid">
+      <a href="https://amzn.to/3Q3ROBQ" target="_blank" rel="nofollow sponsored" class="book-strip-card">
+        <span class="book-strip-format">Kindle · $2.99</span>
+        <div class="book-strip-title">Nova &amp; the Magic of Faith: Was Jesus a Christian?</div>
+        <span class="book-strip-cta">Get it on Amazon →</span>
+      </a>
+      <a href="https://amzn.to/4tUINJ8" target="_blank" rel="nofollow sponsored" class="book-strip-card">
+        <span class="book-strip-format">Paperback · $9.99</span>
+        <div class="book-strip-title">Adventures of Super Nova Vol. 1: Nova's Language of Friendship</div>
+        <span class="book-strip-cta">Get it on Amazon →</span>
+      </a>
+    </div>
+    <p class="affiliate-note">As an Amazon Associate I earn from qualifying purchases at no extra cost to you.</p>
+  </div>
+
+</div>
+
+<!-- POST 1 -->
+<div class="post-single" id="post1">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Neurodivergent Life</span>
+  </div>
+  <h1>What Nobody Told Me About Cleaning With a Neurodivergent Brain</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p>My mother's approach to cleaning was a demand. Not a practice. Not a ritual. A demand. And when I didn't meet it the way she expected — fast enough, thorough enough, without resistance — it became evidence that something was wrong with me.</p>
+    <p>Nobody knew I had PDA then. Nobody had language for the way a directive could hit my nervous system like a wall. Nobody understood that the harder she pushed, the harder my brain pushed back — not out of defiance, but out of something I couldn't even name yet.</p>
+    <div class="pull-quote"><p>"Cleanliness is next to godliness." I heard that my whole life. What I needed someone to say was: godliness is clarity. And clarity starts inside.</p></div>
+    <p>What I know now is this — a clean space is a mental health decision. Not a performance. Not proof that you have it together. Not something you owe anyone else. It is something you do for your own nervous system, your own clarity, your own ability to think and breathe and create.</p>
+    <p>When my house is a mess, my brain feels like a mess. That is not a metaphor. That is a real, documented, neurodivergent reality. External environment and internal state are not separate things. The Law of Correspondence is not just spiritual language — it is lived experience for anyone whose nervous system is wired the way mine is.</p>
+    <p>Back to back meltdowns. Nova processing something big. Me managing my own nervous system while managing hers. The dishes. The floor. The laundry that became a chair. I have been that person. I am sometimes still that person.</p>
+    <p>The difference now is I am not ashamed of it. And I am not passing the shame down.</p>
+    <p>Nova is not going to learn that a clean house means she is worthy. She is going to learn that a clean space is something she does for herself. Because she deserves to think clearly. Because her environment is an extension of her inner world. Because when she takes care of her space she is practicing, in the most tangible way possible, taking care of herself.</p>
+    <p>That is the rewrite. And it started with understanding that the original script was never actually about cleanliness. It was about control.</p>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<!-- POST 2 -->
+<div class="post-single" id="post2">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Universal Laws</span>
+  </div>
+  <h1>The Law of Love Is Not an Emotion</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p>Most people think love is something you feel. Nova taught me it is something you do.</p>
+    <p>She was four years old when she asked me why God made people if God already knew some of them were going to be mean. I did not have an answer from any doctrine I had been handed. I had to go find one. And what I found, when I stopped looking in the places I had been told to look, is that love is not an emotion at all. It is a law.</p>
+    <div class="pull-quote"><p>A law does not ask how you feel about it. It operates whether you understand it or not. Gravity does not need your belief. Neither does love.</p></div>
+    <p>The Law of Love, at its foundation, is this: love is the organizing force of all things. It is not soft. It is not passive. It is not contingent on whether the person in front of you deserves it by your accounting. It is the force that holds things together. It is what Jesus was actually demonstrating. Not sentiment. Force.</p>
+    <p>I grew up in church five days a week. Sold out, as they say. And what I was taught about love was conditional in ways nobody named out loud. Love your neighbor — but only if your neighbor fit a certain set of criteria. Love God — but through a specific mediating institution. Love yourself — but carefully, and not too much, because pride was a sin.</p>
+    <p>I am raising Nova differently. I am teaching her that love is not something you earn or withhold. It is a field you operate inside. You do not love people because they deserve it. You love because that is what you are made of. Because every time you contract away from love you are moving against your own nature.</p>
+    <p>That is the first book in the series. Not a lecture. A story. About a little girl who is learning that the law her mother teaches her is not a rule to follow. It is a truth to inhabit.</p>
+    <p>Less is more. Love is enough.</p>
+  </div>
+  <div class="book-rec">
+    <span class="book-rec-label">Read the Book</span>
+    <div class="book-rec-title">Nova &amp; the Magic of Faith: Was Jesus a Christian?</div>
+    <div class="book-rec-price">Kindle · $2.99</div>
+    <a href="https://amzn.to/3Q3ROBQ" target="_blank" rel="nofollow sponsored" class="book-rec-link">Get it on Amazon →</a>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<!-- POST 3 -->
+<div class="post-single" id="post3">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Theology</span>
+  </div>
+  <h1>She Was Never a Sinner</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p>It started with Mary Magdalene.</p>
+    <p>I needed to understand her. Who she was. Why she held such an important role in the story of Jesus — and why that role had been so deliberately buried for two thousand years. A woman that close to that kind of truth does not get erased by accident.</p>
+    <p>And then I found out that an entire gospel existed in her name. Written in her voice. Left out of the Bible entirely.</p>
+    <div class="pull-quote"><p>The story they told about her was always about controlling what women know. What women witnessed. What women were allowed to carry forward.</p></div>
+    <p>Mary Magdalene was not a prostitute. That was a sixth-century invention — Pope Gregory I, 591 AD, deliberately conflating three separate women from the text into one fallen figure. Early church documents named her Apostle to the Apostles. She was the first witness to the resurrection. The one he appeared to first. The one who ran to tell the others.</p>
+    <p>That is not the story most people were handed. Most people were handed the version that made her small. Because a woman with that kind of access, that kind of knowing, that kind of proximity to the most important teacher in Western history — that woman had to be managed.</p>
+    <p>I see myself in her. I see every woman who has ever held the light while someone else got the credit.</p>
+    <p>I see Nova in her too. And that is exactly why I will not hand my daughter the edited version. She will know who Mary Magdalene actually was. She will know that the closest person to the teaching was a woman. She will know that her witness was real, that her gospel exists, and that it was suppressed not because it was wrong — but because it was dangerous to the wrong people.</p>
+    <p>That knowledge belongs to our children. That is what this entire series is built on.</p>
+  </div>
+  <div class="book-rec">
+    <span class="book-rec-label">Read the Book</span>
+    <div class="book-rec-title">Nova &amp; the Magic of Faith: Was Jesus a Christian?</div>
+    <div class="book-rec-price">Kindle · $2.99</div>
+    <a href="https://amzn.to/3Q3ROBQ" target="_blank" rel="nofollow sponsored" class="book-rec-link">Get it on Amazon →</a>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<!-- POST 4 -->
+<div class="post-single" id="post4">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Expat Life</span>
+  </div>
+  <h1>Why I Left and What I Needed My Daughter to See Before I Did</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p>This is not an inspiration post.</p>
+    <p>I am not going to tell you the move was seamless or that I had everything figured out or that living abroad is all sunsets and farmer's markets. That would be content. What I want to write is the truth.</p>
+    <p>I left because I had been operating inside a system that was not built for me and calling the friction my fault. The job market. The education system. The cost of just existing. The way the United States asks you to perform productivity while dismantling every structure that would make productivity possible for someone like me — neurodivergent, a single mother, a Black woman building something from scratch.</p>
+    <div class="pull-quote"><p>I was not running away. I was running toward something very specific. I just did not have the language for it yet.</p></div>
+    <p>What I needed Nova to see — before we left, while we were leaving, every day since — is that geography is not destiny. That the place you were born is not the only place you are allowed to build a life. That the rules of one country are not the rules of the world. That her mother looked at the constraints she had been handed and said, out loud, these are not my constraints.</p>
+    <p>Three years in Mexico. And now somewhere new. Not because any place is perfect. Because I am a student of my own life and my birth chart has been pointing at this move for years. Because my astrocartography showed me exactly where my Midheaven lands — the line of public recognition and career legacy. Because some things you know before you can explain them.</p>
+    <p>Nova is seven years old and she has already lived in two countries outside the one she was born in. She does not find that strange. She finds it normal. That is the education I am most proud of giving her. Not the curriculum. Not the reading level. The knowing in her bones that the world is hers to move through.</p>
+    <p>That is what I needed her to see. And I needed to actually show her, not just say it.</p>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<!-- POST 5 -->
+<div class="post-single" id="post5">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Theology</span>
+  </div>
+  <h1>114 Sayings. No Miracles. No Story. Just Instructions.</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p>The Gospel of Thomas is not narrative. There is no birth story. No miracles. No crucifixion arc. No resurrection. Just 114 sayings, back to back, with no explanation between them.</p>
+    <p>That is what makes it radical.</p>
+    <p>Every other gospel is a story about Jesus. Thomas is Jesus speaking directly to you. No mediating institution. No priest. No hierarchy. Just the teaching, delivered straight, and the expectation that you are capable of receiving it.</p>
+    <div class="pull-quote"><p>"The kingdom is not coming. It is already here. You are already in it. The only problem is that you cannot see it."</p></div>
+    <p>That single reframe changes everything. If the kingdom is not a future reward for correct behavior — if it is a present reality you are already standing inside — then the entire project of institutional religion shifts. You do not need the institution to get you there. You need the eyes to see where you already are.</p>
+    <p>That is not fringe theology. Thomas is historically documented. It was found in Egypt in 1945 along with 51 other texts that the early church did not include in the canon. Not because they were fraudulent. Because they were dangerous to a specific kind of power structure — one that needed you to believe you required mediation to access the divine.</p>
+    <p>I came to Thomas through Mary Magdalene. Through the Gnostic texts. Through a years-long process of pulling on threads that the church I grew up in told me not to pull. Five days a week in church. Committed. And somehow, through all of that, the thing that finally made spiritual sense to me was the version they left out.</p>
+    <p>The universal laws and the Thomas sayings map onto each other almost perfectly. Thomas is the what — what reality is, what you are, what is already true. The laws are the how — how that reality operates, why things move the way they move. Together they form a complete framework. Not a religion. Instructions.</p>
+    <p>That is what I am teaching Nova. Not doctrine. Instructions for how to live inside a world that was always already yours.</p>
+  </div>
+  <div class="book-rec">
+    <span class="book-rec-label">Read the Book</span>
+    <div class="book-rec-title">Nova &amp; the Magic of Faith: Was Jesus a Christian?</div>
+    <div class="book-rec-price">Kindle · $2.99</div>
+    <a href="https://amzn.to/3Q3ROBQ" target="_blank" rel="nofollow sponsored" class="book-rec-link">Get it on Amazon →</a>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<!-- POST 6 -->
+<div class="post-single" id="post6">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Intentional Parenting</span>
+  </div>
+  <h1>What I Heal in Me, She Never Has to Carry</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p>The Law of Correspondence says: as within, so without. Your external life is a printout of your internal state.</p>
+    <p>I have been sitting with that law for years. And the place it hits hardest — the place I feel it most in my body — is in parenting.</p>
+    <p>Nova did not ask to be born into my unresolved things. She did not sign up to be the mirror that shows me exactly where I am still contracted, still wounded, still operating from a script I inherited and never examined. But she is. That is what children do. They find the places in you that need work and they stand there quietly until you do it.</p>
+    <div class="pull-quote"><p>What I heal in me, she never has to carry. That is the most spiritual work I have ever done. Not in a church. Not on an altar. In my own nervous system.</p></div>
+    <p>Generational patterns do not break themselves. Someone has to be the one who stops. Who looks at the thing clearly, names it, and decides — this ends with me. That decision is not dramatic. It does not always look like a breakthrough. Sometimes it looks like choosing not to say the thing your mother would have said. Sometimes it looks like pausing before you react. Sometimes it looks like going to therapy, or journaling, or sitting in the discomfort of your own behavior long enough to understand where it came from.</p>
+    <p>I grew up in an environment where certain emotional responses were modeled as normal that were not healthy. I did not know that then. I know it now because I have watched myself almost repeat them — and caught myself. That catching is the work. The catching is everything.</p>
+    <p>Nova is hyperverbal and she processes out loud and she has opinions about everything and sometimes that is a lot. And in those moments I have a choice. I can respond from the parts of me that were never given room to be that big. Or I can respond from the part of me that knows exactly what it feels like to be told you are too much — and refuses to pass that forward.</p>
+    <p>I choose the second one. Not perfectly. But intentionally. Every time.</p>
+    <p>The law is correspondence. What I embody, she inherits. That is not a burden. That is the most precise and powerful motivation I have ever had to do my own work.</p>
+    <p>She is watching. She has always been watching. And what she sees is what becomes normal for her.</p>
+    <p>So I am choosing, deliberately, what normal looks like.</p>
+  </div>
+  <div class="book-rec">
+    <span class="book-rec-label">Read the Book</span>
+    <div class="book-rec-title">Adventures of Super Nova Vol. 1: Nova's Language of Friendship</div>
+    <div class="book-rec-price">Paperback · $9.99</div>
+    <a href="https://amzn.to/4tUINJ8" target="_blank" rel="nofollow sponsored" class="book-rec-link">Get it on Amazon →</a>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<script>
+function openPost(id) {
+  document.getElementById('blog-index').classList.add('hidden');
+  document.querySelectorAll('.post-single').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function closePost() {
+  document.querySelectorAll('.post-single').forEach(p => p.classList.remove('active'));
+  document.getElementById('blog-index').classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
