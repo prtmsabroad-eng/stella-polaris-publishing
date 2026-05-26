@@ -583,6 +583,52 @@
     .stat { border-right:none; border-bottom:1px solid rgba(201,168,76,0.1); }
     .stat:last-child { border-bottom:none; }
   }
+
+  /* ═══ JOURNAL PREVIEW ═══ */
+  .journal-section {
+    position:relative; z-index:1;
+    background:var(--purple);
+    border-top:1px solid rgba(201,168,76,0.1);
+    padding:80px 40px; text-align:center;
+  }
+  .journal-grid {
+    display:grid; grid-template-columns:repeat(3,1fr);
+    gap:2px; max-width:960px; margin:0 auto 44px;
+  }
+  .journal-card {
+    background:rgba(255,255,255,0.02);
+    border:1px solid rgba(201,168,76,0.1);
+    padding:32px 24px; text-align:left;
+    text-decoration:none;
+    display:flex; flex-direction:column; gap:12px;
+    transition:all 0.3s;
+  }
+  .journal-card:hover {
+    background:rgba(201,168,76,0.04);
+    border-color:rgba(201,168,76,0.28);
+  }
+  .journal-tag {
+    font-family:'Cinzel',serif; font-size:7px;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--gold); display:block;
+  }
+  .journal-card h3 {
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.15rem; font-style:italic;
+    color:var(--parchment); line-height:1.3; margin:0;
+  }
+  .journal-card p {
+    font-size:0.78rem; color:var(--mist);
+    line-height:1.65; flex:1; margin:0;
+  }
+  .journal-read {
+    font-family:'Cinzel',serif; font-size:7.5px;
+    letter-spacing:0.18em; color:var(--gold); text-transform:uppercase;
+  }
+  @media (max-width:720px) {
+    .journal-grid { grid-template-columns:1fr; }
+    .journal-section { padding:64px 24px; }
+  }
 </style>
 </head>
 <body>
@@ -608,6 +654,7 @@
   <div class="nav-right">
     <a href="/advisory.html" class="nav-link">Stella Polaris Advisory</a>
     <a href="/authored.html" class="nav-link">Authored™</a>
+    <a href="/blog.html" class="nav-link">Journal</a>
     <a href="/portal.html" class="nav-portal">⬡ Portal</a>
   </div>
 </nav>
@@ -738,6 +785,33 @@
   <a href="https://linktr.ee/StellaPolarisPublishing" target="_blank" class="btn-gold">Explore All Books & Rewards</a>
 </section>
 
+<!-- JOURNAL PREVIEW -->
+<section class="journal-section">
+  <span class="section-eyebrow">Notes from the North Star</span>
+  <h2 class="section-heading">Essays on law, lineage,<br><em>and what it means to know.</em></h2>
+  <div class="journal-grid">
+    <a href="/blog.html" class="journal-card">
+      <span class="journal-tag">Theology</span>
+      <h3>She Was Never a Sinner</h3>
+      <p>Mary Magdalene was the closest person to the most important teacher in Western history. The story they told about her was always about controlling what women know.</p>
+      <span class="journal-read">Read →</span>
+    </a>
+    <a href="/blog.html" class="journal-card">
+      <span class="journal-tag">Universal Laws</span>
+      <h3>The Law of Love Is Not an Emotion</h3>
+      <p>Most people think love is something you feel. Nova taught me it is something you do — and why that difference changes everything.</p>
+      <span class="journal-read">Read →</span>
+    </a>
+    <a href="/blog.html" class="journal-card">
+      <span class="journal-tag">Intentional Parenting</span>
+      <h3>What I Heal in Me, She Never Has to Carry</h3>
+      <p>The most spiritual work I have ever done is not in a church or on an altar. It is in my own nervous system.</p>
+      <span class="journal-read">Read →</span>
+    </a>
+  </div>
+  <a href="/blog.html" class="btn-ghost">Read All Posts</a>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-top">
@@ -745,6 +819,7 @@
     <div class="footer-doors">
       <a href="/advisory.html" class="footer-door">Stella Polaris Advisory</a>
       <a href="/authored.html" class="footer-door">Authored™</a>
+      <a href="/blog.html" class="footer-door">Journal</a>
       <a href="/portal.html" class="footer-portal">⬡ Client Portal</a>
     </div>
   </div>
