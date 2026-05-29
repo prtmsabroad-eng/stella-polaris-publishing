@@ -278,6 +278,30 @@
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    .secret-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 24px 0 32px;
+      cursor: default;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .secret-divider .line {
+      width: 60px;
+      height: 1px;
+      background: rgba(201, 168, 76, 0.25);
+    }
+    .secret-divider .star {
+      color: rgba(201, 168, 76, 0.35);
+      font-size: 0.75rem;
+      transition: color 0.3s;
+    }
+    .secret-divider.activating .star {
+      color: rgba(201, 168, 76, 0.9);
+    }
   </style>
 </head>
 <body>
@@ -585,7 +609,37 @@ function handleResend() {
   input.value = lastEmail;
   setTimeout(() => input.focus(), 80);
 }
+
+(function() {
+  const trigger = document.getElementById('secret-trigger');
+  let tapCount = 0;
+  let tapTimer = null;
+  const DASHBOARD_PATH = '/studio.html';
+
+  trigger.addEventListener('click', function() {
+    tapCount++;
+    trigger.classList.add('activating');
+
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(function() {
+      tapCount = 0;
+      trigger.classList.remove('activating');
+    }, 1200);
+
+    if (tapCount >= 3) {
+      tapCount = 0;
+      clearTimeout(tapTimer);
+      window.location.href = DASHBOARD_PATH;
+    }
+  });
+})();
 </script>
+
+<div class="secret-divider" id="secret-trigger">
+  <div class="line"></div>
+  <div class="star">✦</div>
+  <div class="line"></div>
+</div>
 
 </body>
 </html>
