@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tash Studio">
+<title>Tash Studio — Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FFF8F0;
+  --gold: #C9A84C;
+  --gold-light: #F0D080;
+  --ordained: #4A0D5C;
+  --purple: #2D0A3E;
+  --purple-mid: #7B2D9E;
+  --pink: #E8649A;
+  --teal: #2BBFB0;
+  --tiffany: #81D8D0;
+  --yellow: #F5C842;
+  --coral: #F07060;
+  --violet: #9B59B6;
+  --dark: #1A0A2E;
+  --text: #2A1A3E;
+  --green: #27AE60;
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior: smooth; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text); min-height:100vh; }
+
+/* GATE */
+#gate {
+  position:fixed; inset:0;
+  background:linear-gradient(135deg, var(--dark) 0%, #0D0520 50%, #1A0535 100%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  z-index:9999; gap:20px; padding:24px;
+}
+.gate-star { font-size:3rem; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.95)} }
+#gate h1 { font-family:'Playfair Display',serif; color:var(--gold-light); font-size:clamp(1.8rem,6vw,3rem); letter-spacing:3px; text-align:center; }
+#gate p { color:rgba(255,255,255,0.4); font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; }
+#gate input {
+  background:rgba(255,255,255,0.06); border:1px solid var(--gold);
+  color:white; padding:14px 24px; font-size:1rem; border-radius:6px;
+  width:min(280px,90vw); text-align:center; letter-spacing:6px; outline:none;
+  font-family:'Space Mono',monospace; transition:border-color 0.2s;
+}
+#gate input:focus { border-color:var(--gold-light); }
+#gate button {
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  color:var(--dark); border:none; padding:14px 44px; font-size:0.9rem;
+  font-weight:700; border-radius:6px; cursor:pointer; letter-spacing:2px;
+  text-transform:uppercase; transition:opacity 0.2s; font-family:'DM Sans',sans-serif;
+}
+#gate button:hover { opacity:0.85; }
+#gate-error { color:var(--pink); font-size:0.8rem; display:none; letter-spacing:1px; }
+
+/* DASHBOARD */
+#dashboard { display:none; }
+
+/* HEADER */
+header {
+  background:var(--dark); padding:14px 16px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100; border-bottom:2px solid var(--gold);
+}
+.logo { font-family:'Playfair Display',serif; color:var(--gold-light); font-size:1.2rem; letter-spacing:2px; }
+.logo span { color:var(--pink); }
+.header-right { display:flex; align-items:center; gap:10px; }
+.date-pill {
+  background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.4);
+  color:var(--gold-light); padding:5px 12px; border-radius:20px;
+  font-size:0.72rem; font-family:'Space Mono',monospace;
+}
+.goal-mini {
+  background:rgba(123,45,158,0.2); border:1px solid var(--purple-mid);
+  color:#D8A8FF; padding:5px 12px; border-radius:20px;
+  font-size:0.72rem; font-family:'Space Mono',monospace; white-space:nowrap;
+}
+
+/* NAV */
+nav {
+  background:white; display:flex; overflow-x:auto; border-bottom:2px solid #eee;
+  padding:0 8px; gap:2px; scrollbar-width:none;
+}
+nav::-webkit-scrollbar { display:none; }
+nav button {
+  background:none; border:none; padding:14px 14px; font-size:0.78rem; font-weight:600;
+  cursor:pointer; white-space:nowrap; color:#999; border-bottom:3px solid transparent;
+  transition:all 0.2s; font-family:'DM Sans',sans-serif;
+}
+nav button.active { color:var(--purple); border-bottom-color:var(--ordained); }
+nav button:hover { color:var(--purple); }
+
+/* SECTIONS */
+.section { display:none; padding:16px; max-width:860px; margin:0 auto; padding-bottom:80px; }
+.section.active { display:block; }
+.section-title { font-family:'Playfair Display',serif; font-size:1.4rem; color:var(--dark); margin-bottom:4px; }
+.section-sub { font-size:0.78rem; color:#888; margin-bottom:18px; }
+
+/* CARDS */
+.card {
+  background:white; border-radius:14px; padding:18px; margin-bottom:14px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06); animation:fadeUp 0.3s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.card-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.card-icon { width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0; }
+.card h3 { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dark); }
+
+/* TODAY BANNER */
+.today-banner {
+  background:linear-gradient(135deg, var(--ordained) 0%, var(--purple-mid) 100%);
+  border-radius:16px; padding:22px; color:white; margin-bottom:16px;
+  position:relative; overflow:hidden;
+}
+.today-banner::after {
+  content:'★'; position:absolute; right:-10px; top:-10px;
+  font-size:120px; opacity:0.04; line-height:1;
+}
+.day-label { font-size:0.7rem; text-transform:uppercase; letter-spacing:3px; color:var(--gold-light); margin-bottom:4px; font-family:'Space Mono',monospace; }
+.today-banner h2 { font-family:'Playfair Display',serif; font-size:1.5rem; margin-bottom:16px; }
+.task-row {
+  display:flex; align-items:flex-start; gap:10px;
+  background:rgba(255,255,255,0.1); padding:11px 13px; border-radius:10px;
+  border-left:3px solid var(--gold); margin-bottom:8px;
+}
+.task-row:last-child { margin-bottom:0; }
+.task-type { font-size:0.65rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--gold-light); min-width:52px; padding-top:2px; font-family:'Space Mono',monospace; flex-shrink:0; }
+.task-content { font-size:0.85rem; line-height:1.4; }
+
+/* GOAL BAR */
+.goal-bar-wrap { background:white; border-radius:12px; padding:16px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+.goal-label { display:flex; justify-content:space-between; margin-bottom:8px; font-size:0.82rem; font-weight:600; }
+.goal-label span:last-child { font-family:'Space Mono',monospace; color:var(--purple-mid); }
+.progress-bar { height:10px; background:#eee; border-radius:5px; overflow:hidden; }
+.progress-fill { height:100%; border-radius:5px; background:linear-gradient(90deg,var(--ordained),var(--pink)); }
+.goal-sub { font-size:0.72rem; color:#888; margin-top:6px; }
+
+/* CHECKLIST */
+.checklist { list-style:none; display:flex; flex-direction:column; gap:7px; }
+.checklist li { display:flex; align-items:flex-start; gap:8px; font-size:0.83rem; color:#444; line-height:1.4; }
+.checklist li::before { content:'→'; color:var(--gold); font-weight:700; flex-shrink:0; }
+
+/* CALENDAR */
+.week-label { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--purple); padding:12px 0 8px; border-bottom:1px solid #eee; margin-bottom:10px; }
+.week-note { font-size:0.72rem; color:#999; font-weight:400; font-family:'DM Sans',sans-serif; }
+.cal-day {
+  background:white; border-radius:12px; padding:14px; margin-bottom:10px;
+  box-shadow:0 1px 6px rgba(0,0,0,0.05); border-left:4px solid #ddd;
+  transition:transform 0.15s;
+}
+.cal-day:hover { transform:translateY(-1px); }
+.cal-day.today-highlight { box-shadow:0 0 0 2px var(--gold),0 4px 16px rgba(0,0,0,0.1); }
+.cal-day.red-light{border-left-color:var(--coral)}
+.cal-day.purple-light{border-left-color:var(--violet)}
+.cal-day.expat{border-left-color:var(--teal)}
+.cal-day.parenting{border-left-color:var(--pink)}
+.cal-day.legacy{border-left-color:var(--gold)}
+.cal-day.cooking{border-left-color:var(--yellow)}
+.cal-day.beauty{border-left-color:var(--tiffany)}
+.cal-day-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+.cal-day-num { font-family:'Space Mono',monospace; font-size:0.68rem; color:#aaa; }
+.cal-day-date { font-size:0.78rem; font-weight:600; color:var(--dark); }
+.bucket-tag { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:3px 8px; border-radius:20px; color:white; flex-shrink:0; }
+.tag-red{background:var(--coral)} .tag-purple{background:var(--violet)} .tag-expat{background:var(--teal)}
+.tag-parenting{background:var(--pink)} .tag-legacy{background:var(--gold);color:var(--dark)}
+.tag-cooking{background:var(--yellow);color:var(--dark)} .tag-beauty{background:var(--tiffany);color:var(--dark)}
+.cal-feed-hook { font-size:0.85rem; font-weight:600; color:var(--dark); margin-bottom:6px; line-height:1.35; }
+.cal-trial-label { font-size:0.62rem; text-transform:uppercase; letter-spacing:1px; color:var(--teal); font-weight:700; margin-bottom:2px; font-family:'Space Mono',monospace; }
+.cal-trial-hook { font-size:0.78rem; color:#666; line-height:1.3; padding-left:8px; border-left:2px solid var(--teal); }
+.done-btn { margin-top:10px; background:none; border:1px solid #e0e0e0; padding:5px 14px; border-radius:20px; font-size:0.72rem; cursor:pointer; color:#aaa; transition:all 0.2s; font-family:'DM Sans',sans-serif; }
+.done-btn.done { background:#e8f8e8; border-color:#4CAF50; color:#2d7a2d; }
+
+/* GRANTS */
+.grant-card { background:white; border-radius:12px; padding:14px; margin-bottom:10px; box-shadow:0 1px 6px rgba(0,0,0,0.05); display:flex; gap:12px; align-items:flex-start; }
+.grant-urgency { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:4px 8px; border-radius:4px; white-space:nowrap; font-family:'Space Mono',monospace; min-width:52px; text-align:center; flex-shrink:0; }
+.urgent{background:#FFE5E5;color:#C0392B} .soon{background:#FFF3CD;color:#856404}
+.open{background:#E8F5E9;color:#2E7D32} .rolling{background:#E3F2FD;color:#1565C0}
+.grant-info h4 { font-size:0.88rem; font-weight:700; color:var(--dark); margin-bottom:3px; }
+.grant-amount { font-family:'Space Mono',monospace; font-size:0.82rem; color:var(--purple-mid); font-weight:700; margin-bottom:3px; }
+.grant-deadline { font-size:0.72rem; color:#888; margin-bottom:3px; }
+.grant-why { font-size:0.72rem; color:#666; line-height:1.4; font-style:italic; }
+.grant-apply { display:inline-block; margin-top:8px; background:var(--ordained); color:white; padding:5px 14px; border-radius:20px; font-size:0.72rem; font-weight:600; text-decoration:none; transition:background 0.2s; }
+.grant-apply:hover { background:var(--purple-mid); }
+
+/* PROJECTS */
+.project-card { background:white; border-radius:14px; padding:16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.06); border-top:3px solid #ddd; }
+.project-card.live{border-top-color:var(--green)} .project-card.building{border-top-color:var(--yellow)}
+.project-card.pending{border-top-color:var(--coral)} .project-card.upcoming{border-top-color:var(--teal)}
+.project-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.project-name { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dark); }
+.status-pill { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:4px 10px; border-radius:20px; font-family:'Space Mono',monospace; flex-shrink:0; }
+.pill-live{background:#e8f8e8;color:#2d7a2d} .pill-building{background:#FFF9E6;color:#856404}
+.pill-pending{background:#FFE8E6;color:#C0392B} .pill-upcoming{background:#E6F7F7;color:#0d7070}
+.project-link { display:inline-block; margin-top:10px; background:var(--cream); border:1px solid var(--gold); color:var(--dark); padding:6px 14px; border-radius:20px; font-size:0.75rem; font-weight:600; text-decoration:none; transition:background 0.2s; }
+.project-link:hover { background:var(--gold-light); }
+
+/* BLOG */
+.blog-item { background:white; border-radius:12px; padding:14px; margin-bottom:10px; box-shadow:0 1px 6px rgba(0,0,0,0.05); display:flex; align-items:flex-start; gap:12px; }
+.blog-num { font-family:'Space Mono',monospace; font-size:1.2rem; font-weight:700; color:var(--ordained); opacity:0.4; flex-shrink:0; min-width:28px; }
+.blog-info h4 { font-size:0.88rem; font-weight:700; color:var(--dark); margin-bottom:3px; line-height:1.3; }
+.blog-info p { font-size:0.75rem; color:#888; line-height:1.4; }
+.blog-tag { display:inline-block; font-size:0.62rem; font-weight:700; padding:2px 8px; border-radius:10px; margin-top:5px; }
+.btag-ready{background:#e8f8e8;color:#2d7a2d} .btag-draft{background:#FFF3CD;color:#856404}
+
+/* CAROUSELS */
+.carousel-item { background:white; border-radius:12px; padding:14px; margin-bottom:10px; box-shadow:0 1px 6px rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.carousel-info h4 { font-size:0.88rem; font-weight:700; color:var(--dark); margin-bottom:3px; }
+.carousel-info p { font-size:0.75rem; color:#888; }
+.carousel-status { font-size:0.65rem; font-weight:700; padding:4px 10px; border-radius:20px; white-space:nowrap; flex-shrink:0; }
+.cs-done{background:#e8f8e8;color:#2d7a2d} .cs-todo{background:#FFE5E5;color:#C0392B}
+
+/* LIGHT SPLIT */
+.light-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+.light-card { border-radius:12px; padding:16px; color:white; }
+.light-card.red { background:linear-gradient(135deg,#A93226,var(--coral)); }
+.light-card.purple { background:linear-gradient(135deg,var(--ordained),var(--purple-mid)); }
+.light-card h4 { font-family:'Playfair Display',serif; font-size:0.95rem; margin-bottom:8px; }
+.light-card ul { list-style:none; display:flex; flex-direction:column; gap:4px; }
+.light-card ul li { font-size:0.76rem; opacity:0.9; line-height:1.3; }
+.light-card ul li::before { content:'• '; }
+
+/* UGC */
+.pitch-block { background:white; border-radius:12px; padding:16px; margin-bottom:12px; box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+.pitch-block h4 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; color:var(--ordained); font-family:'Space Mono',monospace; }
+.pitch-block p { font-size:0.82rem; line-height:1.6; color:#444; }
+.brand-list { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.brand-pill { background:var(--cream); border:1px solid var(--gold); padding:4px 10px; border-radius:20px; font-size:0.7rem; color:var(--dark); font-weight:500; }
+.rate-row { display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f5f5f5; font-size:0.82rem; }
+.rate-row:last-child { border-bottom:none; }
+.rate-row span:last-child { font-family:'Space Mono',monospace; font-weight:700; color:var(--purple-mid); font-size:0.78rem; }
+
+/* CAMPAIGN */
+.campaign-box { background:linear-gradient(135deg,#FFF8E7,#FFF0D0); border:2px solid var(--gold); border-radius:16px; padding:18px; margin-bottom:14px; }
+.campaign-box h3 { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--dark); margin-bottom:6px; }
+.status-badge { display:inline-block; background:var(--yellow); color:var(--dark); padding:4px 12px; border-radius:20px; font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; font-family:'Space Mono',monospace; }
+
+/* DAILY NOTES */
+.notes-card { background:linear-gradient(135deg,var(--ordained),#1a0535); border-radius:16px; padding:20px; color:white; margin-bottom:14px; }
+.notes-card h3 { font-family:'Playfair Display',serif; font-size:1.1rem; margin-bottom:4px; color:var(--gold-light); }
+.notes-card p { font-size:0.8rem; opacity:0.7; margin-bottom:14px; }
+.notes-textarea { width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(201,168,76,0.3); border-radius:8px; padding:12px; color:white; font-size:0.85rem; font-family:'DM Sans',sans-serif; resize:vertical; min-height:100px; outline:none; line-height:1.5; }
+.notes-textarea::placeholder { color:rgba(255,255,255,0.3); }
+.notes-textarea:focus { border-color:rgba(201,168,76,0.6); }
+.save-note-btn { margin-top:10px; background:linear-gradient(135deg,var(--gold),var(--gold-light)); color:var(--dark); border:none; padding:10px 24px; border-radius:20px; font-size:0.8rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.saved-notes { margin-top:14px; display:flex; flex-direction:column; gap:8px; }
+.saved-note { background:rgba(255,255,255,0.06); border-radius:8px; padding:10px 12px; }
+.saved-note .note-date { font-size:0.65rem; color:var(--gold-light); margin-bottom:4px; font-family:'Space Mono',monospace; }
+.saved-note .note-text { font-size:0.82rem; line-height:1.4; opacity:0.9; }
+
+/* INTENTION BANNER */
+.intention-banner {
+  background:linear-gradient(135deg,#FFF8E7,#FFF3D0);
+  border:1.5px solid var(--gold);
+  border-left:5px solid var(--gold);
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:16px;
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  position:relative;
+}
+.intention-icon { font-size:1.2rem; flex-shrink:0; padding-top:1px; }
+.intention-text-wrap { flex:1; }
+.intention-label { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--gold); margin-bottom:4px; font-family:'Space Mono',monospace; }
+.intention-text { font-size:0.88rem; line-height:1.5; color:var(--dark); font-weight:500; font-style:italic; }
+.intention-edit-btn { background:none; border:none; font-size:0.7rem; color:#bbb; cursor:pointer; padding:4px 8px; border-radius:20px; transition:all 0.2s; flex-shrink:0; font-family:'DM Sans',sans-serif; }
+.intention-edit-btn:hover { background:#f0f0f0; color:#666; }
+.intention-input-wrap { display:none; flex-direction:column; gap:8px; width:100%; }
+.intention-input-wrap textarea {
+  width:100%; background:white; border:1.5px solid var(--gold); border-radius:8px;
+  padding:10px 12px; font-size:0.85rem; font-family:'DM Sans',sans-serif;
+  color:var(--dark); resize:none; outline:none; min-height:70px; line-height:1.5;
+}
+.intention-input-wrap textarea:focus { border-color:var(--ordained); }
+.intention-save-btn { align-self:flex-end; background:var(--ordained); color:white; border:none; padding:7px 18px; border-radius:20px; font-size:0.75rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
+
+/* RESPONSIVE */
+@media(max-width:480px) { .light-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="gate-star">✦</div>
+  <h1>STELLA POLARIS</h1>
+  <p>Command Center</p>
+  <input type="password" id="pw-input" placeholder="········" onkeydown="if(event.key==='Enter')checkPw()">
+  <button onclick="checkPw()">Enter</button>
+  <p id="gate-error">Try again.</p>
+</div>
+
+<div id="dashboard">
+  <header>
+    <div class="logo">TASH <span>✦</span> STUDIO</div>
+    <div class="header-right">
+      <div class="goal-mini" id="goal-mini">1,200 → 10K</div>
+      <div class="date-pill" id="live-date"></div>
+    </div>
+  </header>
+
+  <nav>
+    <button class="active" onclick="showTab('today',this)">📍 Today</button>
+    <button onclick="showTab('calendar',this)">📅 Calendar</button>
+    <button onclick="showTab('move',this)">✈️ The Move</button>
+    <button onclick="showTab('projects',this)">🚀 Projects</button>
+    <button onclick="showTab('blog',this)">✍️ Blog</button>
+    <button onclick="showTab('carousels',this)">🎠 Carousels</button>
+    <button onclick="showTab('grants',this)">💰 Grants</button>
+    <button onclick="showTab('ugc',this)">📣 UGC</button>
+    <button onclick="showTab('notes',this)">📓 Notes</button>
+    <button onclick="showTab('astro',this)">🔮 Transits</button>
+    <button onclick="showTab('framework',this)">💡 Framework</button>
+  </nav>
+
+  <!-- TODAY -->
+  <div class="section active" id="tab-today">
+
+    <!-- INTENTION BANNER -->
+    <!-- DAILY WEALTH MESSAGE -->
+    <div id="daily-msg" style="background:linear-gradient(135deg,#1A0A2E,#2D0A3E);border-radius:14px;padding:18px 20px;margin-bottom:14px;color:white;text-align:center;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;opacity:0.04;font-size:120px;display:flex;align-items:center;justify-content:center;pointer-events:none">✦</div>
+      <div style="font-family:Space Mono,monospace;font-size:0.62rem;color:var(--gold);letter-spacing:3px;margin-bottom:8px">TODAY'S MESSAGE</div>
+      <div id="daily-msg-text" style="font-family:Playfair Display,serif;font-size:1.05rem;line-height:1.6;color:white;font-style:italic"></div>
+      <div style="margin-top:10px;font-size:0.68rem;color:rgba(255,255,255,0.35);letter-spacing:1px" id="daily-msg-date"></div>
+      <button onclick="requestNotifications()" style="margin-top:12px;background:rgba(201,168,76,0.15);border:1px solid rgba(201,168,76,0.4);color:var(--gold-light);padding:7px 18px;border-radius:20px;font-size:0.72rem;font-family:DM Sans,sans-serif;cursor:pointer;letter-spacing:1px" id="notif-btn">🔔 Send me this daily</button>
+    </div>
+
+    <div class="intention-banner">
+      <div class="intention-icon">✦</div>
+      <div class="intention-text-wrap">
+        <div class="intention-label">Current Intention</div>
+        <div class="intention-text" id="intention-display">Take people along with me — not just have them look at me. Come along with me. Let me show you my perspective. POV content, not performance.</div>
+        <div class="intention-input-wrap" id="intention-edit-wrap">
+          <textarea id="intention-input" placeholder="Write your current intention, reminder, or creative directive..."></textarea>
+          <button class="intention-save-btn" onclick="saveIntention()">Save</button>
+        </div>
+      </div>
+      <button class="intention-edit-btn" id="intention-edit-btn" onclick="toggleIntentionEdit()">edit</button>
+    </div>
+
+    <div class="today-banner">
+      <div class="day-label">Today's Mission</div>
+      <h2 id="today-heading">Loading...</h2>
+      <div id="today-tasks"></div>
+    </div>
+
+    <div class="goal-bar-wrap">
+      <div class="goal-label">
+        <span>📈 Followers to 10K by July 24</span>
+        <span>1,200 / 10,000</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:12%"></div></div>
+      <div class="goal-sub">65 days — ~135 new followers/day needed · Edits + daily Trials is the engine</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F0E6FF">⚡</div><h3>Every Single Day</h3></div>
+      <ul class="checklist">
+        <li>Post 1 feed reel from Edits — natively</li>
+        <li>Post 1 Trial reel — cold audience discovery</li>
+        <li>Stories 3-5x — keep current audience warm</li>
+        <li>10 min engaging back in comments</li>
+        <li>Check this dashboard before you start</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#E6FFF8">🎯</div><h3>This Week</h3></div>
+      <ul class="checklist" id="week-focus"></ul>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="section" id="tab-calendar">
+    <div class="section-title">30-Day Content Calendar</div>
+    <div class="section-sub">Starts June 10 · Post what's trending until then · Calendar resets after the move</div>
+    <div id="cal-grid"></div>
+  </div>
+
+  <!-- PROJECTS -->
+
+  <!-- ASTROLOGY / TRANSITS -->
+  <div class="section" id="tab-astro">
+    <div class="section-title">Your Sky Right Now</div>
+    <div class="section-sub">Natal foundation + live transits + what is coming. Updated quarterly.</div>
+
+    <!-- NATAL ANCHOR -->
+    <div class="card" style="border-left:4px solid var(--gold)">
+      <div class="card-header"><div class="card-icon" style="background:#FFF8E7">⭐</div><h3>Natal Foundation — Locked</h3></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:0.82rem;">
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Rising</strong><br>Cancer 11°03'</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>North Node</strong><br>Cancer 13° Rx — conjunct Rising</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Venus</strong><br>Cancer — conjunct North Node zone</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Sun</strong><br>Leo 1° — 1st House</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Moon</strong><br>Virgo 19° — 3rd House</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Midheaven</strong><br>Pisces 25°47'</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Saturn</strong><br>Libra 16° — 4th House</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Jupiter natal</strong><br>Scorpio 1° — 5th House</div>
+        <div style="background:#f9f6ff;padding:10px;border-radius:8px"><strong>Chiron</strong><br>Taurus 26°55' — 11th House</div>
+      </div>
+    </div>
+
+    <!-- URGENT WINDOW -->
+    <div style="background:linear-gradient(135deg,#7B2D9E,#4A0D5C);border-radius:14px;padding:18px;margin-bottom:14px;color:white;">
+      <div style="font-family:Space Mono,monospace;font-size:0.65rem;color:#E2C47A;letter-spacing:3px;margin-bottom:6px">⚠️ CLOSING WINDOW — ACT NOW</div>
+      <div style="font-family:Playfair Display,serif;font-size:1.3rem;margin-bottom:10px">Jupiter in Cancer — Closes June 30</div>
+      <p style="font-size:0.85rem;line-height:1.6;opacity:0.9">Jupiter has been transiting your Cancer Rising, North Node, AND Venus simultaneously — a 12-year window that does not return until 2038. This is not just evolutionary expansion. Jupiter on your Venus is why everything you create right now has a magnetic pull. You are not just visible — you are attractive in the cosmic sense. People are drawn to your work, your energy, your story. Every major move you are making right now is timed to this. The relocation. The Kickstarter. The publishing company going public. This is not coincidence. This is architecture. Jupiter closes its Cancer transit June 30. Everything you plant before that date has 12 years of expansion energy behind it. Move.</p>
+    </div>
+
+    <!-- CURRENT TRANSITS -->
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F3E5F5">🪐</div><h3>Live Transits — Q2 2026</h3></div>
+
+      <div style="border-left:3px solid var(--violet);padding:12px 14px;margin-bottom:12px;background:#faf7ff;border-radius:0 8px 8px 0">
+        <div style="font-size:0.72rem;font-weight:700;color:var(--violet);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-family:Space Mono,monospace">JUPITER IN CANCER → Your Rising + North Node</div>
+        <p style="font-size:0.85rem;line-height:1.5;color:#444">The planet of expansion sitting directly on your evolutionary directive. Visibility is elevated. The world is more receptive to you right now than it will be again for 12 years. Use it. Every public move you make before June 30 lands with more force than usual.</p>
+      </div>
+
+      <div style="border-left:3px solid var(--coral);padding:12px 14px;margin-bottom:12px;background:#fff7f6;border-radius:0 8px 8px 0">
+        <div style="font-size:0.72rem;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-family:Space Mono,monospace">SATURN IN ARIES → Squaring Cancer placements</div>
+        <p style="font-size:0.85rem;line-height:1.5;color:#444">Saturn entered Aries February 13. Aries squares Cancer. This is the friction inside the forward motion — logistics, documentation, bureaucratic load, body pressure, identity pressure. Not a stop sign. A load-bearing test. The relocation paperwork, the solo parent architecture of this move — that is Saturn asking: is this real? Prove it through structure.</p>
+      </div>
+
+      <div style="border-left:3px solid var(--teal);padding:12px 14px;margin-bottom:12px;background:#f4fffe;border-radius:0 8px 8px 0">
+        <div style="font-size:0.72rem;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-family:Space Mono,monospace">NEPTUNE IN ARIES → New expression of your Pisces MC</div>
+        <p style="font-size:0.85rem;line-height:1.5;color:#444">Neptune left Pisces January 26 after 14 years. Your Midheaven is Pisces — Neptune has been in your MC's home sign your entire spiritual development arc. It leaving is the crystal leaving the casing. The channel is intact. The container is retired. Your public calling now needs a bolder, more direct Aries expression. The Nova series is that.</p>
+      </div>
+
+      <div style="border-left:3px solid var(--gold);padding:12px 14px;background:#fffdf0;border-radius:0 8px 8px 0">
+        <div style="font-size:0.72rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;font-family:Space Mono,monospace">URANUS IN GEMINI → 12th House, ingress April 26</div>
+        <p style="font-size:0.85rem;line-height:1.5;color:#444">Uranus permanently entered Gemini April 26. For Cancer Rising this lands in the 12th house — the hidden, the behind-the-scenes, the subconscious. Expect sudden insights, unusual sleep, spiritual downloads, and disruption to old mental patterns. This is not destabilizing. It is rewiring. The content that comes from you in this period will surprise even you.</p>
+      </div>
+    </div>
+
+    <!-- UPCOMING -->
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#E6FFF8">🗓️</div><h3>Upcoming Windows — Know Before They Hit</h3></div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="background:#f9f6ff;border-radius:10px;padding:12px">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--ordained);font-family:Space Mono,monospace;margin-bottom:4px">JUNE 30, 2026</div>
+          <div style="font-size:0.88rem;font-weight:600;margin-bottom:4px">Jupiter leaves Cancer — 12-year window closes</div>
+          <p style="font-size:0.8rem;color:#666;line-height:1.4">Jupiter enters Leo. Your 1st house Sun is Leo — Jupiter will then conjunct your natal Sun. A new chapter begins, but the North Node activation is done. Launch everything before June 30.</p>
+        </div>
+
+        <div style="background:#f9f6ff;border-radius:10px;padding:12px">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--ordained);font-family:Space Mono,monospace;margin-bottom:4px">JULY 2026 — YOUR BIRTHDAY MONTH</div>
+          <div style="font-size:0.88rem;font-weight:600;margin-bottom:4px">Solar Return + Jupiter into Leo + Sun conjunct natal Sun</div>
+          <p style="font-size:0.8rem;color:#666;line-height:1.4">July 24 Solar Return activates under Jupiter newly in Leo hitting your natal Sun at Leo 1°. Birthday season this year is not just celebration — it is ignition. The 10K Instagram goal, the Kickstarter, the relocation all converging here is not accident.</p>
+        </div>
+
+        <div style="background:#f9f6ff;border-radius:10px;padding:12px">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--ordained);font-family:Space Mono,monospace;margin-bottom:4px">Q3–Q4 2026</div>
+          <div style="font-size:0.88rem;font-weight:600;margin-bottom:4px">Saturn continues in Aries — structure building phase</div>
+          <p style="font-size:0.8rem;color:#666;line-height:1.4">The friction does not lift immediately. Saturn in Aries continues squaring your Cancer placements through 2027. The work is to keep building structure inside the pressure rather than waiting for the pressure to lift. It will not lift first. You build first. Then it lifts.</p>
+        </div>
+
+        <div style="background:#f9f6ff;border-radius:10px;padding:12px">
+          <div style="font-size:0.72rem;font-weight:700;color:var(--ordained);font-family:Space Mono,monospace;margin-bottom:4px">RELOCATED CHART — NEW HOME</div>
+          <div style="font-size:0.88rem;font-weight:600;margin-bottom:4px">Midheaven shifts to Cancer 9°55' — conjunct North Node</div>
+          <p style="font-size:0.8rem;color:#666;line-height:1.4">In the relocated chart your Midheaven moves to Cancer 9°55' — direct conjunction with your natal North Node at Cancer 13°. Sun and Mercury both move into the 10th house. This is the location where Stella Polaris Publishing becomes publicly established. The astrocartography confirmed it. You are going to the right place.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#FFF3E0">📝</div><h3>Advisory Methodology Reminder</h3></div>
+      <ul class="checklist">
+        <li>Three-layer read: Solar Arcs + Progressions + Transits against natal</li>
+        <li>Solar Arcs: everything forward 1 degree per year — reliable for major external events</li>
+        <li>Progressions: internal readiness behind each external window</li>
+        <li>Transits: moment-to-moment activation</li>
+        <li>Repeat clients: NEVER restate natal overview — only current transit activations</li>
+        <li>Standard Q1-Q4 quarters always — no custom date ranges</li>
+        <li>Every observation backed by a specific placement — if no placement, it does not belong</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- THE MOVE -->
+  <div class="section" id="tab-move">
+    <div style="border-radius:16px;overflow:hidden;margin-bottom:16px;position:relative;height:200px;background:linear-gradient(135deg,#0D1B2A,#1B3A4B);display:flex;align-items:flex-end;">
+      <img src="https://images.unsplash.com/photo-1555990793-da11153b6ca7?w=800&q=80" alt="Tirana" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;">
+      <div style="position:relative;padding:20px;width:100%">
+        <div style="font-family:Space Mono,monospace;font-size:0.65rem;color:#E2C47A;letter-spacing:3px;margin-bottom:4px">DESTINATION</div>
+        <div style="font-family:Playfair Display,serif;font-size:1.8rem;color:white;font-weight:900;line-height:1">Tirana, Albania</div>
+        <div style="font-size:0.8rem;color:rgba(255,255,255,0.7);margin-top:4px">New life. New chapter. Eyes on the prize.</div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#2D0A3E,#4A0D5C);border-radius:14px;padding:18px;margin-bottom:14px;color:white;text-align:center">
+      <div style="font-family:Space Mono,monospace;font-size:0.7rem;color:#E2C47A;letter-spacing:2px;margin-bottom:6px">DEPARTURE COUNTDOWN</div>
+      <div style="font-family:Playfair Display,serif;font-size:3rem;font-weight:900;color:white;line-height:1" id="countdown-days">--</div>
+      <div style="font-size:0.85rem;color:rgba(255,255,255,0.6);margin-top:4px">days until June 8, 2026</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#FFF3E0">🗓️</div><h3>Flight Itinerary</h3></div>
+      <ul class="checklist">
+        <li><strong>June 8</strong> — Depart Cancun (CUN) · Turkish Airlines FlexFly · 4 checked bags</li>
+        <li><strong>June 9</strong> — Arrive Istanbul (IST) · 24-hour layover · TourIstanbul free guided tour available</li>
+        <li><strong>June 10</strong> — Depart Istanbul morning · Arrive Tirana (TIA)</li>
+      </ul>
+    </div>
+
+    <div class="card" style="border-left:4px solid #F07060">
+      <div class="card-header"><div class="card-icon" style="background:#FFE5E5">🏨</div><h3>Accommodation — BOOK NOW</h3></div>
+      <ul class="checklist">
+        <li>Need accommodation in Tirana for June 10 arrival</li>
+        <li><strong>Top pick:</strong> The Rooms Apartments Tirana — Rruga Sami Frasheri 56 · rated 9.4 Exceptional · apartment style, full kitchen, spacious · near the lake</li>
+        <li><strong>Alternative:</strong> mk hotel tirana — free airport shuttle if arranged ahead, pool, sauna, spotless reviews</li>
+        <li>Book on Booking.com — search June 10 check-in, 2 guests</li>
+      </ul>
+      <a href="https://www.booking.com/searchresults.html?ss=Tirana&checkin=2026-06-10&checkout=2026-06-12&group_adults=2" target="_blank" class="project-link">Search Booking.com →</a>
+    </div>
+
+    <div class="card" style="border-left:4px solid #2BBFB0">
+      <div class="card-header"><div class="card-icon" style="background:#E6FFF8">🚗</div><h3>Drivers — Book Both</h3></div>
+      <ul class="checklist">
+        <li><strong>Cancun → Airport (June 8):</strong> Need to book — you have 4 large bags, need a van or SUV. Search InDriver, Uber XL, or local Cancun airport transfer service</li>
+        <li><strong>Tirana Airport → Accommodation (June 10):</strong> Tirana Airport Shuttle — communicates via WhatsApp, meet and greet with name sign, fixed pricing, van available for luggage · tiranaairportshuttle.com</li>
+        <li>Official airport taxi AHA also available — ~$20 fixed fare, 20-25 min to city center · must specify luggage volume when booking</li>
+      </ul>
+      <a href="https://tiranaairportshuttle.com" target="_blank" class="project-link">Tirana Airport Shuttle →</a>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F0E6FF">📋</div><h3>Pre-Departure Checklist</h3></div>
+      <ul class="checklist">
+        <li id="chk1" onclick="toggleChk('chk1')" style="cursor:pointer">Book Tirana accommodation on Booking.com</li>
+        <li id="chk2" onclick="toggleChk('chk2')" style="cursor:pointer">Book Cancun airport driver (van, 4 bags, 2 passengers)</li>
+        <li id="chk3" onclick="toggleChk('chk3')" style="cursor:pointer">Book Tirana airport driver via WhatsApp — tiranaairportshuttle.com</li>
+        <li id="chk4" onclick="toggleChk('chk4')" style="cursor:pointer">Sell Mazda CX-5 — primary landing fund lever</li>
+        <li id="chk5" onclick="toggleChk('chk5')" style="cursor:pointer">Schwab checking account set up for ATM rebates abroad</li>
+        <li id="chk6" onclick="toggleChk('chk6')" style="cursor:pointer">Nova passport appointment confirmed at Tirana US Embassy</li>
+        <li id="chk7" onclick="toggleChk('chk7')" style="cursor:pointer">Airalo eSIM purchased for both phones before departure</li>
+        <li id="chk8" onclick="toggleChk('chk8')" style="cursor:pointer">4 bags packed and weighed — FlexFly allowance confirmed</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#E6FFF8">💰</div><h3>Landing Budget</h3></div>
+      <ul class="checklist">
+        <li>Total landing budget built: ~$4,490</li>
+        <li>Primary remaining lever: 2016 Mazda CX-5 sale</li>
+        <li>Schwab checking — worldwide ATM fee rebates</li>
+        <li>Wise account for currency conversion savings</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section" id="tab-projects">
+    <div class="section-title">Active Projects</div>
+    <div class="section-sub">Everything running. One place to see it all.</div>
+
+    <div class="project-card live">
+      <div class="project-header">
+        <div class="project-name">Stella Polaris Website</div>
+        <span class="status-pill pill-live">LIVE</span>
+      </div>
+      <ul class="checklist">
+        <li>stellapolarispublishing.com — Cloudflare Pages</li>
+        <li>9.28k requests · 2.27k visits · 33 countries (7 days)</li>
+        <li>Advisory payment page v7 live</li>
+        <li>Foundations of Faith popup — Supabase capture pending Claude Code deploy</li>
+        <li>Calendly link still needed on advisory booking button</li>
+      </ul>
+      <a href="https://stellapolarispublishing.com" target="_blank" class="project-link">Visit Site →</a>
+    </div>
+
+    <div class="project-card live">
+      <div class="project-header">
+        <div class="project-name">Authored™ MVP</div>
+        <span class="status-pill pill-live">LIVE</span>
+      </div>
+      <ul class="checklist">
+        <li>React MVP deployed via createanything.com</li>
+        <li>4 features: book type selector, AI scaffold, voice-to-text, outline view</li>
+        <li>Google Form waitlist active · Beta NDA complete</li>
+        <li>Tagline locked: "Your voice. Your words. Your book. Certifiably human authored."</li>
+        <li>The Yap Session feature — stream of consciousness voice journaling</li>
+      </ul>
+    </div>
+
+    <div class="project-card pending">
+      <div class="project-header">
+        <div class="project-name">Kickstarter — Nova & the Magic of Faith</div>
+        <span class="status-pill pill-pending">PRE-LAUNCH</span>
+      </div>
+      <ul class="checklist">
+        <li>Page exists — launch button not yet flipped</li>
+        <li>Purple light content = organic Kickstarter runway</li>
+        <li>Press releases staggered and ready for launch day</li>
+        <li>Emmanuel Lewis endorsement on file</li>
+        <li>Target: launch before Jupiter in Cancer closes June 30</li>
+      </ul>
+    </div>
+
+    <div class="project-card building">
+      <div class="project-header">
+        <div class="project-name">Trading Dashboard</div>
+        <span class="status-pill pill-building">IN PROGRESS</span>
+      </div>
+      <ul class="checklist">
+        <li>Interface built — setup not yet complete</li>
+        <li>Goal: check it daily from this dashboard</li>
+        <li>Add link here once live URL is confirmed</li>
+      </ul>
+    </div>
+
+    <div class="project-card upcoming">
+      <div class="project-header">
+        <div class="project-name">Albania Relocation</div>
+        <span class="status-pill pill-upcoming">IMMINENT</span>
+      </div>
+      <ul class="checklist">
+        <li>Turkish Airlines CUN → IST → TIA · FlexFly · 4 checked bags total</li>
+        <li>Landing in Durrës · 35-40 min from Tirana US Embassy for Nova's passport</li>
+        <li>Landing budget ~$4,490 built</li>
+        <li>Schwab checking for worldwide ATM rebates</li>
+        <li>2016 Mazda CX-5 sale is primary remaining financial lever</li>
+      </ul>
+    </div>
+
+    <div class="project-card live">
+      <div class="project-header">
+        <div class="project-name">Advisory Portal</div>
+        <span class="status-pill pill-live">LIVE</span>
+      </div>
+      <ul class="checklist">
+        <li>Magic-link and email/password login active</li>
+        <li>Supabase: wshqygrcfsxxcamxitbs.supabase.co</li>
+        <li>$497 offer locked: "Stop guessing your next move..."</li>
+        <li>Calendly link still the missing piece for bookings</li>
+      </ul>
+      <a href="https://stellapolarispublishing.com/advisory-portal-login.html" target="_blank" class="project-link">Advisory Portal →</a>
+    </div>
+  </div>
+
+  <!-- BLOG -->
+  <div class="section" id="tab-blog">
+    <div class="section-title">Blog Queue</div>
+    <div class="section-sub">6 posts ready to write. Build the blog page, drop them in.</div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F0E6FF">🔧</div><h3>Next Step</h3></div>
+      <ul class="checklist">
+        <li>Build the blog page HTML on the Stella Polaris site</li>
+        <li>Each post below becomes a page or section</li>
+        <li>Purple light conversations = natural blog content</li>
+        <li>Every blog post is also a caption, a carousel, and a Trial reel hook</li>
+      </ul>
+    </div>
+
+    <div class="blog-item"><div class="blog-num">01</div><div class="blog-info"><h4>What Nobody Told Me About Cleaning With a Neurodivergent Brain</h4><p>PDA, meltdowns, how cleaning was taught as demand not practice. Rewriting it for Nova. Clean spaces as mental health not performance.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+    <div class="blog-item"><div class="blog-num">02</div><div class="blog-info"><h4>The Law of Love Is Not an Emotion</h4><p>Universal law as a living system not a governing one. How I teach Nova to live inside it instead of around it.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+    <div class="blog-item"><div class="blog-num">03</div><div class="blog-info"><h4>She Was Never a Sinner — Mary Magdalene and What They Took From Us</h4><p>The story they told about her was always about controlling what women know. Why this matters for raising Nova.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+    <div class="blog-item"><div class="blog-num">04</div><div class="blog-info"><h4>Why I Left and What I Needed My Daughter to See Before I Did</h4><p>Not inspiration content. The real reasons. What changes when you stop tolerating geography as default.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+    <div class="blog-item"><div class="blog-num">05</div><div class="blog-info"><h4>114 Sayings, No Miracles — What the Gospel of Thomas Actually Says</h4><p>No resurrection story. No miracles. Just instructions. Why this is the most radical document in the canon.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+    <div class="blog-item"><div class="blog-num">06</div><div class="blog-info"><h4>What I Heal in Me, She Never Has to Carry</h4><p>The Law of Correspondence through a parenting lens. Generational pattern work as the most spiritual act.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+  </div>
+
+  <!-- CAROUSELS -->
+  <div class="section" id="tab-carousels">
+    <div class="section-title">Purple Carousels</div>
+    <div class="section-sub">Ordained purple #4A0D5C · Cover slide: enchanted forest + purple overlay · Inner slides: vibrant forest</div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F3E5F5">🎨</div><h3>Brand Color — Ordained</h3></div>
+      <ul class="checklist">
+        <li>Hex: <strong>#4A0D5C</strong> — deep aubergine, fuchsia warmth</li>
+        <li>Cover slide: enchanted forest + purple overlay = brand anchor</li>
+        <li>Inner slides: vibrant warmer forest image</li>
+        <li>Stella Polaris logo bottom left — consistent on every slide</li>
+      </ul>
+    </div>
+
+    <div class="carousel-item"><div class="carousel-info"><h4>Mother Carousel</h4><p>"I think therefore Mother · noun & verb & world"</p></div><span class="carousel-status cs-done">✓ Done</span></div>
+    <div class="carousel-item"><div class="carousel-info"><h4>Role Model Carousel v6</h4><p>"what I embody / ROLE MODEL / she inherits"</p></div><span class="carousel-status cs-done">✓ Done</span></div>
+    <div class="carousel-item"><div class="carousel-info"><h4>Love Carousel v1</h4><p>Law of Love series — first in sequence</p></div><span class="carousel-status cs-done">✓ Done</span></div>
+    <div class="carousel-item"><div class="carousel-info"><h4>Believer Carousel v2</h4><p>Belief & alchemy content</p></div><span class="carousel-status cs-done">✓ Done</span></div>
+    <div class="carousel-item"><div class="carousel-info"><h4>Faith Carousel</h4><p>Law of Correspondence / Gospel of Thomas</p></div><span class="carousel-status cs-todo">Still to build</span></div>
+    <div class="carousel-item"><div class="carousel-info"><h4>Resistance Carousel</h4><p>Law of Resistance / The Tinkerbee</p></div><span class="carousel-status cs-todo">Still to build</span></div>
+  </div>
+
+  <!-- GRANTS -->
+  <div class="section" id="tab-grants">
+    <div class="section-title">Grant Tracker</div>
+    <div class="section-sub">One application per week minimum. Check deadlines every Sunday morning.</div>
+    <div id="grants-list"></div>
+  </div>
+
+  <!-- UGC -->
+  <div class="section" id="tab-ugc">
+    <div class="section-title">UGC & Brand Pitching</div>
+    <div class="section-sub">One pitch per week. Your engagement rate and reach are the sell — not follower count.</div>
+
+    <div class="pitch-block">
+      <h4>Your Numbers Right Now</h4>
+      <div class="rate-row"><span>Followers</span><span>~1,200</span></div>
+      <div class="rate-row"><span>Average post reach</span><span>200–500</span></div>
+      <div class="rate-row"><span>Breaking-out posts</span><span>1,200–1,400</span></div>
+      <div class="rate-row"><span>Top Trial reel</span><span>1,300 views</span></div>
+      <div class="rate-row"><span>Website reach</span><span>33 countries · 9.28k req/week</span></div>
+    </div>
+
+    <div class="pitch-block">
+      <h4>Rate Card</h4>
+      <div class="rate-row"><span>Single video (15-30s, Edits native)</span><span>$150–300</span></div>
+      <div class="rate-row"><span>Video + usage rights (30 days)</span><span>$300–500</span></div>
+      <div class="rate-row"><span>Story series (3 slides)</span><span>$75–150</span></div>
+      <div class="rate-row"><span>Full package (reel + stories + 60 day rights)</span><span>$500–800</span></div>
+    </div>
+
+    <div class="pitch-block">
+      <h4>Cold Pitch Template</h4>
+      <p>Hi [Brand], I'm Tashia Monique — founder, author, homeschooling mom and creator documenting a life built entirely on purpose. Relocating from Mexico to Albania with my daughter Nova, building content around intentional parenting, legacy, and living abroad as a Black American woman.<br><br>
+      Posts regularly reaching 1,000–1,400 non-follower accounts organically with an internationally distributed website audience across 33 countries. All content created natively in Instagram Edits for maximum platform reach.<br><br>
+      I'd love to explore a UGC partnership for [product category]. Full portfolio at stellapolarispublishing.com.</p>
+    </div>
+
+    <div class="pitch-block">
+      <h4>Target Brands</h4>
+      <div class="brand-list">
+        <span class="brand-pill">Dyson</span><span class="brand-pill">Fenty Beauty</span>
+        <span class="brand-pill">Vrbo</span><span class="brand-pill">Airalo eSIM</span>
+        <span class="brand-pill">KiwiCo</span><span class="brand-pill">Canva</span>
+        <span class="brand-pill">Notion</span><span class="brand-pill">Mented Cosmetics</span>
+        <span class="brand-pill">Prose Hair</span><span class="brand-pill">Lovevery</span>
+        <span class="brand-pill">Fellow Coffee</span><span class="brand-pill">The Ordinary</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="section" id="tab-notes">
+    <div class="section-title">Daily Notes</div>
+    <div class="section-sub">Write it here so it doesn't get lost. Thoughts, wins, intentions, anything.</div>
+
+    <div class="notes-card">
+      <h3>Today's Note</h3>
+      <p id="notes-date-label"></p>
+      <textarea class="notes-textarea" id="note-input" placeholder="Write anything. A win, a thought, an intention, a reminder to yourself..."></textarea>
+      <button class="save-note-btn" onclick="saveNote()">Save Note</button>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F3E5F5">📖</div><h3>Recent Notes</h3></div>
+      <div class="saved-notes" id="saved-notes-list"><p style="font-size:0.8rem;color:#aaa">No notes yet. Start today.</p></div>
+    </div>
+  </div>
+
+  <!-- FRAMEWORK -->
+  <div class="section" id="tab-framework">
+    <div class="section-title">Brand Framework</div>
+    <div class="section-sub">Regulated Rebellion. Grounded in identity. Refusing external programming.</div>
+
+    <div class="light-grid">
+      <div class="light-card red">
+        <h4>🔴 Red Light</h4>
+        <ul>
+          <li>Hot takes</li><li>Controversy</li><li>Trending topics</li>
+          <li>What's irritating people</li><li>Reaction content</li><li>Algorithm bait</li>
+        </ul>
+      </div>
+      <div class="light-card purple">
+        <h4>🟣 Purple Light</h4>
+        <ul>
+          <li>Universal Laws</li><li>Mary Magdalene</li><li>Intentional parenting</li>
+          <li>The books & Nova</li><li>Deep conversations</li><li>Community building</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#E8F5E9">📦</div><h3>Content Buckets</h3></div>
+      <ul class="checklist">
+        <li><strong style="color:var(--coral)">Red Light</strong> — Hot takes, trending, controversy · algorithm bait</li>
+        <li><strong style="color:var(--violet)">Purple Light</strong> — Laws, Mary Magdalene, parenting, books · community builder</li>
+        <li><strong style="color:var(--teal)">Expat / Abroad</strong> — Reframed: what changed when I left · not inspiration</li>
+        <li><strong style="color:var(--pink)">Intentional Parenting</strong> — Nova, homeschooling, conscious raising</li>
+        <li><strong style="color:var(--gold)">Legacy / Publishing</strong> — Stella Polaris, the books, Kickstarter</li>
+        <li><strong style="color:var(--yellow)">Cooking</strong> — Starts June 8 after Albania arrival</li>
+        <li><strong style="color:var(--tiffany)">Beauty</strong> — Starts June 8 after Albania arrival</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#FFF3E0">📖</div><h3>The Four Laws — Nova Series</h3></div>
+      <ul class="checklist">
+        <li><strong>Book 1:</strong> Was Jesus a Christian? — Law of Love</li>
+        <li><strong>Book 2:</strong> Was Jesus a Magician? — Law of Belief & Alchemy</li>
+        <li><strong>Book 3:</strong> The Tinkerbee — Law of Resistance</li>
+        <li><strong>Book 4:</strong> Nova & the Magic of Faith — Law of Correspondence</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#F3E5F5">🎯</div><h3>Voice Rules</h3></div>
+      <ul class="checklist">
+        <li>Viewer is always the hero — lead with the problem it solves for them</li>
+        <li>Your story is supporting context only — never the hook</li>
+        <li>College-educated AAVE — hold both registers simultaneously</li>
+        <li>No em dashes in brand copy (Love Overload manuscript only)</li>
+        <li>Post from Edits natively — algorithmic boost is real</li>
+        <li>One Trial reel daily — cold discovery engine</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#E6FFF8">📱</div><h3>Instagram Bio (Locked)</h3></div>
+      <div style="background:#f9f9f9;border-radius:8px;padding:12px;font-family:'Space Mono',monospace;font-size:0.78rem;line-height:1.8;color:var(--dark)">
+        Conscious parenting · Faith · Homeschool 🧩<br>
+        40+ · 3 yrs abroad 🌍<br>
+        Clairvoyant C-Suite Strategist 📈<br>
+        Author 📚<br>
+        pr@stellapolarispublishing.com
+      </div>
+      <p style="font-size:0.72rem;color:#888;margin-top:8px">136 characters · Instagram limit 140</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const PASSWORD = 'alchemy';
+
+function checkPw() {
+  const val = document.getElementById('pw-input').value.toLowerCase().trim();
+  if (val === PASSWORD) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    initDashboard();
+  } else {
+    document.getElementById('gate-error').style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+const startDate = new Date('2026-06-10');
+
+const calData = [
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Love is not an emotion. It is a force. Here is how I taught my daughter to live inside it."',trial:'"Most people think love is something you feel. Nova taught me it is something you do."'},
+  {bucket:'expat',tag:'tag-expat',feed:'Expat reframe: "I did not move abroad for the aesthetic. Here is what I needed my daughter to witness before she turned 7."',trial:'"What I stopped tolerating the moment we left."'},
+  {bucket:'red',tag:'tag-red',feed:'Red Light: Hot take on something trending — school systems, parenting debates, or cultural moment of the day',trial:'"Say what everyone is thinking but nobody will say."'},
+  {bucket:'parenting',tag:'tag-parenting',feed:'Intentional Parenting: "Nova asked me a question last week that I was not ready for. Here is what I said."',trial:'"Raising a child who questions everything is terrifying and also exactly right."'},
+  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "I built a publishing company because the industry would not make space. Here is what that actually looked like."',trial:'"The book exists because she asked a question I could not answer with anything on the shelf."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Belief — you are not manifesting things into your life. You are organizing your reality around what you already believe is true."',trial:'"What you believe is literally building the room you are standing in right now."'},
+  {bucket:'expat',tag:'tag-expat',feed:'Expat: "Here is what homeschooling abroad actually looks like on a Tuesday." (show Nova, make it real)',trial:'"Two BAPs from Decatur, learning and exploring the world."'},
+  {bucket:'red',tag:'tag-red',feed:'Red Light: React to a trending conversation about parenting, faith, or Black culture',trial:'"I had this thought as a kid... I am 43 now and it still applies."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: Mary Magdalene — "She was not a sinner. She was the one who understood what he was actually teaching. Here is why that matters for how I raise Nova."',trial:'"The story they told about her was always about controlling what women know."'},
+  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "What I refuse to pass down. And what I am being intentional about handing her instead."',trial:'"Generational patterns do not break themselves."'},
+  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: The Law of Correspondence — "As within, so without. Your external life is a printout of your internal state. This is why the books exist."',trial:'"Nova asked me what magic is. Here is what I told her."'},
+  {bucket:'expat',tag:'tag-expat',feed:'Expat reframe: "What community actually looks like when you build it on purpose instead of defaulting to geography."',trial:'"I chose who gets access to my daughter\'s everyday life. That was the most intentional parenting decision I ever made."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Resistance — everything you fight gets stronger. Here is what I stopped fighting and what happened next."',trial:'"The Tinkerbee exists because Nova showed me what resistance actually looks like in a child."'},
+  {bucket:'red',tag:'tag-red',feed:'Red Light: Hot take — pick the most unhinged thing in your feed this week and respond from your actual framework',trial:'"Why are people like this." (let them tag their friends)'},
+  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "We are moving to Albania in days. Here is every question Nova has asked me about it and every answer I gave."',trial:'"Homeschooling means the whole world is the classroom."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Gospel of Thomas says the kingdom is not coming. It is already here. You are already in it. Here is what that changed for me."',trial:'"114 sayings. No miracles. No story. Just instructions."'},
+  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "What I needed my daughter to understand about where we come from before we left the continent."',trial:'"Ebbie Lee. Willie Odessa. Mary Jane. Lillian. This is who the books are for."'},
+  {bucket:'expat',tag:'tag-expat',feed:'Expat: "Last week in Mexico. Here is what this chapter gave us." (reflection, gratitude, no sentimentality)',trial:'"New life. New country. Follow our journey abroad."'},
+  {bucket:'red',tag:'tag-red',feed:'Red Light: "Everything people got wrong about moving abroad with kids."',trial:'"I was not running away. I was running toward something very specific."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "Why I teach Nova universal laws instead of religion. And why that is the most spiritual thing I have ever done."',trial:'"Christ consciousness is not Christianity. Here is the difference."'},
+  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "Nova designed the logo for our publishing company before she could write her name conventionally. Here is what that taught me about intelligence."',trial:'"She signs it like a signet. Because she has always known she is royalty."'},
+  {bucket:'expat',tag:'tag-expat',feed:'ALBANIA DAY 1: "We are here. Here is what the first 24 hours actually felt like." (raw, real)',trial:'"New life. New country. We made it."'},
+  {bucket:'cooking',tag:'tag-cooking',feed:'COOKING UNLOCKED: "First meal cooked in our new Albanian kitchen. Here is what I made and why it mattered."',trial:'"A professional chef in a new country with new ingredients. Watch what happens."'},
+  {bucket:'beauty',tag:'tag-beauty',feed:'BEAUTY UNLOCKED: "First getting-ready in Albania. Same face, new light, new life."',trial:'"Your girl did not lose her edge crossing the Atlantic."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light from Albania: "The Law of Correspondence hits different when your external life finally matches what you built internally for years."',trial:'"I knew this place before I arrived. My astrocartography said so."'},
+  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting in Albania: "Nova\'s first week learning in a new country. What she noticed that I missed completely."',trial:'"Children are not confused by change. They are confused by adults who pretend change is not happening."'},
+  {bucket:'red',tag:'tag-red',feed:'Red Light: React to something trending from your new Albanian vantage point',trial:'"The view is different from here."'},
+  {bucket:'cooking',tag:'tag-cooking',feed:'Cooking: "Albanian ingredients I had no idea what to do with. Here is what I figured out."',trial:'"Chef brain does not turn off just because the country changed."'},
+  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "Here is what Stella Polaris Publishing is actually building. And why the books are just the beginning."',trial:'"I founded a publishing house because infrastructure matters more than a single book."'},
+  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: Full circle — "The Law of Correspondence. I came to the place my birth chart said was mine. Here is what I found when I got here."',trial:'"Some people call it astrology. I call it directions."'},
+];
+
+const grants = [
+  {urgency:'urgent',label:'URGENT',name:'AT&T Women\'s Small Business Grant',amount:'$50,000',deadline:'May 31, 2026',why:'Women-owned, social impact, US-based. Closes in days.',url:'https://womenfoundersnetwork.org/about-fast-pitch'},
+  {urgency:'urgent',label:'URGENT',name:'Alan Andres Picture Book Writer Fellowship',amount:'$25,000',deadline:'June 5, 2026',why:'Emerging children\'s book writer. Stella Polaris fits exactly.',url:'https://www.associatesbpl.org/events-and-programs/picture-book-writer-fellowship/'},
+  {urgency:'soon',label:'SOON',name:'Famous Amos Ingredients for Success',amount:'$50,000',deadline:'June 1, 2026',why:'Black-owned business under 5 years. Requires pitch video.',url:'https://www.uschamber.com/co/run/business-financing'},
+  {urgency:'soon',label:'SOON',name:'Stimpunks Foundation Creator Grant',amount:'Up to $3,000',deadline:'Opens June 1, 2026',why:'Neurodivergent creator. Self-identification accepted.',url:'https://stimpunks.org/creators/grant/'},
+  {urgency:'open',label:'OPEN',name:'Miss Sarah Fellowship — Black Women Writers',amount:'Residency + stipend',deadline:'2026 cycle open',why:'Black woman writer. Writing time and space. Love Overload + Nova series.',url:'https://www.trilliumartsnc.org/writing-fellowships-guidelines'},
+  {urgency:'open',label:'OPEN',name:'Her Agenda Grant',amount:'$5,000',deadline:'September 18, 2026',why:'Women entrepreneur, 1+ year in business. Subscribe to newsletter before applying.',url:'https://heragenda.com'},
+  {urgency:'open',label:'OPEN',name:'NAACP Powershift Entrepreneur Grant',amount:'$25,000',deadline:'November 1, 2026',why:'Black business owner. Prepare materials now — this one takes lead time.',url:'https://naacp.org'},
+  {urgency:'rolling',label:'ROLLING',name:'SoGal Black Founder Startup Grant',amount:'$5,000–$10,000',deadline:'Rolling',why:'Black woman or nonbinary founder. Both Stella Polaris and Authored qualify.',url:'https://www.sogalfoundation.org'},
+  {urgency:'rolling',label:'ROLLING',name:'Fearless Strivers Grant',amount:'$10,000',deadline:'Rolling',why:'Black women business owners. Strong brand story is your asset.',url:'https://fearlessfund.com'},
+  {urgency:'rolling',label:'ROLLING',name:'Astraea Foundation',amount:'$5,000–$30,000',deadline:'Rolling',why:'LGBTQI people of color. Racial and gender justice mission. Stella Polaris fits.',url:'https://astraeafoundation.org'},
+];
+
+function initDashboard() {
+  const now = new Date();
+  document.getElementById('live-date').textContent = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  document.getElementById('notes-date-label').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+
+  const dayIndex = Math.floor((now - startDate) / 86400000);
+  const todayData = (dayIndex >= 0 && dayIndex < calData.length) ? calData[dayIndex] : null;
+
+  if (todayData) {
+    document.getElementById('today-heading').textContent = 'Day ' + (dayIndex+1) + ' of 30';
+    document.getElementById('today-tasks').innerHTML = `
+      <div class="task-row"><div class="task-type">FEED</div><div class="task-content">${todayData.feed}</div></div>
+      <div class="task-row" style="border-left-color:var(--teal)"><div class="task-type" style="color:var(--teal)">TRIAL</div><div class="task-content">${todayData.trial}</div></div>`;
+  } else if (dayIndex < 0) {
+    document.getElementById('today-heading').textContent = 'Starts May 19 — Get Ready';
+    document.getElementById('today-tasks').innerHTML = '<div class="task-row"><div class="task-content">Queue your drafts. Organize Edits. Launch day is coming.</div></div>';
+  } else {
+    document.getElementById('today-heading').textContent = '30-Day Sprint Complete. Build the next one.';
+  }
+
+  const weekFocuses = {
+    0:['Establish red/purple light rhythm','Post daily from Edits natively','Start Trial reels for cold discovery','Law of Love content — feed into book awareness'],
+    1:['Mary Magdalene purple light series','Pitch one UGC brand this week','Apply for one grant before Sunday','Law of Resistance content'],
+    2:['Albania departure — document everything','Build Kickstarter launch anticipation','Apply for Famous Amos before June 1','Gospel of Thomas series'],
+    3:['Albania arrival — cooking + beauty unlocked','Law of Correspondence purple light','Apply for Stimpunks Creator Grant','Kickstarter launch window now open'],
+    4:['Close the sprint strong','Build next 30-day calendar','Review follower growth vs goal','Plan July content arc toward birthday']
+  };
+  const wk = Math.min(Math.floor(Math.max(dayIndex,0)/7), 4);
+  document.getElementById('week-focus').innerHTML = (weekFocuses[wk]||weekFocuses[0]).map(f=>`<li>${f}</li>`).join('');
+
+  // Calendar
+  const grid = document.getElementById('cal-grid');
+  const weeks = [
+    {label:'Week 1 — May 19-25',note:'Establishing the frequency',days:[0,1,2,3,4,5,6]},
+    {label:'Week 2 — May 26 - June 1',note:'Building community',days:[7,8,9,10,11,12,13]},
+    {label:'Week 3 — June 2-8',note:'Pre-Albania anticipation',days:[14,15,16,17,18,19,20]},
+    {label:'Week 4 — June 9-15',note:'🇦🇱 Albania — cooking + beauty unlock',days:[21,22,23,24,25,26,27]},
+    {label:'Week 5 — June 16-17',note:'Closing the sprint',days:[28,29]},
+  ];
+  weeks.forEach(week => {
+    const wl = document.createElement('div');
+    wl.className = 'week-label';
+    wl.innerHTML = `${week.label} <span class="week-note">— ${week.note}</span>`;
+    grid.appendChild(wl);
+    week.days.forEach(i => {
+      const d = calData[i];
+      const dd = new Date(startDate); dd.setDate(dd.getDate()+i);
+      const ds = dd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+      const isToday = i===dayIndex;
+      const saved = localStorage.getItem('done-'+i)==='true';
+      const el = document.createElement('div');
+      el.className = `cal-day ${d.bucket}${isToday?' today-highlight':''}`;
+      const bucketLabel = d.bucket.replace('red','🔴 Red').replace('purple','🟣 Purple').replace('expat','🌍 Expat').replace('parenting','💛 Parenting').replace('legacy','⭐ Legacy').replace('cooking','🍳 Cooking').replace('beauty','💄 Beauty');
+      el.innerHTML = `
+        <div class="cal-day-header">
+          <div><div class="cal-day-num">Day ${i+1}${isToday?' ← TODAY':''}</div><div class="cal-day-date">${ds}</div></div>
+          <span class="bucket-tag ${d.tag}">${bucketLabel}</span>
+        </div>
+        <div class="cal-feed-hook">${d.feed}</div>
+        <div style="margin-top:7px"><div class="cal-trial-label">Trial Reel</div><div class="cal-trial-hook">${d.trial}</div></div>
+        <button class="done-btn ${saved?'done':''}" onclick="toggleDone(${i},this)">${saved?'✓ Done':'Mark done'}</button>`;
+      grid.appendChild(el);
+    });
+  });
+
+  // Grants
+  const gl = document.getElementById('grants-list');
+  grants.forEach(g => {
+    gl.innerHTML += `<div class="grant-card"><div class="grant-urgency ${g.urgency}">${g.label}</div><div class="grant-info"><h4>${g.name}</h4><div class="grant-amount">${g.amount}</div><div class="grant-deadline">📅 ${g.deadline}</div><div class="grant-why">${g.why}</div><a href="${g.url}" target="_blank" class="grant-apply">Apply →</a></div></div>`;
+  });
+
+  // Notes
+  loadNotes();
+  loadIntention();
+  loadDailyMessage();
+  if (localStorage.getItem("notif-granted") === "true") scheduleDaily();
+  initCountdown();
+  loadChecklists();
+}
+
+function toggleDone(i, btn) {
+  const isDone = btn.classList.contains('done');
+  btn.classList.toggle('done', !isDone);
+  btn.textContent = isDone ? 'Mark done' : '✓ Done';
+  localStorage.setItem('done-'+i, (!isDone).toString());
+}
+
+function saveNote() {
+  const text = document.getElementById('note-input').value.trim();
+  if (!text) return;
+  const now = new Date();
+  const notes = JSON.parse(localStorage.getItem('tash-notes')||'[]');
+  notes.unshift({date:now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'}), text});
+  if (notes.length > 30) notes.pop();
+  localStorage.setItem('tash-notes', JSON.stringify(notes));
+  document.getElementById('note-input').value = '';
+  loadNotes();
+  loadIntention();
+  loadDailyMessage();
+  if (localStorage.getItem("notif-granted") === "true") scheduleDaily();
+  initCountdown();
+  loadChecklists();
+}
+
+const wealthMessages = [
+  "You are not waiting to be chosen. You are the one doing the choosing. Today is a $10,000 kind of day.",
+  "Everything you have built is working. The seeds you planted are already growing. Receive it.",
+  "You are a Cancer Rising with Jupiter on your North Node. The universe has been clearing the path. Walk.",
+  "Nova is watching someone who does not apologize for taking up space. Be that person today.",
+  "Your publishing company is real. Your advisory practice is real. Your legacy is already in motion.",
+  "A $10,000 month does not require you to hustle harder. It requires you to stay aligned. You are aligned.",
+  "The Law of Correspondence is always on. Your outer world is catching up to who you already are inside.",
+  "You are the north star. Fixed. Brilliant. Everything navigates by you.",
+  "Abundance is your birthright not your reward. You do not earn it. You allow it.",
+  "You left comfort to build something real. That kind of courage compounds. Your investment is paying off.",
+  "There are people who need exactly what you carry. They are on their way to find you.",
+  "Your chart says this is the season. Your work says you are ready. Your job today is to show up.",
+  "You are a professional chef, a clairvoyant strategist, a published author, and a homeschooling mother abroad. You are not ordinary. Act like it.",
+  "The Kickstarter. The blog. The advisory practice. The app. You built all of that. In one season. Let that land.",
+  "Money flows to clarity. You are clear. The flow is coming.",
+  "You are raising a child who has never seen her mother shrink. That is the most powerful thing you have ever done.",
+  "Your relocated Midheaven is conjunct your North Node. You are going to the place where you become fully visible. Almost there.",
+  "Today someone will find your work and it will change something for them. That is why you keep going.",
+  "You do not need to have it all figured out. You need to take the next right step. You already know what it is.",
+  "Jupiter does not return to your North Node for 12 years. You are inside the window. Use every day of it.",
+  "Your voice, your words, your books. Certifiably human authored. There is no one else who can do what you do.",
+  "A thriving month is already written in this season's sky. Your only job is to not block what is coming.",
+  "The blog is live. The calendar is set. The transits are in your favor. All systems are go.",
+  "You are not behind. You are precisely on time for the life that was always meant for you.",
+  "Every piece of content you post is a seed. Every seed has a 12-year Jupiter wind behind it right now.",
+  "You built a publishing company from a vision, a laptop, and your daughter's name. That is founder energy.",
+  "The universe is conspiring in your favor. Not eventually. Right now. Today. This moment.",
+  "Your ancestors cleared ground you have not even reached yet. Walk forward like the path is already yours.",
+  "You are somebody's answered prayer. The person who needed to find you is searching right now.",
+  "New home. New chapter. New country. Same north star. You always knew where you were going."
+];
+
+function loadDailyMessage() {
+  const now = new Date();
+  const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+  const msg = wealthMessages[dayOfYear % wealthMessages.length];
+  const el = document.getElementById("daily-msg-text");
+  const dateEl = document.getElementById("daily-msg-date");
+  if (el) el.textContent = msg;
+  if (dateEl) dateEl.textContent = now.toLocaleDateString("en-US", {weekday:"long", month:"long", day:"numeric"});
+}
+
+function requestNotifications() {
+  if ("Notification" in window && "serviceWorker" in navigator) {
+    Notification.requestPermission().then(permission => {
+      if (permission === "granted") {
+        localStorage.setItem("notif-granted", "true");
+        scheduleDaily();
+      }
+    });
+  }
+}
+
+function scheduleDaily() {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(8, 0, 0, 0);
+  if (now > target) target.setDate(target.getDate() + 1);
+  const ms = target - now;
+  setTimeout(() => {
+    const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    const msg = wealthMessages[dayOfYear % wealthMessages.length];
+    new Notification("✦ Stella Polaris", { body: msg, icon: "/favicon.ico" });
+    scheduleDaily();
+  }, ms);
+}
+
+function toggleIntentionEdit() {
+  const wrap = document.getElementById("intention-edit-wrap");
+  const display = document.getElementById("intention-display");
+  const btn = document.getElementById("intention-edit-btn");
+  const input = document.getElementById("intention-input");
+  const isEditing = wrap.style.display === "flex";
+  if (isEditing) {
+    wrap.style.display = "none";
+    display.style.display = "block";
+    btn.textContent = "edit";
+  } else {
+    input.value = display.textContent;
+    wrap.style.display = "flex";
+    wrap.style.flexDirection = "column";
+    display.style.display = "none";
+    btn.textContent = "cancel";
+    input.focus();
+  }
+}
+
+function saveIntention() {
+  const text = document.getElementById("intention-input").value.trim();
+  if (!text) return;
+  localStorage.setItem("tash-intention", text);
+  document.getElementById("intention-display").textContent = text;
+  document.getElementById("intention-edit-wrap").style.display = "none";
+  document.getElementById("intention-display").style.display = "block";
+  document.getElementById("intention-edit-btn").textContent = "edit";
+}
+
+function loadIntention() {
+  const saved = localStorage.getItem("tash-intention");
+  if (saved) document.getElementById("intention-display").textContent = saved;
+}
+
+function initCountdown() {
+  const depart = new Date("2026-06-08");
+  const now = new Date();
+  const days = Math.ceil((depart - now) / 86400000);
+  const el = document.getElementById("countdown-days");
+  if (el) el.textContent = days > 0 ? days : "TODAY!";
+}
+
+function toggleChk(id) {
+  const el = document.getElementById(id);
+  const done = el.style.textDecoration === "line-through";
+  el.style.textDecoration = done ? "none" : "line-through";
+  el.style.opacity = done ? "1" : "0.4";
+  localStorage.setItem("chk-"+id, (!done).toString());
+}
+
+function loadChecklists() {
+  ["chk1","chk2","chk3","chk4","chk5","chk6","chk7","chk8"].forEach(id => {
+    if (localStorage.getItem("chk-"+id) === "true") {
+      const el = document.getElementById(id);
+      if (el) { el.style.textDecoration = "line-through"; el.style.opacity = "0.4"; }
+    }
+  });
+}
+
+function loadNotes() {
+  const notes = JSON.parse(localStorage.getItem('tash-notes')||'[]');
+  const container = document.getElementById('saved-notes-list');
+  if (!notes.length) { container.innerHTML = '<p style="font-size:0.8rem;color:#aaa">No notes yet. Start today.</p>'; return; }
+  container.innerHTML = notes.map(n => `<div class="saved-note"><div class="note-date">${n.date}</div><div class="note-text">${n.text}</div></div>`).join('');
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js');
+}
+</script>
+</body>
+</html>
