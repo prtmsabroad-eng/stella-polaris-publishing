@@ -288,6 +288,7 @@
       cursor: default;
       user-select: none;
       -webkit-user-select: none;
+      touch-action: manipulation;
     }
     .secret-divider .line {
       width: 60px;
@@ -616,7 +617,8 @@ function handleResend() {
   let tapTimer = null;
   const DASHBOARD_PATH = '/studio.html';
 
-  trigger.addEventListener('click', function() {
+  function handleTap(e) {
+    e.preventDefault();
     tapCount++;
     trigger.classList.add('activating');
 
@@ -631,7 +633,10 @@ function handleResend() {
       clearTimeout(tapTimer);
       window.location.href = DASHBOARD_PATH;
     }
-  });
+  }
+
+  trigger.addEventListener('touchend', handleTap, { passive: false });
+  trigger.addEventListener('click', handleTap);
 })();
 </script>
 
