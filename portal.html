@@ -8,6 +8,7 @@
   <link rel="manifest" href="/manifest.json">
   <title>Client Portal — Stella Polaris Advisory</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -442,6 +443,12 @@
 <div class="dev-note">Portal v2 · Dual Auth</div>
 
 <script>
+const _sb = window.supabase.createClient(
+  'https://wshqygrcfsxxcamxitbs.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI'
+);
+const OWNER_EMAIL = 'tashia2g@gmail.com';
+
 /* STARS */
 (function () {
   const canvas = document.getElementById('stars');
@@ -518,10 +525,6 @@ function togglePw(inputId, btn) {
    · Set secure, httpOnly session cookies on the server
    · Enable 2FA for your own admin account
    ───────────────────────────────────────────────────── */
-async function simulateSignIn(email, password) {
-  return new Promise(resolve => setTimeout(resolve, 1600));
-}
-
 async function handleSignIn() {
   const email = document.getElementById('si-email').value.trim().toLowerCase();
   const pw    = document.getElementById('si-pw').value;
@@ -541,9 +544,9 @@ async function handleSignIn() {
   btn.classList.add('loading'); btn.disabled = true;
 
   try {
-    await simulateSignIn(email, pw);
-    // ── replace with: window.location.href = '/portal/dashboard'; ──
-    showError('si-error', '✓ Auth successful — redirect to dashboard here.', true);
+    const { error } = await _sb.auth.signInWithPassword({ email, password: pw });
+    if (error) throw new Error(error.message);
+    window.location.href = email === OWNER_EMAIL ? '/studio.html' : '/portal/dashboard';
   } catch (err) {
     showError('si-error', err?.message || 'Incorrect email or password. Please try again.');
   } finally {
@@ -564,10 +567,6 @@ async function handleSignIn() {
    ───────────────────────────────────────────────────── */
 let lastEmail = '';
 
-async function simulateMagicLink(email) {
-  return new Promise(resolve => setTimeout(resolve, 1800));
-}
-
 async function handleMagicLink() {
   const input = document.getElementById('ml-email');
   const btn   = document.getElementById('ml-btn');
@@ -581,18 +580,15 @@ async function handleMagicLink() {
   lastEmail = email;
 
   try {
-    await simulateMagicLink(email);
+    const { error } = await _sb.auth.signInWithOtp({ email });
+    if (error) throw new Error(error.message);
     document.getElementById('sent-to-email').textContent = email;
     document.getElementById('panel-link').classList.remove('active');
     document.getElementById('panel-success').classList.add('active');
     document.getElementById('tabs').style.opacity = '0.3';
     document.getElementById('tabs').style.pointerEvents = 'none';
   } catch (err) {
-    showError('ml-error',
-      err?.message === 'NOT_FOUND'
-        ? "That email isn't on our client list. Please contact us directly to request access."
-        : 'Something went wrong. Please try again or reach out directly.'
-    );
+    showError('ml-error', 'Something went wrong. Please try again or reach out directly.');
   } finally {
     btn.classList.remove('loading'); btn.disabled = false;
   }
