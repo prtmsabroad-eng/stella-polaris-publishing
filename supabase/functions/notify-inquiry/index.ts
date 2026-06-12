@@ -1,3 +1,5 @@
+import webpush from "npm:web-push";
+
 const cors = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -25,17 +27,17 @@ Deno.serve(async (req) => {
         ${q1 ? `<div style="background:white;border-radius:8px;padding:16px;margin-bottom:12px;">
           <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#7B2D9E;margin-bottom:6px">What brought them here</div>
           <div style="font-size:0.88rem;color:#333;line-height:1.5">${q1}</div>
-        </div>` : ''}
+        </div>` : ""}
 
         ${q2 ? `<div style="background:white;border-radius:8px;padding:16px;margin-bottom:12px;">
           <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#7B2D9E;margin-bottom:6px">Birth time available</div>
           <div style="font-size:0.88rem;color:#333;line-height:1.5">${q2}</div>
-        </div>` : ''}
+        </div>` : ""}
 
         ${q3 ? `<div style="background:white;border-radius:8px;padding:16px;margin-bottom:12px;">
           <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#7B2D9E;margin-bottom:6px">Their message</div>
           <div style="font-size:0.88rem;color:#333;line-height:1.5">${q3}</div>
-        </div>` : ''}
+        </div>` : ""}
 
         <a href="mailto:${email}?subject=Re%3A%20Your%20Stella%20Polaris%20Advisory%20Inquiry"
            style="display:inline-block;margin-top:8px;background:#4A0D5C;color:white;padding:12px 24px;border-radius:6px;text-decoration:none;font-size:0.88rem;font-weight:600;letter-spacing:1px">
@@ -46,31 +48,57 @@ Deno.serve(async (req) => {
       </div>
     `;
 
+    // Send email via Resend
     const resendKey = Deno.env.get("RESEND_API_KEY");
-    if (!resendKey) {
-      console.error("RESEND_API_KEY not set");
-      return new Response(JSON.stringify({ ok: false, error: "Email service not configured" }), {
-        headers: { ...cors, "Content-Type": "application/json" }, status: 500,
+    if (resendKey) {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${resendKey}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Stella Polaris <onboarding@resend.dev>",
+          to: ["poshmamamindset@gmail.com"],
+          subject: `✦ New Advisory Inquiry — ${name}`,
+          html,
+        }),
       });
+      if (!res.ok) console.error("Resend error:", await res.text());
     }
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${resendKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "Stella Polaris <onboarding@resend.dev>",
-        to: ["poshmamamindset@gmail.com"],
-        subject: `✦ New Advisory Inquiry — ${name}`,
-        html,
-      }),
-    });
+    // Send web push notification
+    const vapidPublic = Deno.env.get("VAPID_PUBLIC_KEY");
+    const vapidPrivate = Deno.env.get("VAPID_PRIVATE_KEY");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error("Resend error:", err);
+    if (vapidPublic && vapidPrivate && supabaseUrl && serviceKey) {
+      webpush.setVapidDetails("mailto:poshmamamindset@gmail.com", vapidPublic, vapidPrivate);
+
+      const subsRes = await fetch(`${supabaseUrl}/rest/v1/push_subscriptions?select=subscription`, {
+        headers: {
+          "apikey": serviceKey,
+          "Authorization": `Bearer ${serviceKey}`,
+        },
+      });
+
+      if (subsRes.ok) {
+        const subs = await subsRes.json();
+        const payload = JSON.stringify({
+          title: `✦ New Lead — ${name}`,
+          body: `${email} just submitted your advisory form`,
+          url: "/studio.html",
+        });
+
+        for (const row of subs) {
+          try {
+            await webpush.sendNotification(row.subscription, payload);
+          } catch (e) {
+            console.error("Push failed:", e.message);
+          }
+        }
+      }
     }
 
     return new Response(JSON.stringify({ ok: true }), {

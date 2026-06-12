@@ -63,3 +63,19 @@ self.addEventListener('notificationclick', e => {
   e.notification.close();
   e.waitUntil(clients.openWindow('/studio.html'));
 });
+
+// Server-sent push (new lead alerts)
+self.addEventListener('push', e => {
+  if (!e.data) return;
+  const data = e.data.json();
+  e.waitUntil(
+    self.registration.showNotification(data.title || '✦ New Lead', {
+      body: data.body || 'Someone just submitted your advisory form.',
+      icon: '/favicon.png',
+      badge: '/favicon.png',
+      tag: 'new-lead',
+      renotify: true,
+      data: { url: data.url || '/studio.html' }
+    })
+  );
+});

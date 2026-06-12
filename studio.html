@@ -1085,14 +1085,43 @@ function loadDailyMessage() {
   if (dateEl) dateEl.textContent = now.toLocaleDateString("en-US", {weekday:"long", month:"long", day:"numeric"});
 }
 
-function requestNotifications() {
-  if ("Notification" in window && "serviceWorker" in navigator) {
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        localStorage.setItem("notif-granted", "true");
-        scheduleDaily();
-      }
+const VAPID_PUBLIC_KEY = 'BIAFxTDoAOpiQd_HlCvVtkzz4qnMpf-pPYAuiccU-nfx98cP3a1Dj5pxikx_5yzZMUKCvnSVHdAfIW0Y8V4T3GM';
+const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const rawData = atob(base64);
+  return Uint8Array.from([...rawData].map(c => c.charCodeAt(0)));
+}
+
+async function requestNotifications() {
+  if (!("Notification" in window) || !("serviceWorker" in navigator)) return;
+  const permission = await Notification.requestPermission();
+  if (permission !== "granted") return;
+  localStorage.setItem("notif-granted", "true");
+  scheduleDaily();
+
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
     });
+    await fetch(`${SUPABASE_URL}/rest/v1/push_subscriptions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON,
+        'Authorization': `Bearer ${SUPABASE_ANON}`,
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({ subscription: sub.toJSON() })
+    });
+    document.getElementById('notif-btn').textContent = '🔔 Notifications on';
+  } catch(e) {
+    console.error('Push subscription failed:', e);
   }
 }
 
