@@ -1,0 +1,22 @@
+name: Supabase Keep Alive
+
+on:
+  schedule:
+    # Runs every 3 days at 8:00 AM UTC — keeps the free tier from auto-pausing
+    - cron: '0 8 */3 * *'
+  workflow_dispatch: # allows manual trigger from GitHub Actions tab
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase DB
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/advisory_inquiries?select=id&limit=1" \
+            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
+            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI")
+          echo "Supabase ping status: $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "Warning: unexpected status $STATUS"
+          fi
