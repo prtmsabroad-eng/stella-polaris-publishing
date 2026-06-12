@@ -40,4 +40,9 @@ create policy "Anon insert only"
   on public.advisory_inquiries for insert
   with check (true);
 
-grant insert on public.advisory_inquiries to anon;
+-- Studio dashboard reads leads with anon key (page is password-protected)
+create policy "Anon select for studio"
+  on public.advisory_inquiries for select
+  using (true);
+
+grant insert, select on public.advisory_inquiries to anon;

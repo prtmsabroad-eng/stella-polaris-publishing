@@ -615,9 +615,11 @@ async function submitForm() {
   btn.disabled = true;
   btn.querySelector('span').textContent = 'Submitting...';
 
-  const q1 = document.querySelector('#step1 .opt.selected')?.textContent || '';
-  const q2 = document.querySelector('#step2 .opt.selected')?.textContent || '';
-  const q3 = document.querySelector('#step3 .textarea')?.value || '';
+  const q1 = document.querySelector('#step1 .opt.sel')?.textContent?.trim() || '';
+  const q2 = document.querySelector('#step2 .opt.sel')?.textContent?.trim() || '';
+  const q3 = document.querySelector('#step3 textarea')?.value?.trim() || '';
+
+  const payload = { name, email, q1, q2, q3 };
 
   try {
     await fetch('https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/advisory_inquiries', {
@@ -628,9 +630,16 @@ async function submitForm() {
         'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI',
         'Prefer': 'return=minimal'
       },
-      body: JSON.stringify({ name, email, q1, q2, q3 })
+      body: JSON.stringify(payload)
     });
   } catch(e) {}
+
+  // Fire email notification — non-blocking, failure is silent to the client
+  fetch('https://wshqygrcfsxxcamxitbs.supabase.co/functions/v1/notify-inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
 
   document.getElementById("intakeForm").style.display = "none";
   document.getElementById("success").classList.add("active");

@@ -315,6 +315,7 @@ nav button:hover { color:var(--purple); }
     <button onclick="showTab('notes',this)">📓 Notes</button>
     <button onclick="showTab('astro',this)">🔮 Transits</button>
     <button onclick="showTab('framework',this)">💡 Framework</button>
+    <button onclick="showTab('leads',this)" id="leads-nav-btn">⚡ Leads</button>
   </nav>
 
   <!-- TODAY -->
@@ -824,8 +825,33 @@ nav button:hover { color:var(--purple); }
       </div>
       <p style="font-size:0.72rem;color:#888;margin-top:8px">136 characters · Instagram limit 140</p>
     </div>
+  <!-- LEADS -->
+  <div class="section" id="tab-leads">
+    <div class="section-title">Advisory Leads</div>
+    <div class="section-sub" id="leads-sub">Loading inquiries...</div>
+    <div id="leads-list"></div>
+  </div>
+
   </div>
 </div>
+
+<style>
+.lead-card { background:white; border-radius:14px; padding:18px; margin-bottom:14px; box-shadow:0 2px 12px rgba(0,0,0,0.07); border-left:4px solid var(--gold); transition:opacity 0.3s; }
+.lead-card.contacted { border-left-color:#ccc; opacity:0.55; }
+.lead-name { font-family:'Playfair Display',serif; font-size:1rem; color:var(--dark); margin-bottom:2px; }
+.lead-email { font-size:0.82rem; color:var(--purple-mid); margin-bottom:10px; font-family:'Space Mono',monospace; }
+.lead-date { font-size:0.68rem; color:#aaa; margin-bottom:10px; font-family:'Space Mono',monospace; }
+.lead-answer { font-size:0.8rem; color:#555; line-height:1.5; padding:8px 12px; background:#faf9f7; border-radius:6px; margin-bottom:6px; }
+.lead-answer strong { display:block; font-size:0.62rem; text-transform:uppercase; letter-spacing:1.5px; color:#aaa; margin-bottom:3px; }
+.lead-actions { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.lead-contact-btn { background:var(--ordained); color:white; border:none; padding:9px 20px; border-radius:20px; font-size:0.78rem; font-weight:700; cursor:pointer; text-decoration:none; display:inline-block; font-family:'DM Sans',sans-serif; letter-spacing:0.5px; }
+.lead-contact-btn:hover { opacity:0.85; }
+.lead-done-btn { background:none; border:1px solid #ddd; color:#888; padding:9px 16px; border-radius:20px; font-size:0.78rem; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
+.lead-done-btn:hover { background:#e8f8e8; border-color:#4caf50; color:#2d7a2d; }
+.lead-done-btn.done { background:#e8f8e8; border-color:#4caf50; color:#2d7a2d; }
+.leads-empty { text-align:center; padding:48px 24px; color:#aaa; font-size:0.9rem; }
+.leads-badge { display:inline-block; background:var(--pink); color:white; font-size:0.6rem; font-weight:700; padding:1px 6px; border-radius:10px; margin-left:4px; vertical-align:middle; font-family:'Space Mono',monospace; }
+</style>
 
 <script>
 const PASSWORD = 'alchemy';
@@ -848,6 +874,7 @@ function showTab(id, btn) {
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
+  if (id === 'leads') loadLeads();
 }
 
 const startDate = new Date('2026-06-10');
@@ -1135,6 +1162,74 @@ function loadNotes() {
   const container = document.getElementById('saved-notes-list');
   if (!notes.length) { container.innerHTML = '<p style="font-size:0.8rem;color:#aaa">No notes yet. Start today.</p>'; return; }
   container.innerHTML = notes.map(n => `<div class="saved-note"><div class="note-date">${n.date}</div><div class="note-text">${n.text}</div></div>`).join('');
+}
+
+async function loadLeads() {
+  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+
+  const list = document.getElementById('leads-list');
+  const sub = document.getElementById('leads-sub');
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/advisory_inquiries?select=*&order=created_at.desc`, {
+      headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` }
+    });
+    const leads = await res.json();
+
+    if (!Array.isArray(leads) || leads.length === 0) {
+      sub.textContent = 'No inquiries yet.';
+      list.innerHTML = '<div class="leads-empty">No advisory inquiries yet. Share your page and watch this fill up.</div>';
+      return;
+    }
+
+    const contacted = JSON.parse(localStorage.getItem('leads-contacted') || '[]');
+    const newCount = leads.filter(l => !contacted.includes(l.id)).length;
+
+    sub.textContent = `${leads.length} total · ${newCount} need follow-up`;
+
+    const navBtn = document.getElementById('leads-nav-btn');
+    if (newCount > 0) {
+      navBtn.innerHTML = `⚡ Leads <span class="leads-badge">${newCount}</span>`;
+    }
+
+    list.innerHTML = leads.map(lead => {
+      const isDone = contacted.includes(lead.id);
+      const date = new Date(lead.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit' });
+      const subject = encodeURIComponent('Re: Your Stella Polaris Advisory Inquiry');
+      const body = encodeURIComponent(`Hi ${lead.name},\n\nThank you for reaching out about the Stella Polaris Advisory. I'd love to connect with you.\n\nWarm regards,\nTashia`);
+      const mailto = `mailto:${lead.email}?subject=${subject}&body=${body}`;
+
+      return `<div class="lead-card${isDone ? ' contacted' : ''}" id="lcard-${lead.id}">
+        <div class="lead-date">${date}</div>
+        <div class="lead-name">${lead.name}</div>
+        <div class="lead-email">${lead.email}</div>
+        ${lead.q1 ? `<div class="lead-answer"><strong>What brought them here</strong>${lead.q1}</div>` : ''}
+        ${lead.q2 ? `<div class="lead-answer"><strong>Birth time available</strong>${lead.q2}</div>` : ''}
+        ${lead.q3 ? `<div class="lead-answer"><strong>Their message</strong>${lead.q3}</div>` : ''}
+        <div class="lead-actions">
+          <a href="${mailto}" class="lead-contact-btn" onclick="markLeadContacted('${lead.id}')">Email ${lead.name.split(' ')[0]} →</a>
+          <button class="lead-done-btn${isDone ? ' done' : ''}" id="ldone-${lead.id}" onclick="markLeadContacted('${lead.id}')">
+            ${isDone ? '✓ Contacted' : 'Mark contacted'}
+          </button>
+        </div>
+      </div>`;
+    }).join('');
+
+  } catch(e) {
+    sub.textContent = 'Could not load leads. Run the SQL in schema.sql to enable Studio reads.';
+    list.innerHTML = '';
+  }
+}
+
+function markLeadContacted(id) {
+  const contacted = JSON.parse(localStorage.getItem('leads-contacted') || '[]');
+  if (!contacted.includes(id)) contacted.push(id);
+  localStorage.setItem('leads-contacted', JSON.stringify(contacted));
+  const card = document.getElementById('lcard-' + id);
+  const btn = document.getElementById('ldone-' + id);
+  if (card) card.classList.add('contacted');
+  if (btn) { btn.textContent = '✓ Contacted'; btn.classList.add('done'); }
 }
 </script>
 <script>
