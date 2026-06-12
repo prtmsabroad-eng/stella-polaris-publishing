@@ -62,7 +62,7 @@ Deno.serve(async (req) => {
       },
       body: JSON.stringify({
         from: "Stella Polaris <onboarding@resend.dev>",
-        to: ["tashia2g@gmail.com"],
+        to: ["pr.tmsabroad@gmail.com"],
         subject: `✦ New Advisory Inquiry — ${name}`,
         html,
       }),
