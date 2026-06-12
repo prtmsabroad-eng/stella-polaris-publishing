@@ -305,6 +305,7 @@ nav button:hover { color:var(--purple); }
 
   <nav>
     <button class="active" onclick="showTab('today',this)">📍 Today</button>
+    <button onclick="showTab('leads',this)" id="leads-nav-btn">⚡ Leads</button>
     <button onclick="showTab('calendar',this)">📅 Calendar</button>
     <button onclick="showTab('move',this)">✈️ The Move</button>
     <button onclick="showTab('projects',this)">🚀 Projects</button>
@@ -315,7 +316,6 @@ nav button:hover { color:var(--purple); }
     <button onclick="showTab('notes',this)">📓 Notes</button>
     <button onclick="showTab('astro',this)">🔮 Transits</button>
     <button onclick="showTab('framework',this)">💡 Framework</button>
-    <button onclick="showTab('leads',this)" id="leads-nav-btn">⚡ Leads</button>
   </nav>
 
   <!-- TODAY -->
@@ -342,6 +342,14 @@ nav button:hover { color:var(--purple); }
         </div>
       </div>
       <button class="intention-edit-btn" id="intention-edit-btn" onclick="toggleIntentionEdit()">edit</button>
+    </div>
+
+    <div id="leads-summary" style="display:none;background:linear-gradient(135deg,#4A0D5C,#7B2D9E);border-radius:14px;padding:16px 18px;margin-bottom:14px;color:white;cursor:pointer;" onclick="showTab('leads', document.querySelector('nav button:nth-child(2)'))">
+      <div style="font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--gold-light);margin-bottom:6px;font-family:'Space Mono',monospace">Advisory Leads</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div id="leads-summary-text" style="font-family:'Playfair Display',serif;font-size:1.1rem">Loading...</div>
+        <div style="font-size:0.8rem;opacity:0.7">View all →</div>
+      </div>
     </div>
 
     <div class="today-banner">
@@ -930,6 +938,10 @@ function initDashboard() {
   document.getElementById('live-date').textContent = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
   document.getElementById('notes-date-label').textContent = now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
 
+  // Load leads summary on dashboard open
+  loadLeadsSummary();
+
+
   const dayIndex = Math.floor((now - startDate) / 86400000);
   const todayData = (dayIndex >= 0 && dayIndex < calData.length) ? calData[dayIndex] : null;
 
@@ -1162,6 +1174,33 @@ function loadNotes() {
   const container = document.getElementById('saved-notes-list');
   if (!notes.length) { container.innerHTML = '<p style="font-size:0.8rem;color:#aaa">No notes yet. Start today.</p>'; return; }
   container.innerHTML = notes.map(n => `<div class="saved-note"><div class="note-date">${n.date}</div><div class="note-text">${n.text}</div></div>`).join('');
+}
+
+async function loadLeadsSummary() {
+  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/advisory_inquiries?select=id,name,created_at&order=created_at.desc`, {
+      headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` }
+    });
+    const leads = await res.json();
+    if (!Array.isArray(leads) || leads.length === 0) return;
+
+    const contacted = JSON.parse(localStorage.getItem('leads-contacted') || '[]');
+    const newCount = leads.filter(l => !contacted.includes(l.id)).length;
+    const summary = document.getElementById('leads-summary');
+    const summaryText = document.getElementById('leads-summary-text');
+    const navBtn = document.getElementById('leads-nav-btn');
+
+    summary.style.display = 'block';
+    summaryText.textContent = newCount > 0
+      ? `${newCount} lead${newCount > 1 ? 's' : ''} waiting — ${leads[0].name}`
+      : `${leads.length} total lead${leads.length > 1 ? 's' : ''} — all contacted`;
+
+    if (newCount > 0) {
+      navBtn.innerHTML = `⚡ Leads <span class="leads-badge">${newCount}</span>`;
+    }
+  } catch(e) {}
 }
 
 async function loadLeads() {
