@@ -12,6 +12,7 @@
   const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
   const DESTINATION_SLUG = 'singapore';
+  const DESTINATION_CITY = 'Singapore';
 </script>
 
 <style>
@@ -753,7 +754,7 @@ function renderPostCard(post) {
         ${videoEmbed}
         <div class="post-tags">
           ${agesTag}
-          <span class="post-tag">Singapore</span>
+          <span class="post-tag">${DESTINATION_CITY}</span>
         </div>
       </div>
     </div>`;
