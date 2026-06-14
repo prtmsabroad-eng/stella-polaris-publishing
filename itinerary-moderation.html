@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Itinerary — Moderation Dashboard | Stella Polaris</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+
+<script>
+  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+  const DASHBOARD_PASSWORD = 'alchemy';
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A84C; --gold-light: #F0D080; --rose: #D4547A;
+    --teal: #3BBFB0; --violet: #2E1D60; --cream: #FDFAF4;
+    --ink: #1C1812; --mid: #6B6358; --border: #E8DFC8;
+    --parchment: #F5EDD8; --success: #2D9E6B; --error: #C0392B;
+    --pending: #E8950A;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: #0F0A1E; color: white; min-height: 100vh; }
+
+  /* LOCK SCREEN */
+  #lock-screen {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0F0A1E 0%, #2E1D60 100%);
+  }
+  .lock-card {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(245,237,216,0.15);
+    border-radius: 4px; padding: 3rem; width: 100%; max-width: 380px; text-align: center;
+  }
+  .lock-star { font-size: 2rem; color: var(--gold); margin-bottom: 1rem; }
+  .lock-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem;
+    color: var(--parchment); margin-bottom: 0.4rem;
+  }
+  .lock-sub { font-size: 0.78rem; color: rgba(245,237,216,0.5); margin-bottom: 2rem; }
+  .lock-input {
+    width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(245,237,216,0.2);
+    border-radius: 2px; padding: 0.8rem 1rem; color: var(--parchment);
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem; outline: none;
+    text-align: center; letter-spacing: 0.15em; margin-bottom: 1rem;
+  }
+  .lock-input:focus { border-color: var(--teal); }
+  .lock-btn {
+    width: 100%; background: var(--teal); color: white; border: none;
+    padding: 0.85rem; border-radius: 2px; font-size: 0.88rem;
+    font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .lock-btn:hover { background: var(--rose); }
+  .lock-error { color: var(--rose); font-size: 0.78rem; margin-top: 0.75rem; display: none; }
+
+  /* DASHBOARD */
+  #dashboard { display: none; }
+
+  .dash-nav {
+    background: rgba(255,255,255,0.04); border-bottom: 1px solid rgba(245,237,216,0.1);
+    padding: 0 2rem; display: flex; align-items: center;
+    justify-content: space-between; height: 60px;
+  }
+  .dash-brand {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+  }
+  .dash-brand span { color: rgba(245,237,216,0.4); }
+  .dash-back {
+    font-size: 0.75rem; color: rgba(245,237,216,0.5); text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+  .dash-back:hover { color: var(--teal); }
+
+  .dash-header {
+    padding: 2.5rem 2rem 1.5rem;
+    border-bottom: 1px solid rgba(245,237,216,0.08);
+  }
+  .dash-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+    color: var(--parchment); margin-bottom: 0.4rem;
+  }
+  .dash-sub { font-size: 0.82rem; color: rgba(245,237,216,0.5); }
+
+  /* STAT ROW */
+  .stat-row {
+    display: flex; gap: 1px; background: rgba(245,237,216,0.08);
+    border-bottom: 1px solid rgba(245,237,216,0.08);
+  }
+  .stat-box {
+    flex: 1; background: rgba(255,255,255,0.03);
+    padding: 1.2rem 2rem; text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif; font-size: 2rem;
+    display: block; line-height: 1;
+  }
+  .stat-num.pending { color: var(--pending); }
+  .stat-num.live { color: var(--teal); }
+  .stat-num.rejected { color: var(--rose); }
+  .stat-label { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,237,216,0.4); margin-top: 0.3rem; font-family: 'Space Mono', monospace; }
+
+  /* FILTER TABS */
+  .filter-tabs {
+    display: flex; gap: 0; border-bottom: 1px solid rgba(245,237,216,0.08);
+    padding: 0 2rem;
+  }
+  .filter-tab {
+    padding: 1rem 1.5rem; font-size: 0.78rem; letter-spacing: 0.06em;
+    text-transform: uppercase; cursor: pointer; border: none;
+    background: transparent; color: rgba(245,237,216,0.45);
+    font-family: 'Space Mono', monospace; border-bottom: 2px solid transparent;
+    margin-bottom: -1px; transition: all 0.2s;
+  }
+  .filter-tab:hover { color: var(--parchment); }
+  .filter-tab.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+  /* POSTS LIST */
+  .posts-section { padding: 2rem; max-width: 1000px; }
+
+  .loading-row {
+    text-align: center; padding: 4rem;
+    color: rgba(245,237,216,0.4); font-size: 0.88rem;
+  }
+  .spinner {
+    width: 24px; height: 24px; border: 2px solid rgba(245,237,216,0.1);
+    border-top-color: var(--teal); border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .mod-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(245,237,216,0.1);
+    border-radius: 3px; margin-bottom: 1rem; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .mod-card:hover { border-color: rgba(245,237,216,0.2); }
+  .mod-card.status-live { border-left: 3px solid var(--teal); }
+  .mod-card.status-rejected { border-left: 3px solid var(--rose); opacity: 0.6; }
+  .mod-card.status-pending { border-left: 3px solid var(--pending); }
+
+  .mod-card-header {
+    padding: 1rem 1.5rem; display: flex; align-items: center;
+    justify-content: space-between; gap: 1rem;
+    border-bottom: 1px solid rgba(245,237,216,0.07);
+  }
+  .mod-meta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .mod-name { font-weight: 500; color: var(--parchment); font-size: 0.9rem; }
+  .mod-destination {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--teal); background: rgba(59,191,176,0.1);
+    padding: 0.2rem 0.6rem; border-radius: 2px;
+  }
+  .mod-date { font-size: 0.72rem; color: rgba(245,237,216,0.4); }
+  .status-pill {
+    font-family: 'Space Mono', monospace; font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 0.25rem 0.7rem; border-radius: 20px;
+  }
+  .status-pill.pending { background: rgba(232,149,10,0.15); color: var(--pending); border: 1px solid rgba(232,149,10,0.3); }
+  .status-pill.live { background: rgba(45,158,107,0.15); color: var(--teal); border: 1px solid rgba(45,158,107,0.3); }
+  .status-pill.rejected { background: rgba(192,57,43,0.15); color: var(--rose); border: 1px solid rgba(192,57,43,0.3); }
+
+  .mod-card-body { padding: 1.2rem 1.5rem; }
+  .mod-story {
+    font-size: 0.85rem; color: rgba(245,237,216,0.75); line-height: 1.7;
+    margin-bottom: 0.9rem;
+  }
+  .mod-details { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .mod-detail { font-size: 0.75rem; color: rgba(245,237,216,0.45); }
+  .mod-detail strong { color: rgba(245,237,216,0.7); }
+  .mod-video-link {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.75rem; color: var(--teal); text-decoration: none;
+  }
+  .mod-video-link:hover { text-decoration: underline; }
+
+  .mod-photos { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .mod-photo {
+    width: 80px; height: 80px; border-radius: 2px;
+    background-size: cover; background-position: center;
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid rgba(245,237,216,0.1);
+  }
+
+  .mod-actions { display: flex; gap: 0.6rem; padding: 1rem 1.5rem; border-top: 1px solid rgba(245,237,216,0.07); }
+  .btn-approve {
+    background: var(--success); color: white; border: none;
+    padding: 0.5rem 1.2rem; border-radius: 2px; font-size: 0.78rem;
+    font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: opacity 0.2s;
+  }
+  .btn-approve:hover { opacity: 0.85; }
+  .btn-reject {
+    background: transparent; color: var(--rose);
+    border: 1px solid rgba(192,57,43,0.4);
+    padding: 0.5rem 1.2rem; border-radius: 2px; font-size: 0.78rem;
+    font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .btn-reject:hover { background: rgba(192,57,43,0.1); }
+  .btn-undo {
+    background: transparent; color: rgba(245,237,216,0.4);
+    border: 1px solid rgba(245,237,216,0.15);
+    padding: 0.5rem 1rem; border-radius: 2px; font-size: 0.75rem;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s; margin-left: auto;
+  }
+  .btn-undo:hover { color: var(--parchment); border-color: rgba(245,237,216,0.3); }
+
+  .empty-mod {
+    text-align: center; padding: 4rem 2rem;
+    color: rgba(245,237,216,0.4); font-size: 0.88rem;
+  }
+  .empty-mod h3 {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+    color: rgba(245,237,216,0.6); margin-bottom: 0.5rem; margin-top: 1rem;
+  }
+
+  /* AUTH NOTE */
+  .auth-note {
+    background: rgba(232,149,10,0.08); border: 1px solid rgba(232,149,10,0.25);
+    border-radius: 3px; padding: 0.75rem 1.2rem; margin: 1.5rem 2rem 0;
+    font-size: 0.75rem; color: rgba(245,237,216,0.6); line-height: 1.5;
+    max-width: 700px;
+  }
+  .auth-note strong { color: var(--pending); }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    padding: 0.9rem 1.4rem; border-radius: 3px; font-size: 0.85rem; font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transform: translateY(100px); opacity: 0; transition: all 0.3s; pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: var(--success); color: white; }
+  .toast.error { background: var(--error); color: white; }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-star">✦</div>
+    <h2 class="lock-title">Moderation Dashboard</h2>
+    <p class="lock-sub">The Itinerary · Stella Polaris Publishing</p>
+    <input type="password" class="lock-input" id="lock-input" placeholder="PASSWORD" onkeydown="if(event.key==='Enter')unlock()">
+    <button class="lock-btn" onclick="unlock()">Enter</button>
+    <div class="lock-error" id="lock-error">Incorrect password</div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <nav class="dash-nav">
+    <div class="dash-brand">The Itinerary <span>· Moderation</span></div>
+    <a href="/studio.html" class="dash-back">← Back to Studio</a>
+  </nav>
+
+  <div class="dash-header">
+    <h1 class="dash-title">Community Posts</h1>
+    <p class="dash-sub">Review and approve submissions from Roaming Stellas before they go live.</p>
+  </div>
+
+  <!-- Note: approve/reject requires a Supabase authenticated session.
+       To enable moderation actions, sign in via Supabase Auth in portal.html first,
+       then return here — or add email/password login to this page. -->
+  <div class="auth-note" id="auth-note" style="display:none;">
+    <strong>Note:</strong> Approve/reject actions require you to be signed into your Supabase account.
+    Sign in via the <a href="/portal.html" style="color:var(--teal);">portal</a> first, then return here.
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <span class="stat-num pending" id="count-pending">—</span>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num live" id="count-live">—</span>
+      <div class="stat-label">Live</div>
+    </div>
+    <div class="stat-box">
+      <span class="stat-num rejected" id="count-rejected">—</span>
+      <div class="stat-label">Rejected</div>
+    </div>
+  </div>
+
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="pending" onclick="setFilter('pending', this)">Pending Review</button>
+    <button class="filter-tab" data-filter="live" onclick="setFilter('live', this)">Live</button>
+    <button class="filter-tab" data-filter="rejected" onclick="setFilter('rejected', this)">Rejected</button>
+    <button class="filter-tab" data-filter="all" onclick="setFilter('all', this)">All</button>
+  </div>
+
+  <div class="posts-section" id="posts-section">
+    <div class="loading-row"><div class="spinner"></div>Loading submissions...</div>
+  </div>
+</div>
+
+<script>
+let allPosts = [];
+let destinations = {};
+let currentFilter = 'pending';
+let authToken = SUPABASE_ANON_KEY;
+
+// ============================================================
+// AUTH
+// ============================================================
+function unlock() {
+  const val = document.getElementById('lock-input').value;
+  if (val === DASHBOARD_PASSWORD) {
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    checkSupabaseSession();
+    init();
+  } else {
+    document.getElementById('lock-error').style.display = 'block';
+    document.getElementById('lock-input').value = '';
+  }
+}
+
+document.getElementById('lock-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') unlock();
+});
+
+async function checkSupabaseSession() {
+  try {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
+    });
+    if (res.ok) {
+      const user = await res.json();
+      if (user && user.id) {
+        const stored = localStorage.getItem('sb-wshqygrcfsxxcamxitbs-auth-token');
+        if (stored) {
+          try { authToken = JSON.parse(stored).access_token || SUPABASE_ANON_KEY; } catch(e) {}
+        }
+        return;
+      }
+    }
+    document.getElementById('auth-note').style.display = 'block';
+  } catch (e) {
+    document.getElementById('auth-note').style.display = 'block';
+  }
+}
+
+// ============================================================
+// SUPABASE CLIENT
+// ============================================================
+const sb = {
+  async get(table, params = '') {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${authToken}`
+      }
+    });
+    if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+    return res.json();
+  },
+
+  async patch(table, id, data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 401 || res.status === 403) {
+        document.getElementById('auth-note').style.display = 'block';
+        throw new Error('Not authorized — sign in via the portal first');
+      }
+      throw new Error(err.message || 'Update failed');
+    }
+    return res.json();
+  }
+};
+
+// ============================================================
+// INIT
+// ============================================================
+async function init() {
+  try {
+    const dests = await sb.get('destinations', '?is_published=eq.true');
+    dests.forEach(d => { destinations[d.id] = d; });
+
+    allPosts = await sb.get('community_posts', '?order=created_at.desc');
+    updateCounts();
+    renderPosts();
+  } catch (err) {
+    console.error(err);
+    document.getElementById('posts-section').innerHTML =
+      '<div class="empty-mod"><h3>Could not load posts</h3><p>Check your Supabase connection.</p></div>';
+  }
+}
+
+function updateCounts() {
+  document.getElementById('count-pending').textContent  = allPosts.filter(p => p.status === 'pending').length;
+  document.getElementById('count-live').textContent     = allPosts.filter(p => p.status === 'live').length;
+  document.getElementById('count-rejected').textContent = allPosts.filter(p => p.status === 'rejected').length;
+}
+
+// ============================================================
+// FILTER
+// ============================================================
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderPosts();
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderPosts() {
+  const filtered = currentFilter === 'all'
+    ? allPosts
+    : allPosts.filter(p => p.status === currentFilter);
+
+  const section = document.getElementById('posts-section');
+
+  if (!filtered.length) {
+    section.innerHTML = `
+      <div class="empty-mod">
+        <div style="font-size: 2rem">✦</div>
+        <h3>${currentFilter === 'pending' ? 'No posts waiting for review' : `No ${currentFilter} posts`}</h3>
+        <p>${currentFilter === 'pending' ? 'You\'re all caught up.' : 'Nothing here yet.'}</p>
+      </div>`;
+    return;
+  }
+
+  section.innerHTML = filtered.map(post => renderCard(post)).join('');
+}
+
+function renderCard(post) {
+  const dest = destinations[post.destination_id];
+  const destName = dest ? `${dest.city}, ${dest.country}` : 'Unknown destination';
+  const date = new Date(post.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  const photos = (post.photo_urls || []).map(url =>
+    `<div class="mod-photo" style="background-image: url('${url}')"></div>`
+  ).join('');
+  const videoLink = post.video_url
+    ? `<a href="${esc(post.video_url)}" target="_blank" class="mod-video-link">▶ Watch video →</a>` : '';
+
+  const actions = post.status === 'pending'
+    ? `<button class="btn-approve" onclick="approve('${post.id}')">✓ Approve & Publish</button>
+       <button class="btn-reject" onclick="reject('${post.id}')">✕ Reject</button>`
+    : post.status === 'live'
+    ? `<button class="btn-reject" onclick="reject('${post.id}')">✕ Unpublish</button>
+       <button class="btn-undo" onclick="setPending('${post.id}')">Move to pending</button>`
+    : `<button class="btn-approve" onclick="approve('${post.id}')">✓ Approve & Publish</button>
+       <button class="btn-undo" onclick="setPending('${post.id}')">Move to pending</button>`;
+
+  return `
+    <div class="mod-card status-${post.status}" id="card-${post.id}">
+      <div class="mod-card-header">
+        <div class="mod-meta">
+          <span class="mod-name">${esc(post.mom_name)}</span>
+          <span class="mod-destination">${destName}</span>
+          <span class="mod-date">${date}</span>
+          ${post.kids_ages ? `<span class="mod-detail">Ages: <strong>${esc(post.kids_ages)}</strong></span>` : ''}
+        </div>
+        <span class="status-pill ${post.status}">${post.status}</span>
+      </div>
+      <div class="mod-card-body">
+        <p class="mod-story">${esc(post.story)}</p>
+        ${photos ? `<div class="mod-photos">${photos}</div>` : ''}
+        <div class="mod-details">
+          ${post.mom_email ? `<span class="mod-detail">Email: <strong>${esc(post.mom_email)}</strong></span>` : ''}
+          ${videoLink}
+        </div>
+      </div>
+      <div class="mod-actions">${actions}</div>
+    </div>`;
+}
+
+// ============================================================
+// ACTIONS
+// ============================================================
+async function approve(id) {
+  await updateStatus(id, 'live', { published_at: new Date().toISOString() });
+}
+
+async function reject(id) {
+  await updateStatus(id, 'rejected', {});
+}
+
+async function setPending(id) {
+  await updateStatus(id, 'pending', {});
+}
+
+async function updateStatus(id, status, extra) {
+  try {
+    await sb.patch('community_posts', id, { status, ...extra });
+    const post = allPosts.find(p => p.id === id);
+    if (post) { post.status = status; Object.assign(post, extra); }
+    updateCounts();
+    renderPosts();
+    const labels = { live: 'Published ✓', rejected: 'Rejected', pending: 'Moved to pending' };
+    showToast(labels[status] || 'Updated', status === 'live' ? 'success' : 'error');
+  } catch (err) {
+    console.error(err);
+    showToast(err.message || 'Update failed — check console', 'error');
+  }
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function esc(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast ${type} show`;
+  setTimeout(() => { t.className = 'toast'; }, 3500);
+}
+</script>
+
+</body>
+</html>
