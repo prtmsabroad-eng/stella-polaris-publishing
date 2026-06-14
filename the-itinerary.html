@@ -356,42 +356,66 @@ const sb = {
   }
 };
 
-let allDestinations = [];
+// Static destination list — always renders, no Supabase needed
+const DESTINATIONS = [
+  {slug:'singapore',   city:'Singapore',   country:'Singapore',    region:'Asia',       is_featured:true,  description:'One of the most kid-friendly cities on the planet. Clean, fast, wildly delicious, and endlessly curious.'},
+  {slug:'tokyo',       city:'Tokyo',       country:'Japan',         region:'Asia',       is_featured:false, description:'Sensory overload in the best possible way. Tokyo rewards curious kids and patient moms.'},
+  {slug:'bali',        city:'Bali',        country:'Indonesia',     region:'Asia',       is_featured:false, description:'The rice terraces and temple ceremonies are genuinely magical. Stay in Ubud if you are travelling with children.'},
+  {slug:'bangkok',     city:'Bangkok',     country:'Thailand',      region:'Asia',       is_featured:false, description:'Temples that make kids gasp, night markets until midnight, and street food better than anything you have paid $40 for at home.'},
+  {slug:'seoul',       city:'Seoul',       country:'South Korea',   region:'Asia',       is_featured:false, description:'Efficient, safe, wildly stimulating. Hanbok for the palaces, snacks at every corner, and a subway system you will want to bring home.'},
+  {slug:'amsterdam',   city:'Amsterdam',   country:'Netherlands',   region:'Europe',     is_featured:false, description:'Canal bikes, stroopwafels, and NEMO Science Museum. Amsterdam punches above its weight for families.'},
+  {slug:'lisbon',      city:'Lisbon',      country:'Portugal',      region:'Europe',     is_featured:false, description:'Slow pace, incredible food, and strangers who actually talk to your kids. Europe the way it used to feel.'},
+  {slug:'barcelona',   city:'Barcelona',   country:'Spain',         region:'Europe',     is_featured:false, description:'Gaudí astounds children in ways no amount of prep can prepare you for — and the beaches are clean, warm, and close.'},
+  {slug:'rome',        city:'Rome',        country:'Italy',         region:'Europe',     is_featured:false, description:'Kids who have walked the Colosseum and thrown a coin in the Trevi Fountain carry something with them forever.'},
+  {slug:'paris',       city:'Paris',       country:'France',        region:'Europe',     is_featured:false, description:'The croissants alone are worth the flight. The Luxembourg Gardens are better than any playground you have ever paid for.'},
+  {slug:'mexico-city', city:'Mexico City', country:'Mexico',        region:'Americas',   is_featured:false, description:'Murals, markets, and the best tacos your kids will ever eat. CDMX is wildly underrated for families.'},
+  {slug:'cartagena',   city:'Cartagena',   country:'Colombia',      region:'Americas',   is_featured:false, description:'The walled city is one of the most beautiful places on earth. Caribbean water warm enough to swim in all year.'},
+  {slug:'buenos-aires',city:'Buenos Aires',country:'Argentina',     region:'Americas',   is_featured:false, description:'BA runs on a different schedule — dinner at 9pm, parks alive at midnight. Sync with its rhythm and the city opens up.'},
+  {slug:'montego-bay', city:'Montego Bay', country:'Jamaica',       region:'Americas',   is_featured:false, description:'Jamaica is layered in ways that make it extraordinary for families who want more than a resort. The food tells the whole story.'},
+  {slug:'accra',       city:'Accra',       country:'Ghana',         region:'Africa',     is_featured:false, description:'Warm, loud, alive. Accra connects kids to history, culture, and food in a way nowhere else can.'},
+  {slug:'cape-town',   city:'Cape Town',   country:'South Africa',  region:'Africa',     is_featured:false, description:'Arguably the most scenically absurd city on earth. Boulders Beach penguins alone justify the flight.'},
+  {slug:'marrakech',   city:'Marrakech',   country:'Morocco',       region:'Africa',     is_featured:false, description:'A full sensory assault — spice souks piled to the ceiling and riads with courtyard pools that make you forget the chaos outside.'},
+  {slug:'nairobi',     city:'Nairobi',     country:'Kenya',         region:'Africa',     is_featured:false, description:'You can watch giraffes from your hotel window. The elephant orphanage is one of the best experiences available to a child anywhere.'},
+  {slug:'dubai',       city:'Dubai',       country:'UAE',           region:'Middle East',is_featured:false, description:'Theme parks, desert safaris, and the world\'s tallest building. Engineered for excess and it mostly works.'},
+  {slug:'doha',        city:'Doha',        country:'Qatar',         region:'Middle East',is_featured:false, description:'The National Museum of Qatar is extraordinary. Souq Waqif is everything a night market should be.'},
+  {slug:'sydney',      city:'Sydney',      country:'Australia',     region:'Oceania',    is_featured:false, description:'Taronga Zoo by ferry, Manly Beach, the Opera House up close. Expensive and unbelievably good.'},
+  {slug:'auckland',    city:'Auckland',    country:'New Zealand',   region:'Oceania',    is_featured:false, description:'Built on 53 volcanoes, surrounded by two harbours. The Maori cultural encounters are the most authentic in New Zealand.'},
+];
+
+let allDestinations = DESTINATIONS;
 let storyCounts = {};
 
 // ============================================================
-// INIT
+// INIT — render static destinations immediately, enrich with Supabase
 // ============================================================
 async function init() {
-  let dests = [];
-  let posts = [];
-
-  try {
-    dests = await sb.get('destinations', '?is_published=eq.true&order=is_featured.desc,city.asc');
-  } catch (err) {
-    console.error('Destinations fetch failed:', err);
-    document.getElementById('dest-grid').innerHTML =
-      '<div class="loading-state">Could not load destinations — try refreshing the page.</div>';
-    return;
-  }
-
-  try {
-    posts = await sb.get('community_posts', '?status=eq.live&select=destination_id');
-  } catch (err) {
-    console.warn('Community posts count unavailable:', err);
-  }
-
-  allDestinations = dests;
-  posts.forEach(p => {
-    storyCounts[p.destination_id] = (storyCounts[p.destination_id] || 0) + 1;
-  });
-
-  const regions = new Set(dests.map(d => d.region));
-  document.getElementById('stat-destinations').textContent = dests.length;
-  document.getElementById('stat-stories').textContent = posts.length;
+  // Render static destinations immediately — no waiting on Supabase
+  const regions = new Set(DESTINATIONS.map(d => d.region));
+  document.getElementById('stat-destinations').textContent = DESTINATIONS.length;
   document.getElementById('stat-regions').textContent = regions.size;
+  document.getElementById('stat-stories').textContent = '—';
+  renderGrid(DESTINATIONS);
 
-  renderGrid(dests);
+  // Try to load story counts from Supabase as an enhancement
+  try {
+    const posts = await sb.get('community_posts', '?status=eq.live&select=destination_id');
+    // Map counts by slug using destination data from Supabase
+    const dests = await sb.get('destinations', '?is_published=eq.true&select=id,slug');
+    const slugToId = {};
+    dests.forEach(d => { slugToId[d.slug] = d.id; });
+    posts.forEach(p => {
+      storyCounts[p.destination_id] = (storyCounts[p.destination_id] || 0) + 1;
+    });
+    document.getElementById('stat-stories').textContent = posts.length;
+    // Re-render with story counts
+    const currentRegion = document.querySelector('.region-btn.active')?.dataset.region || 'all';
+    const filtered = currentRegion === 'all' ? allDestinations : allDestinations.filter(d => d.region === currentRegion);
+    // Add id to each destination for story count lookup
+    filtered.forEach(d => { d.id = slugToId[d.slug]; });
+    renderGrid(filtered);
+  } catch (err) {
+    console.warn('Story counts unavailable (Supabase):', err);
+  }
 }
 
 // ============================================================
