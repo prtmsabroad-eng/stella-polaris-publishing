@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buenos Aires with Kids — The Itinerary | Stella Polaris Publishing</title>
+<meta name="description" content="Real mom experiences, kid-friendly activities, and honest itineraries for Buenos Aires. Curated by Stella Polaris.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<script>
+  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+  const DESTINATION_SLUG = 'buenos-aires';
+  const DESTINATION_CITY = 'Buenos Aires';
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C; --gold-light: #F0D080; --rose: #D4547A; --teal: #3BBFB0;
+    --parchment: #F5EDD8; --violet: #2E1D60; --cream: #FDFAF4;
+    --ink: #1C1812; --mid: #6B6358; --border: #E8DFC8;
+    --success: #2D9E6B; --error: #C0392B;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.6; }
+
+  nav { position: sticky; top: 0; z-index: 100; background: var(--cream); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .nav-brand { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
+  .nav-brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--violet); }
+  .nav-cta { background: var(--violet); color: white !important; padding: 0.5rem 1.2rem; border-radius: 2px; }
+
+  .breadcrumb { background: var(--parchment); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); }
+  .breadcrumb a { color: var(--teal); text-decoration: none; }
+  .breadcrumb span { margin: 0 0.5rem; }
+
+  .dest-hero { background: var(--violet); padding: 4rem 2rem 3rem; position: relative; overflow: hidden; }
+  .dest-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 70% 30%, rgba(59,191,176,0.15) 0%, transparent 55%), radial-gradient(ellipse at 20% 90%, rgba(212,84,122,0.1) 0%, transparent 50%); pointer-events: none; }
+  .dest-hero-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .dest-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 0.8rem; }
+  .dest-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 600; color: var(--parchment); line-height: 1; letter-spacing: -0.01em; margin-bottom: 0.8rem; }
+  .dest-hero h1 em { font-style: italic; color: var(--gold-light); }
+  .dest-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.2rem; }
+  .dest-meta-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: rgba(245,237,216,0.7); }
+  .dest-meta-item strong { color: var(--parchment); }
+
+  .page-layout { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; display: grid; grid-template-columns: 1fr 320px; gap: 3rem; align-items: start; }
+
+  .editorial-pick { background: white; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 16px rgba(46,29,96,0.07); margin-bottom: 2.5rem; }
+  .pick-header { background: var(--violet); padding: 1rem 1.5rem; display: flex; align-items: center; gap: 0.6rem; }
+  .pick-header-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+  .pick-star { color: var(--gold); font-size: 0.8rem; }
+  .pick-body { padding: 2rem; }
+  .pick-body h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--violet); line-height: 1.25; margin-bottom: 1rem; }
+  .pick-body p { font-size: 0.9rem; color: var(--mid); line-height: 1.75; margin-bottom: 1.2rem; }
+  .pick-highlights { list-style: none; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .pick-highlights li { display: flex; align-items: flex-start; gap: 0.7rem; font-size: 0.85rem; color: var(--ink); line-height: 1.5; }
+  .pick-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); flex-shrink: 0; margin-top: 0.4rem; }
+
+  .product-strip { background: linear-gradient(135deg, var(--violet) 0%, #1a0f38 100%); border-radius: 3px; padding: 1.2rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .product-strip p { font-size: 0.82rem; color: rgba(245,237,216,0.85); margin: 0; line-height: 1.5; }
+  .product-strip strong { color: var(--gold-light); display: block; margin-bottom: 0.2rem; }
+  .btn-gold { background: var(--gold); color: var(--ink); padding: 0.6rem 1.2rem; border-radius: 2px; font-size: 0.8rem; font-weight: 500; white-space: nowrap; text-decoration: none; border: none; cursor: pointer; flex-shrink: 0; font-family: 'DM Sans', sans-serif; }
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .section-label { font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 0.4rem; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--ink); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .section-title span { color: var(--rose); font-style: italic; }
+
+  .posts-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .post-card { background: white; border-radius: 3px; box-shadow: 0 2px 12px rgba(46,29,96,0.06); overflow: hidden; transition: box-shadow 0.2s; }
+  .post-card:hover { box-shadow: 0 4px 20px rgba(46,29,96,0.1); }
+  .post-photos { display: flex; gap: 2px; height: 160px; overflow: hidden; }
+  .post-photo { flex: 1; background-size: cover; background-position: center; background-color: var(--parchment); }
+  .post-body { padding: 1.5rem; }
+  .post-mom { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; }
+  .mom-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--violet); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--gold-light); font-family: 'Space Mono', monospace; flex-shrink: 0; }
+  .mom-name { font-size: 0.88rem; font-weight: 500; color: var(--ink); display: block; }
+  .mom-meta { font-size: 0.7rem; color: var(--mid); }
+  .roaming-badge { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; margin-left: 0.4rem; }
+  .post-story { font-size: 0.88rem; color: var(--ink); line-height: 1.75; margin-bottom: 1rem; }
+  .post-embed { background: var(--parchment); border: 1px solid var(--border); border-radius: 3px; padding: 0.75rem 1rem; display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; text-decoration: none; }
+  .embed-platform { width: 32px; height: 32px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; flex-shrink: 0; font-weight: 600; }
+  .embed-platform.tiktok { background: #010101; }
+  .embed-platform.youtube { background: #FF0000; }
+  .embed-info { flex: 1; }
+  .embed-info span { font-size: 0.75rem; color: var(--teal); display: block; font-weight: 500; }
+  .embed-info small { font-size: 0.68rem; color: var(--mid); }
+  .embed-arrow { color: var(--mid); font-size: 0.8rem; }
+  .post-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .post-tag { background: var(--parchment); border: 1px solid var(--border); color: var(--mid); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.68rem; letter-spacing: 0.04em; }
+  .post-tag.age { border-color: var(--teal); color: var(--teal); }
+
+  .loading-state { text-align: center; padding: 3rem; color: var(--mid); font-size: 0.88rem; }
+  .loading-spinner { width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .empty-state { text-align: center; padding: 3rem 2rem; background: white; border-radius: 3px; box-shadow: 0 2px 12px rgba(46,29,96,0.06); }
+  .empty-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+  .empty-state h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--violet); margin-bottom: 0.5rem; }
+  .empty-state p { font-size: 0.85rem; color: var(--mid); margin-bottom: 1.2rem; }
+
+  .sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+  .sidebar-card { background: white; border-radius: 3px; box-shadow: 0 2px 12px rgba(46,29,96,0.06); overflow: hidden; }
+  .sidebar-card-header { background: var(--parchment); padding: 0.75rem 1.2rem; border-bottom: 1px solid var(--border); font-family: 'Space Mono', monospace; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); }
+  .sidebar-card-body { padding: 1.2rem; }
+  .quick-facts { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .quick-fact { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; }
+  .fact-label { color: var(--mid); }
+  .fact-value { font-weight: 500; color: var(--ink); text-align: right; }
+  .age-filters { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .age-filter { border: 1px solid var(--border); color: var(--mid); padding: 0.3rem 0.7rem; border-radius: 20px; font-size: 0.72rem; cursor: pointer; background: transparent; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .age-filter:hover, .age-filter.active { border-color: var(--teal); color: var(--teal); background: rgba(59,191,176,0.06); }
+  .share-cta { background: var(--violet); border-radius: 3px; padding: 1.5rem; text-align: center; }
+  .share-cta h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--parchment); margin-bottom: 0.5rem; }
+  .share-cta p { font-size: 0.78rem; color: rgba(245,237,216,0.65); margin-bottom: 1rem; line-height: 1.6; }
+  .btn-teal { display: block; background: var(--teal); color: white; padding: 0.75rem; border-radius: 2px; text-decoration: none; font-size: 0.82rem; font-weight: 500; text-align: center; transition: background 0.2s; }
+  .btn-teal:hover { background: var(--rose); }
+
+  .submit-section { background: var(--violet); margin-top: 4rem; position: relative; overflow: hidden; }
+  .submit-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 50%, rgba(59,191,176,0.12) 0%, transparent 60%); pointer-events: none; }
+  .submit-inner { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center; position: relative; z-index: 1; }
+  .submit-copy h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 600; color: var(--parchment); line-height: 1.15; margin-bottom: 1rem; }
+  .submit-copy h2 em { font-style: italic; color: var(--gold-light); }
+  .submit-copy p { font-size: 0.9rem; color: rgba(245,237,216,0.72); line-height: 1.75; margin-bottom: 1rem; font-weight: 300; }
+  .honest-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(59,191,176,0.12); border: 1px solid rgba(59,191,176,0.3); color: var(--teal); padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.7rem; font-family: 'Space Mono', monospace; letter-spacing: 0.1em; text-transform: uppercase; }
+  .submit-form { background: rgba(255,255,255,0.06); border: 1px solid rgba(245,237,216,0.15); border-radius: 4px; padding: 2rem; }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-label { display: block; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(245,237,216,0.55); margin-bottom: 0.4rem; font-family: 'Space Mono', monospace; }
+  .form-label .required { color: var(--rose); margin-left: 2px; }
+  .form-input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(245,237,216,0.2); border-radius: 2px; padding: 0.7rem 1rem; color: var(--parchment); font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none; transition: border-color 0.2s; }
+  .form-input::placeholder { color: rgba(245,237,216,0.28); }
+  .form-input:focus { border-color: var(--teal); }
+  textarea.form-input { resize: vertical; min-height: 110px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .form-hint { font-size: 0.67rem; color: rgba(245,237,216,0.38); margin-top: 0.3rem; }
+  .upload-area { border: 1px dashed rgba(245,237,216,0.22); border-radius: 2px; padding: 1.2rem; text-align: center; cursor: pointer; transition: border-color 0.2s; }
+  .upload-area:hover { border-color: var(--teal); }
+  .upload-icon { font-size: 1.4rem; margin-bottom: 0.3rem; }
+  .upload-text { font-size: 0.73rem; color: rgba(245,237,216,0.45); line-height: 1.5; }
+  .upload-files-preview { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.6rem; }
+  .upload-file-chip { background: rgba(59,191,176,0.15); border: 1px solid rgba(59,191,176,0.3); color: var(--teal); font-size: 0.68rem; padding: 0.2rem 0.6rem; border-radius: 20px; }
+  input[type="file"] { display: none; }
+  .form-submit { width: 100%; background: var(--teal); color: white; border: none; padding: 0.9rem; border-radius: 2px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 500; letter-spacing: 0.04em; cursor: pointer; margin-top: 0.75rem; transition: background 0.2s; }
+  .form-submit:hover:not(:disabled) { background: var(--rose); }
+  .form-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+  .toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; padding: 1rem 1.5rem; border-radius: 3px; font-size: 0.88rem; font-weight: 500; box-shadow: 0 4px 20px rgba(0,0,0,0.2); transform: translateY(100px); opacity: 0; transition: all 0.3s; pointer-events: none; }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.success { background: var(--success); color: white; }
+  .toast.error { background: var(--error); color: white; }
+  footer { background: var(--ink); padding: 2.5rem 2rem; text-align: center; }
+  .footer-brand { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .footer-sub { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+  @media (max-width: 900px) {
+    .page-layout { grid-template-columns: 1fr; }
+    .sidebar { order: -1; }
+    .submit-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+
+<nav>
+  <a href="/index.html" class="nav-brand">Stella Polaris <span>Publishing™</span></a>
+  <ul class="nav-links">
+    <li><a href="/nova.html">Nova Series</a></li>
+    <li><a href="/the-itinerary.html" class="active">The Itinerary</a></li>
+    <li><a href="/advisory.html">Advisory</a></li>
+    <li><a href="/blog.html">Notes from the North Star</a></li>
+    <li><a href="#share" class="nav-cta">Share Your Story</a></li>
+  </ul>
+</nav>
+
+<div class="breadcrumb">
+  <a href="/the-itinerary.html">The Itinerary</a>
+  <span>›</span>
+  <a href="/the-itinerary.html?region=Americas">Americas</a>
+  <span>›</span>
+  Buenos Aires
+</div>
+
+<section class="dest-hero">
+  <div class="dest-hero-inner">
+    <span class="dest-eyebrow">🇦🇷 Buenos Aires · Americas</span>
+    <h1>Buenos Aires<br><em>with Kids</em></h1>
+    <div class="dest-meta">
+      <div class="dest-meta-item"><strong id="post-count">—</strong>&nbsp;community stories</div>
+      <div class="dest-meta-item">·</div>
+      <div class="dest-meta-item">Curated by <strong>Stella Polaris</strong></div>
+      <div class="dest-meta-item">·</div>
+      <div class="dest-meta-item"><strong>Honest experiences welcomed</strong></div>
+    </div>
+  </div>
+</section>
+
+<div class="page-layout">
+  <main>
+    <div class="editorial-pick">
+      <div class="pick-header">
+        <span class="pick-star">★</span>
+        <span class="pick-header-label">Stella Polaris Pick · Curated June 2026</span>
+      </div>
+      <div class="pick-body">
+        <h2>Buenos Aires with Kids: Steak, Tango, and a City That Lives at Night</h2>
+        <p>BA runs on a different schedule — dinner at 9pm, parks alive at midnight. This is actually perfect for families who nap, and once you sync with its rhythm, the city is extraordinarily generous with children.</p>
+        <ul class="pick-highlights">
+          <li><span class="pick-dot"></span>Palermo parks complex: zoo, Japanese garden, paddleboat lake, planetarium — full day sorted</li>
+          <li><span class="pick-dot"></span>MALBA (Latin American art museum) has a genuine kids section and is world-class</li>
+          <li><span class="pick-dot"></span>San Telmo Sunday market: antiques, street food, tango dancers performing in the street</li>
+          <li><span class="pick-dot"></span>Tigre Delta day trip — boat through the Paraná river delta, completely otherworldly</li>
+          <li><span class="pick-dot"></span>Steak at a parrilla: this is what you came for. Order the bife de chorizo.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="product-strip" id="product-strip" style="margin-bottom: 2.5rem; display: none;">
+      <p><strong id="product-name"></strong><span id="product-desc"></span></p>
+      <a href="#" id="product-link" class="btn-gold">Get it — <span id="product-price"></span></a>
+    </div>
+
+    <div>
+      <span class="section-label">From the Roaming Stellas</span>
+      <h2 class="section-title">What moms are <span>saying</span></h2>
+      <div id="posts-container">
+        <div class="loading-state"><div class="loading-spinner"></div>Loading community stories...</div>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Quick Facts · Buenos Aires</div>
+      <div class="sidebar-card-body">
+        <ul class="quick-facts">
+          <li class="quick-fact"><span class="fact-label">Region</span><span class="fact-value">South America</span></li>
+          <li class="quick-fact"><span class="fact-label">Language</span><span class="fact-value">Spanish</span></li>
+          <li class="quick-fact"><span class="fact-label">Currency</span><span class="fact-value">ARS (Argentine Peso)</span></li>
+          <li class="quick-fact"><span class="fact-label">Visa</span><span class="fact-value">90 days visa-free (US)</span></li>
+          <li class="quick-fact"><span class="fact-label">Best for</span><span class="fact-value">Ages 6+</span></li>
+          <li class="quick-fact"><span class="fact-label">Avg trip</span><span class="fact-value">10–14 days</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Filter by Kids’ Ages</div>
+      <div class="sidebar-card-body">
+        <div class="age-filters">
+          <button class="age-filter active" data-age="all">All Ages</button>
+          <button class="age-filter" data-age="under5">Under 5</button>
+          <button class="age-filter" data-age="5to8">Ages 5–8</button>
+          <button class="age-filter" data-age="9to12">Ages 9–12</button>
+          <button class="age-filter" data-age="teens">Teens</button>
+          <button class="age-filter" data-age="solo">Solo Mom</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="share-cta">
+      <h3>Been to Buenos Aires?</h3>
+      <p>The steak, the palaces, the late-night parks — tell the moms who are on the fence about South America.</p>
+      <a href="#share" class="btn-teal">Share Your Story</a>
+    </div>
+
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">Explore Other Destinations</div>
+      <div class="sidebar-card-body" id="other-destinations">
+        <div style="font-size: 0.8rem; color: var(--mid);">Loading destinations...</div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<section class="submit-section" id="share">
+  <div class="submit-inner">
+    <div class="submit-copy">
+      <span style="font-family: 'Space Mono', monospace; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 0.8rem;">Join the Roaming Stellas</span>
+      <h2>Been here?<br><em>Tell your story.</em></h2>
+      <p>List your experience. Link your video. Let other moms see what you found. Honest experiences welcomed — no highlight reel required.</p>
+      <p>If it helped your family, it’ll help someone else’s.</p>
+      <span class="honest-badge">✦ Honest experiences welcomed</span>
+    </div>
+    <div class="submit-form" id="submission-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your Name <span class="required">*</span></label>
+          <input type="text" class="form-input" id="field-name" placeholder="First name is fine">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email <span class="required">*</span></label>
+          <input type="email" class="form-input" id="field-email" placeholder="Private — never displayed">
+          <div class="form-hint">We’ll never share or display your email</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your Experience <span class="required">*</span></label>
+        <textarea class="form-input" id="field-story" placeholder="What did you do? What would you tell another mom planning this trip?"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">TikTok or YouTube Link</label>
+          <input type="text" class="form-input" id="field-video" placeholder="Paste your video link">
+          <div class="form-hint">We’ll embed it automatically</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Kids’ Ages</label>
+          <input type="text" class="form-input" id="field-ages" placeholder="e.g. 4 and 7">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Photos (up to 5 · max 10MB each)</label>
+        <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text">Tap to upload photos from your trip<br><small>JPG, PNG · up to 5 photos · 10MB each</small></div>
+          <div class="upload-files-preview" id="files-preview"></div>
+        </div>
+        <input type="file" id="file-input" accept="image/*" multiple>
+      </div>
+      <button class="form-submit" id="submit-btn" onclick="submitStory()">Share My Story with the Community</button>
+    </div>
+    <div id="success-state" style="display: none; background: rgba(255,255,255,0.06); border: 1px solid rgba(59,191,176,0.3); border-radius: 4px; padding: 3rem; text-align: center; grid-column: 2;">
+      <div style="font-size: 2.5rem; margin-bottom: 1rem;">✦</div>
+      <h3 style="font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--parchment); margin-bottom: 0.75rem;">You’re a Roaming Stella.</h3>
+      <p style="font-size: 0.88rem; color: rgba(245,237,216,0.65); line-height: 1.7;">Your story is under review. Once approved it’ll be live for every mom planning this trip. Thank you for being real.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Stella Polaris Publishing™</div>
+  <div class="footer-sub">The Itinerary · Real travel from real moms · A Roaming Stellas community</div>
+</footer>
+
+<script>
+const sb = {
+  async get(table, params = '') {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}${params}`, {
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) throw new Error(`Supabase error: ${res.status}`);
+    return res.json();
+  },
+  async post(table, data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' },
+      body: JSON.stringify(data)
+    });
+    if (!res.ok) { const err = await res.json(); throw new Error(err.message || 'Submission failed'); }
+    return res.json();
+  },
+  async uploadPhoto(file) {
+    const ext = file.name.split('.').pop();
+    const fileName = `itinerary/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/community-photos/${fileName}`, {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}`, 'Content-Type': file.type },
+      body: file
+    });
+    if (!res.ok) throw new Error('Photo upload failed');
+    return `${SUPABASE_URL}/storage/v1/object/public/community-photos/${fileName}`;
+  }
+};
+
+let destinationId = null;
+let selectedFiles = [];
+
+async function init() {
+  try {
+    const dests = await sb.get('destinations', `?slug=eq.${DESTINATION_SLUG}&is_published=eq.true&limit=1`);
+    if (!dests.length) { showError('Destination not found.'); return; }
+    destinationId = dests[0].id;
+
+    const products = await sb.get('itinerary_products', `?destination_id=eq.${destinationId}&is_active=eq.true&limit=1`);
+    if (products.length) renderProduct(products[0]);
+
+    const posts = await sb.get('community_posts', `?destination_id=eq.${destinationId}&status=eq.live&order=published_at.desc`);
+    document.getElementById('post-count').textContent = posts.length;
+    renderPosts(posts);
+
+    const others = await sb.get('destinations', `?slug=neq.${DESTINATION_SLUG}&is_published=eq.true&limit=6`);
+    renderOtherDests(others);
+  } catch (err) {
+    console.error(err);
+    renderPosts([]);
+  }
+}
+
+function renderProduct(p) {
+  document.getElementById('product-name').textContent = p.name;
+  document.getElementById('product-desc').textContent = p.description || '';
+  document.getElementById('product-price').textContent = `$${p.price_usd}`;
+  document.getElementById('product-link').href = p.buy_link;
+  document.getElementById('product-strip').style.display = 'flex';
+}
+
+function renderPosts(posts) {
+  const c = document.getElementById('posts-container');
+  if (!posts.length) {
+    c.innerHTML = `<div class="empty-state"><div class="empty-icon">✈️</div><h3>No stories yet for this destination</h3><p>Be the first Roaming Stella to share what you found here.</p><a href="#share" class="btn-teal" style="display:inline-block;padding:0.75rem 1.5rem;">Share the first story</a></div>`;
+    return;
+  }
+  c.innerHTML = `<div class="posts-list">${posts.map(renderPostCard).join('')}</div>`;
+}
+
+function renderPostCard(post) {
+  const initials = post.mom_name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
+  const date = new Date(post.created_at).toLocaleDateString('en-US', {month:'short',year:'numeric'});
+  const photos = post.photo_urls || [];
+  const photosHtml = photos.length ? `<div class="post-photos">${photos.slice(0,3).map(u => `<div class="post-photo" style="background-image:url('${u}')"></div>`).join('')}</div>` : '';
+  const videoEmbed = post.video_url ? renderVideoEmbed(post.video_url) : '';
+  const agesTag = post.kids_ages ? `<span class="post-tag age">Ages: ${esc(post.kids_ages)}</span>` : '';
+  return `<div class="post-card">${photosHtml}<div class="post-body"><div class="post-mom"><div class="mom-avatar">${initials}</div><div><span class="mom-name">${esc(post.mom_name)} <span class="roaming-badge">✦ Roaming Stella</span></span><span class="mom-meta">Shared ${date}</span></div></div><p class="post-story">${esc(post.story)}</p>${videoEmbed}<div class="post-tags">${agesTag}<span class="post-tag">${DESTINATION_CITY}</span></div></div></div>`;
+}
+
+function renderVideoEmbed(url) {
+  const isTikTok = url.includes('tiktok.com');
+  const isYoutube = url.includes('youtube.com') || url.includes('youtu.be');
+  if (!isTikTok && !isYoutube) return '';
+  const platform = isTikTok ? 'tiktok' : 'youtube';
+  const label = isTikTok ? 'TT' : 'YT';
+  return `<a href="${esc(url)}" target="_blank" rel="noopener" class="post-embed"><div class="embed-platform ${platform}">${label}</div><div class="embed-info"><span>${isTikTok ? 'Watch on TikTok' : 'Watch on YouTube'} →</span><small>Video linked by this Roaming Stella</small></div><span class="embed-arrow">↗</span></a>`;
+}
+
+function renderOtherDests(dests) {
+  const el = document.getElementById('other-destinations');
+  if (!dests.length) { el.innerHTML = ''; return; }
+  el.innerHTML = dests.map(d => `<a href="/the-itinerary/${d.slug}.html" style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--ink);font-size:0.82rem;"><span>${d.city}, ${d.country}</span><span style="color:var(--teal);font-size:0.75rem;">→</span></a>`).join('');
+}
+
+document.querySelectorAll('.age-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.age-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+document.getElementById('file-input').addEventListener('change', (e) => {
+  const files = Array.from(e.target.files);
+  const MAX_SIZE = 10 * 1024 * 1024;
+  const valid = files.filter(f => {
+    if (f.size > MAX_SIZE) { showToast(`${f.name} is over 10MB — skipped`, 'error'); return false; }
+    return true;
+  }).slice(0, 5 - selectedFiles.length);
+  selectedFiles = [...selectedFiles, ...valid].slice(0, 5);
+  document.getElementById('files-preview').innerHTML = selectedFiles.map(f => `<span class="upload-file-chip">📷 ${f.name.slice(0,20)}</span>`).join('');
+});
+
+async function submitStory() {
+  const name = document.getElementById('field-name').value.trim();
+  const email = document.getElementById('field-email').value.trim();
+  const story = document.getElementById('field-story').value.trim();
+  const video = document.getElementById('field-video').value.trim();
+  const ages = document.getElementById('field-ages').value.trim();
+  if (!name) { showToast('Please enter your name', 'error'); return; }
+  if (!email || !email.includes('@')) { showToast('Please enter a valid email', 'error'); return; }
+  if (!story || story.length < 50) { showToast('Please share at least a few sentences about your experience', 'error'); return; }
+  if (!destinationId) { showToast('Something went wrong — please refresh and try again', 'error'); return; }
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true; btn.textContent = 'Uploading photos...';
+  try {
+    let photoUrls = [];
+    for (const file of selectedFiles) { photoUrls.push(await sb.uploadPhoto(file)); }
+    btn.textContent = 'Submitting your story...';
+    await sb.post('community_posts', { destination_id: destinationId, mom_name: name, mom_email: email, story, video_url: video || null, kids_ages: ages || null, photo_urls: photoUrls.length ? photoUrls : null, status: 'pending' });
+    document.getElementById('submission-form').style.display = 'none';
+    document.getElementById('success-state').style.display = 'block';
+    showToast('Story submitted! We’ll review it shortly.', 'success');
+  } catch (err) {
+    console.error(err);
+    showToast('Something went wrong. Please try again.', 'error');
+    btn.disabled = false; btn.textContent = 'Share My Story with the Community';
+  }
+}
+
+function esc(str) { return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function showToast(msg, type='success') { const t=document.getElementById('toast'); t.textContent=msg; t.className=`toast ${type} show`; setTimeout(()=>{t.className='toast';},4000); }
+function showError(msg) { document.getElementById('posts-container').innerHTML=`<div class="empty-state"><div class="empty-icon">⚠️</div><h3>Something went wrong</h3><p>${msg}</p></div>`; }
+
+init();
+</script>
+</body>
+</html>

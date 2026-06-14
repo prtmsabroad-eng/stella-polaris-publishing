@@ -363,30 +363,35 @@ let storyCounts = {};
 // INIT
 // ============================================================
 async function init() {
+  let dests = [];
+  let posts = [];
+
   try {
-    const [dests, posts] = await Promise.all([
-      sb.get('destinations', '?is_published=eq.true&order=is_featured.desc,city.asc'),
-      sb.get('community_posts', '?status=eq.live&select=destination_id')
-    ]);
-
-    allDestinations = dests;
-
-    posts.forEach(p => {
-      storyCounts[p.destination_id] = (storyCounts[p.destination_id] || 0) + 1;
-    });
-
-    const regions = new Set(dests.map(d => d.region));
-    document.getElementById('stat-destinations').textContent = dests.length;
-    document.getElementById('stat-stories').textContent = posts.length;
-    document.getElementById('stat-regions').textContent = regions.size;
-
-    renderGrid(dests);
-
+    dests = await sb.get('destinations', '?is_published=eq.true&order=is_featured.desc,city.asc');
   } catch (err) {
-    console.error(err);
+    console.error('Destinations fetch failed:', err);
     document.getElementById('dest-grid').innerHTML =
-      '<div class="loading-state">Could not load destinations. Check your connection.</div>';
+      '<div class="loading-state">Could not load destinations — try refreshing the page.</div>';
+    return;
   }
+
+  try {
+    posts = await sb.get('community_posts', '?status=eq.live&select=destination_id');
+  } catch (err) {
+    console.warn('Community posts count unavailable:', err);
+  }
+
+  allDestinations = dests;
+  posts.forEach(p => {
+    storyCounts[p.destination_id] = (storyCounts[p.destination_id] || 0) + 1;
+  });
+
+  const regions = new Set(dests.map(d => d.region));
+  document.getElementById('stat-destinations').textContent = dests.length;
+  document.getElementById('stat-stories').textContent = posts.length;
+  document.getElementById('stat-regions').textContent = regions.size;
+
+  renderGrid(dests);
 }
 
 // ============================================================
