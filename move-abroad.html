@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Move Abroad with Your Kids | Stella Polaris Publishing</title>
+<meta name="description" content="Three guides for moms ready to leave, land, and build a life abroad with their kids. Real steps, not theory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+
+<script>
+  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+</script>
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #F0D080;
+    --rose: #D4547A;
+    --teal: #3BBFB0;
+    --parchment: #F5EDD8;
+    --violet: #2E1D60;
+    --cream: #FDFAF4;
+    --ink: #1C1812;
+    --mid: #6B6358;
+    --border: #E8DFC8;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.6; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--cream); border-bottom: 1px solid var(--border);
+    padding: 0 2rem; display: flex; align-items: center;
+    justify-content: space-between; height: 64px;
+  }
+  .nav-brand { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
+  .nav-brand span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--violet); }
+
+  /* HERO */
+  .hero {
+    background: var(--violet);
+    padding: 4.5rem 2rem 3.5rem;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(59,191,176,0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 10% 100%, rgba(212,84,122,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(201,168,76,0.08) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 680px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-family: 'Space Mono', monospace; font-size: 0.62rem;
+    letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal);
+    display: block; margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 600; color: var(--parchment);
+    line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 1.2rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold-light); }
+  .hero p {
+    font-size: 1.05rem; color: rgba(245,237,216,0.75); line-height: 1.75;
+    font-weight: 300; max-width: 540px; margin: 0 auto;
+  }
+
+  /* PRODUCTS */
+  .products-section {
+    max-width: 1000px; margin: 0 auto; padding: 4rem 2rem;
+  }
+  .section-eyebrow {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+    display: block; margin-bottom: 0.5rem; text-align: center;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.9rem;
+    font-weight: 600; color: var(--ink); text-align: center;
+    margin-bottom: 3rem;
+  }
+  .section-title span { color: var(--rose); font-style: italic; }
+
+  .product-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.75rem;
+  }
+  .trust-line {
+    text-align: center; font-size: 0.85rem; color: var(--mid);
+    margin-top: 2rem; font-style: italic;
+  }
+  .passport-form {
+    display: flex; flex-direction: column; gap: 0.6rem; margin-top: auto;
+  }
+  .passport-input {
+    padding: 0.65rem 0.9rem; border: 1px solid var(--border);
+    border-radius: 6px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; color: var(--ink); background: var(--cream);
+  }
+  .passport-input:focus { outline: none; border-color: var(--teal); }
+  .passport-submit { width: 100%; text-align: center; border: none; cursor: pointer; }
+  .passport-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .passport-msg { font-size: 0.78rem; min-height: 1em; }
+
+  .product-card {
+    background: white; border-radius: 6px;
+    box-shadow: 0 2px 16px rgba(46,29,96,0.07);
+    overflow: hidden; display: flex; flex-direction: column;
+    border: 1px solid var(--border);
+  }
+  .product-card.featured { border-color: var(--gold); }
+
+  .product-tag {
+    font-family: 'Space Mono', monospace; font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 0.5rem 1.5rem; background: var(--violet); color: var(--gold-light);
+  }
+  .product-tag.free { background: var(--teal); color: white; }
+
+  .product-body { padding: 1.75rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+  .product-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+    font-weight: 600; color: var(--ink); margin-bottom: 0.6rem; line-height: 1.25;
+  }
+  .product-microhook {
+    font-size: 0.88rem; font-style: italic; color: var(--rose);
+    margin-bottom: 0.6rem; line-height: 1.4;
+  }
+  .product-subtitle {
+    font-family: 'Space Mono', monospace; font-size: 0.66rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid);
+    margin-bottom: 0.5rem;
+  }
+  .upsell-nudge {
+    font-size: 0.78rem; color: var(--mid); text-align: center;
+    margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px dashed var(--border);
+  }
+  .upsell-nudge a { color: var(--rose); text-decoration: none; font-weight: 500; }
+  .upsell-nudge a:hover { text-decoration: underline; }
+  .product-desc {
+    font-size: 0.92rem; color: var(--mid); line-height: 1.6;
+    margin-bottom: 1.5rem; flex: 1;
+  }
+  .product-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; margin-top: auto;
+  }
+  .product-price {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem;
+    font-weight: 600; color: var(--violet);
+  }
+  .product-price.free-price { color: var(--teal); }
+
+  .btn-buy {
+    background: var(--gold); color: var(--violet);
+    font-family: 'Space Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    text-decoration: none; padding: 0.7rem 1.3rem;
+    border-radius: 30px; transition: all 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-buy:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .btn-buy.free-btn { background: var(--teal); color: white; }
+  .btn-buy.free-btn:hover { background: #2fa89a; }
+
+  /* WHY SECTION */
+  .why-strip {
+    background: var(--parchment); padding: 3.5rem 2rem;
+    text-align: center;
+  }
+  .why-inner { max-width: 640px; margin: 0 auto; }
+  .why-strip h2 {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.7rem;
+    color: var(--ink); margin-bottom: 1rem;
+  }
+  .why-strip h2 em { color: var(--rose); font-style: italic; }
+  .why-strip p {
+    font-size: 0.95rem; color: var(--mid); line-height: 1.75;
+  }
+  .consult-cta {
+    margin-top: 2.2rem; padding-top: 2rem; border-top: 1px solid var(--border);
+  }
+  .consult-text {
+    font-size: 1rem; color: var(--ink); line-height: 1.7;
+    margin-bottom: 1.2rem; font-style: italic;
+  }
+  .consult-btn {
+    display: inline-block; background: var(--violet); color: var(--gold-light) !important;
+    padding: 0.85rem 1.8rem; font-size: 0.78rem;
+  }
+  .consult-btn:hover { background: #3d2a7a; }
+  .consult-sub {
+    font-size: 0.82rem; color: var(--mid); margin-top: 0.9rem;
+  }
+
+  footer {
+    background: var(--violet); padding: 2.5rem 2rem; text-align: center;
+  }
+  .footer-brand {
+    font-family: 'Space Mono', monospace; font-size: 0.65rem;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-light);
+  }
+  .footer-sub {
+    font-size: 0.78rem; color: rgba(245,237,216,0.45); margin-top: 0.4rem;
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/index.html" class="nav-brand">Stella Polaris <span>Publishing™</span></a>
+  <ul class="nav-links">
+    <li><a href="/nova.html">Nova Series</a></li>
+    <li><a href="/the-itinerary.html">The Itinerary</a></li>
+    <li><a href="/advisory.html">Advisory</a></li>
+    <li><a href="/blog.html">Notes from the North Star</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">✦ For Moms Ready to Go</span>
+    <h1>Move Abroad<br>with <em>Your Kids</em></h1>
+    <p>You don't need a fortune or a five-year plan. You need a real next step, not another article telling you to "just go." These guides are the next step.</p>
+  </div>
+</section>
+
+<section class="products-section">
+  <span class="section-eyebrow">Start Here</span>
+  <h2 class="section-title">Three guides. <span>One path forward.</span></h2>
+
+  <div class="product-grid">
+
+    <!-- PEACE PASSPORT - FREE LEAD MAGNET -->
+    <div class="product-card">
+      <div class="product-tag free">Free Guide</div>
+      <div class="product-body">
+        <div class="product-title">The Peace Passport</div>
+        <div class="product-subtitle">3 Steps to Begin Your Exit Journey</div>
+        <div class="product-microhook">Stuck on "where do I even start"?</div>
+        <div class="product-desc">A full workbook, not just a checklist. Reflection prompts, boundary work, and your first real action steps, built to take you from scrolling and wondering to actually packing a bag. Created for single moms and solo women ready to begin with clarity, not chaos.</div>
+        <form id="passport-form" class="passport-form" onsubmit="return handlePassportSubmit(event)">
+          <input type="email" id="passport-email" class="passport-input" placeholder="Your email" required>
+          <button type="submit" id="passport-submit-btn" class="btn-buy free-btn passport-submit">Send Me the Workbook</button>
+          <div id="passport-msg" class="passport-msg"></div>
+        </form>
+        <div class="upsell-nudge">Ready to actually leave? <a href="#playbook-card">The Playbook walks you through it →</a></div>
+      </div>
+    </div>
+
+    <!-- NEURODIVERGENT PEACE ABROAD -->
+    <div class="product-card">
+      <div class="product-tag">Guide · $17</div>
+      <div class="product-body">
+        <div class="product-title">Neurodivergent Peace Abroad</div>
+        <div class="product-microhook">Moving is hard. Moving with a kid who needs more than "just adjust" is harder.</div>
+        <div class="product-desc">You're not winging this one. Get the sensory prep, routine transition plan, and support system roadmap so your child lands soft, not shattered, and you're not figuring it out alone at midnight in a new country.</div>
+        <div class="product-footer">
+          <span class="product-price">$17</span>
+          <a href="#" class="btn-buy" id="link-nd">Get the Roadmap</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PACK YOUR PEACE PLAYBOOK -->
+    <div class="product-card featured" id="playbook-card">
+      <div class="product-tag">Most Popular · $27</div>
+      <div class="product-body">
+        <div class="product-title">Pack Your Peace Playbook</div>
+        <div class="product-subtitle">Leave the U.S. in 90 Days</div>
+        <div class="product-microhook">Everyone says "just go." Nobody tells you how.</div>
+        <div class="product-desc">The full no-excuse relocation plan for women with no remote job, no partner, and no time to waste. Documents, money, what actually fits in the bag, the first 30 days on the ground. This is the difference between landing in chaos and landing in motion. Stop researching. Start packing.</div>
+        <div class="product-footer">
+          <span class="product-price">$27</span>
+          <a href="#" class="btn-buy" id="link-playbook">Start Packing</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="trust-line">Instant download. No subscriptions, no recurring charges, no waiting on a stranger to "get back to you." You buy it, you read it tonight.</p>
+</section>
+
+<section class="why-strip">
+  <div class="why-inner">
+    <h2>You are not starting <em>from scratch</em></h2>
+    <p>Someone has already mapped the path. These guides exist so you spend your energy living your new life abroad, not figuring out logistics alone at 1am. Start with the free guide. Move to the playbook when you're ready to book the flight.</p>
+    <div class="consult-cta">
+      <p class="consult-text">And if that isn't enough and you really need to talk to a person to really feel comfortable with your next move, I'm here.</p>
+      <a href="/checkout.html" class="btn-buy consult-btn">Book a Call With Me</a>
+      <p class="consult-sub">No nonsense, straight talk, real life experience from 3+ years living abroad.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Stella Polaris Publishing™</div>
+  <div class="footer-sub">Move Abroad · Real guides for real moms going somewhere new</div>
+</footer>
+
+<script>
+// ============================================================
+// BUY LINKS — replace these placeholders with real Gumroad or
+// Stripe Payment Links the moment they exist. No code changes
+// needed anywhere else once these are swapped.
+// ============================================================
+// ============================================================
+// PAID PRODUCTS — Stripe Payment Links
+// ============================================================
+const LINKS = {
+  nd:       'https://buy.stripe.com/dRmeVe1gg6j11Dk17Q7AI01',
+  playbook: 'https://buy.stripe.com/6oU3cwbUU6j14PwcQy7AI03'
+};
+document.getElementById('link-nd').href = LINKS.nd;
+document.getElementById('link-playbook').href = LINKS.playbook;
+
+// ============================================================
+// PEACE PASSPORT — free lead magnet via in-house Supabase capture
+// Same pattern as the Foundations of Faith popup on the homepage.
+// Update PASSPORT_PDF_PATH once the file is uploaded to the repo.
+// ============================================================
+const PASSPORT_PDF_PATH = '/peace-passport-final.pdf';
+
+function getUtmSource() {
+  const p = new URLSearchParams(window.location.search);
+  const src = p.get('utm_source');
+  const med = p.get('utm_medium');
+  const cam = p.get('utm_campaign');
+  if (src) return [src, med, cam].filter(Boolean).join('/');
+  return 'move-abroad-peace-passport';
+}
+
+async function handlePassportSubmit(e) {
+  e.preventDefault();
+  const email = document.getElementById('passport-email').value.trim();
+  const btn   = document.getElementById('passport-submit-btn');
+  const msg   = document.getElementById('passport-msg');
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  msg.textContent = '';
+
+  const trafficSource = getUtmSource();
+
+  try {
+    const res = await fetch(
+      'https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/subscribers',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          email: email,
+          source: trafficSource,
+          created_at: new Date().toISOString()
+        })
+      }
+    );
+
+    let success = res.ok || res.status === 201;
+    if (!success) {
+      const err = await res.json().catch(() => ({}));
+      if (res.status === 409 || (err.code && err.code === '23505')) {
+        success = true; // duplicate email — still grant access
+      } else {
+        throw new Error(err.message || 'Submission failed');
+      }
+    }
+
+    if (success) {
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          event_category: 'email_capture',
+          event_label: 'peace_passport_move_abroad',
+          traffic_source: trafficSource
+        });
+      }
+      if (typeof fbq === 'function') fbq('track', 'Lead');
+      if (typeof ttq !== 'undefined') ttq.track('SubmitForm');
+      window.location.href = PASSPORT_PDF_PATH;
+    }
+  } catch (err) {
+    msg.textContent = 'Something went wrong. Please try again.';
+    msg.style.color = '#E07070';
+    btn.disabled = false;
+    btn.textContent = 'Send Me the Workbook';
+  }
+  return false;
+}
+</script>
+
+</body>
+</html>

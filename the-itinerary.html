@@ -80,6 +80,20 @@
   .hub-stats {
     display: flex; justify-content: center; gap: 2.5rem; flex-wrap: wrap;
   }
+  .hub-move-cta {
+    display: inline-block; margin: 0 0 2.5rem;
+    background: var(--gold); color: var(--violet) !important;
+    font-family: 'Space Mono', monospace; font-size: 0.78rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; padding: 0.85rem 1.8rem;
+    border-radius: 30px; transition: all 0.2s ease;
+    box-shadow: 0 4px 18px rgba(201,168,76,0.25);
+  }
+  .hub-move-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 22px rgba(201,168,76,0.35);
+  }
   .hub-stat {
     text-align: center;
   }
@@ -278,6 +292,7 @@
     <span class="hub-eyebrow">✦ A Roaming Stellas Community</span>
     <h1>The<br><em>Itinerary</em></h1>
     <p>Real travel from real moms. Curated destinations, honest experiences, and community intel from the Roaming Stellas — the moms who've actually been.</p>
+    <a href="/move-abroad.html" class="hub-move-cta">Learn How to Move Abroad →</a>
     <div class="hub-stats">
       <div class="hub-stat">
         <span class="hub-stat-num" id="stat-destinations">—</span>
