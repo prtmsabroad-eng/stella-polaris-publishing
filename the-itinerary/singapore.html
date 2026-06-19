@@ -473,13 +473,22 @@
       </div>
     </div>
 
-    <!-- DIGITAL PRODUCT STRIP -->
-    <div class="product-strip" id="product-strip" style="margin-bottom: 2.5rem; display: none;">
-      <p>
-        <strong id="product-name"></strong>
-        <span id="product-desc"></span>
-      </p>
-      <a href="#" id="product-link" class="btn-gold">Get it — <span id="product-price"></span></a>
+    <!-- DIGITAL PRODUCTS -->
+    <div style="margin-bottom: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
+      <div class="product-strip">
+        <p>
+          <strong>Neurodivergent Peace Abroad</strong>
+          Sensory-friendly strategies for travelling with neurodivergent kids — every destination, every age.
+        </p>
+        <a href="/product-checkout.html?product=neurodivergent" class="btn-gold">Get it — $17</a>
+      </div>
+      <div class="product-strip">
+        <p>
+          <strong>Pack Your Peace Playbook</strong>
+          The complete framework for stress-free, peaceful family travel — wherever you're headed.
+        </p>
+        <a href="/product-checkout.html?product=playbook" class="btn-gold">Get it — $27</a>
+      </div>
     </div>
 
     <!-- COMMUNITY POSTS -->
@@ -679,9 +688,6 @@ async function init() {
     const dest = dests[0];
     destinationId = dest.id;
 
-    const products = await sb.get('itinerary_products', `?destination_id=eq.${dest.id}&is_active=eq.true&limit=1`);
-    if (products.length) renderProduct(products[0]);
-
     const posts = await sb.get('community_posts',
       `?destination_id=eq.${dest.id}&status=eq.live&order=published_at.desc`);
     document.getElementById('post-count').textContent = posts.length;
@@ -694,17 +700,6 @@ async function init() {
     console.error(err);
     renderPosts([]);
   }
-}
-
-// ============================================================
-// RENDER: PRODUCT STRIP
-// ============================================================
-function renderProduct(product) {
-  document.getElementById('product-name').textContent = product.name;
-  document.getElementById('product-desc').textContent = product.description || '';
-  document.getElementById('product-price').textContent = `$${product.price_usd}`;
-  document.getElementById('product-link').href = product.buy_link;
-  document.getElementById('product-strip').style.display = 'flex';
 }
 
 // ============================================================
