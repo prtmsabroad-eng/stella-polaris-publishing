@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shepherd Framework™ | Stella Polaris Advisory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --purple-deep:#2D0A3E;
+    --purple-mid:#4A1861;
+    --purple-glow:#7B2D9E;
+    --cream:#FBF6EC;
+    --cream-dim:#F3ECDC;
+    --gold-light:#F0D080;
+    --gold-deep:#C8922A;
+    --ink:#2D0A3E;
+    --ink-soft:#5C4A68;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--purple-deep);
+    color:var(--cream);
+    font-family:'Karla',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:900px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    display:inline-block;
+    font-family:'Karla',sans-serif;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+    margin-bottom:20px;
+  }
+
+  /* ===== STARFIELD BG ===== */
+  .stars{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background-image:
+      radial-gradient(1.5px 1.5px at 15% 20%, rgba(240,208,128,0.5), transparent),
+      radial-gradient(1px 1px at 80% 10%, rgba(240,208,128,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 65% 45%, rgba(240,208,128,0.35), transparent),
+      radial-gradient(1px 1px at 30% 65%, rgba(240,208,128,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 90% 75%, rgba(240,208,128,0.4), transparent),
+      radial-gradient(1px 1px at 10% 90%, rgba(240,208,128,0.35), transparent);
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    z-index:1;
+    background:radial-gradient(ellipse 800px 500px at 50% 0%, var(--purple-glow) 0%, transparent 65%);
+    padding:110px 0 80px;
+    text-align:center;
+  }
+  .hero h1{
+    font-size:clamp(30px,4.6vw,50px);
+    line-height:1.15;
+    max-width:760px;
+    margin:0 auto 24px;
+  }
+  .hero p.sub{
+    font-size:18px;
+    max-width:560px;
+    margin:0 auto 40px;
+    color:#E4D6EF;
+  }
+  .btn{
+    display:inline-block;
+    padding:17px 36px;
+    border-radius:100px;
+    font-weight:700;
+    font-size:15px;
+    background:linear-gradient(100deg, var(--gold-light), var(--gold-deep));
+    color:var(--purple-deep);
+    box-shadow:0 8px 24px rgba(200,146,42,0.35);
+    transition:transform 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+
+  /* ===== SECTION SHARED ===== */
+  section{position:relative;z-index:1;padding:70px 0;}
+  .divider{
+    max-width:900px;margin:0 auto;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(240,208,128,0.3), transparent);
+  }
+  .center{text-align:center;}
+  .lede{color:#D9C6E6;font-size:17px;max-width:600px;margin:0 auto;}
+
+  /* ===== PROBLEM / WHAT-IS ===== */
+  .prose p{font-size:17px;color:#E4D6EF;margin-bottom:16px;}
+  .prose{max-width:640px;margin:0 auto;}
+  .prose em{font-style:italic;color:var(--gold-light);}
+
+  /* ===== OVERLAP MAP (signature element) ===== */
+  .overlap{padding:90px 0;}
+  .overlap h2{font-size:clamp(26px,3.6vw,36px);margin-bottom:14px;}
+  .map-visual{
+    max-width:680px;margin:50px auto 0;
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:0;
+  }
+  @media(max-width:640px){.map-visual{grid-template-columns:1fr;gap:16px;}}
+  .map-circle{
+    background:rgba(255,255,255,0.05);
+    border:1.5px solid rgba(240,208,128,0.35);
+    border-radius:20px;
+    padding:28px 22px;
+    text-align:center;
+  }
+  .map-circle .tag{
+    font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+    color:var(--gold-light);font-weight:700;margin-bottom:10px;
+  }
+  .map-circle p{font-size:14.5px;color:#EDE3F5;}
+  .map-center{
+    display:flex;align-items:center;justify-content:center;
+    padding:0 20px;
+  }
+  @media(max-width:640px){.map-center{padding:6px 0;}}
+  .map-center .glyph{
+    width:56px;height:56px;border-radius:50%;
+    background:linear-gradient(135deg, var(--gold-light), var(--gold-deep));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:22px;color:var(--purple-deep);
+  }
+
+  /* ===== INCLUDED ===== */
+  .included{padding:90px 0;}
+  .included h2{font-size:clamp(26px,3.6vw,36px);margin-bottom:44px;text-align:center;}
+  .incl-list{max-width:600px;margin:0 auto;}
+  .incl-item{
+    display:flex;gap:16px;
+    padding:18px 0;
+    border-bottom:1px solid rgba(240,208,128,0.15);
+  }
+  .incl-item:last-child{border-bottom:none;}
+  .incl-item .num{
+    font-family:'Fraunces',serif;
+    color:var(--gold-light);
+    font-size:15px;
+    min-width:24px;
+  }
+  .incl-item p{font-size:15.5px;color:#EDE3F5;}
+
+  /* ===== WHO ===== */
+  .who{padding:60px 0;text-align:center;}
+  .who .prose p{font-size:18px;font-family:'Fraunces',serif;font-style:italic;color:#F2E9F8;}
+
+  /* ===== INVESTMENT ===== */
+  .investment{padding:90px 0;text-align:center;}
+  .price-card{
+    max-width:440px;margin:40px auto 0;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(240,208,128,0.35);
+    border-radius:22px;
+    padding:44px 36px;
+  }
+  .price-card .rate-tag{
+    display:inline-block;
+    font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--purple-deep);
+    background:linear-gradient(100deg, var(--gold-light), var(--gold-deep));
+    padding:5px 14px;border-radius:100px;
+    margin-bottom:18px;
+  }
+  .price-card .amount{font-family:'Fraunces',serif;font-size:52px;color:var(--gold-light);}
+  .price-card .amount-note{font-size:13px;color:#C7AFD6;margin-top:4px;margin-bottom:24px;}
+  .price-card ul{text-align:left;margin-top:8px;}
+  .price-card li{
+    list-style:none;font-size:14px;color:#EDE3F5;
+    padding-left:22px;position:relative;margin-bottom:10px;
+  }
+  .price-card li::before{content:"✦";position:absolute;left:0;color:var(--gold-light);font-size:11px;top:3px;}
+  .fine-note{margin-top:16px;font-size:12.5px;color:#B79FC7;font-style:italic;}
+
+  /* ===== CLOSE ===== */
+  .close{padding:70px 0 100px;text-align:center;}
+  .close h2{font-size:clamp(24px,3.4vw,32px);max-width:600px;margin:0 auto;}
+
+  footer{
+    position:relative;z-index:1;
+    padding:40px 24px;text-align:center;
+    border-top:1px solid rgba(240,208,128,0.15);
+  }
+  footer p{font-size:13px;color:#B79FC7;}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Stella Polaris Advisory · The Shepherd Framework™</span>
+    <h1>You're not raising a child in isolation from your own chart. You're raising them in the space where your chart and theirs meet.</h1>
+    <p class="sub">A private parenting intensive built on both of your birth charts, so you stop guessing where your instincts help, and where they're quietly working against what your child actually needs.</p>
+    <a href="https://buy.stripe.com/8x29AU3oo5eXa9Q03M7AI05" class="btn">Book Your Session</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="wrap prose">
+    <p>You've probably already had a reading done, or read enough to know your child's chart in broad strokes. That's useful. It's also incomplete.</p>
+    <p>A child's chart tells you who they are. It doesn't tell you what happens when who they are meets who <em>you</em> are. That's the actual site of every hard parenting decision you make, and it's the one place most astrology stops short of going.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap prose">
+    <p style="font-family:'Fraunces',serif;font-size:19px;color:var(--gold-light);margin-bottom:18px;">This is not a bigger version of a child reading.</p>
+    <p>It's a live session built around one question: where does your natural instinct as a parent align with what your child needs, and where do you need to consciously translate?</p>
+    <p>You'll leave with a written Overlap Map naming both, and a Decision Log you'll use for every parenting choice that comes after this one, not just the one you booked the session to solve.</p>
+  </div>
+</section>
+
+<section class="overlap">
+  <div class="wrap center">
+    <span class="eyebrow">The core deliverable</span>
+    <h2>The Overlap Map</h2>
+    <p class="lede">Two charts, read together, sorted into what already works and what needs translating.</p>
+    <div class="map-visual">
+      <div class="map-circle">
+        <div class="tag">Their Chart</div>
+        <p>What they need to feel safe, how they learn, how they show up to the world</p>
+      </div>
+      <div class="map-center"><div class="glyph">✦</div></div>
+      <div class="map-circle">
+        <div class="tag">Your Chart</div>
+        <p>Your instinct for comfort, how you naturally explain, how you show up at home</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="included">
+  <div class="wrap">
+    <h2>What's included</h2>
+    <div class="incl-list">
+      <div class="incl-item"><span class="num">01</span><p>A written pre-session brief covering both charts, so you walk in already informed</p></div>
+      <div class="incl-item"><span class="num">02</span><p>A 30-minute live 1:1 session focused entirely on your Overlap Map, not chart basics</p></div>
+      <div class="incl-item"><span class="num">03</span><p>Your Overlap Map: where your instincts help, and where you need to translate</p></div>
+      <div class="incl-item"><span class="num">04</span><p>A real answer applied to one current decision you're facing right now</p></div>
+      <div class="incl-item"><span class="num">05</span><p>A written Decision Framework Worksheet, yours to reuse for every future decision</p></div>
+      <div class="incl-item"><span class="num">06</span><p>A 30-day follow-up check-in once you've had time to actually use it</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="who">
+  <div class="wrap prose">
+    <p>"For parents who've felt the gap between their instincts and their child's actual needs, and want a repeatable system for closing it, not another one-time read."</p>
+  </div>
+</section>
+
+<section class="investment" id="invest">
+  <div class="wrap">
+    <span class="eyebrow">Investment</span>
+    <div class="price-card">
+      <div class="rate-tag">Introductory Rate</div>
+      <div class="amount">$497</div>
+      <div class="amount-note">One parent, one child · Live session + full deliverables</div>
+      <div style="font-size:12.5px;color:#C7AFD6;margin-top:-14px;margin-bottom:6px;">Additional child: <a href="https://buy.stripe.com/5kQ6oI7EEgXF0zg17Q7AI07" style="color:var(--gold-light);text-decoration:underline;">+$75 each</a></div>
+      <div style="font-size:12.5px;color:#C7AFD6;margin-bottom:6px;">Add-on: Career Path & Passions, <a href="https://buy.stripe.com/5kQ9AU4ss6j10zg9Em7AI06" style="color:var(--gold-light);text-decoration:underline;">+$17</a></div>
+      <div style="font-size:11.5px;color:#B79FC7;margin-bottom:20px;font-style:italic;">Add-ons only, available with a session. Please book your session first, then add these on.</div>
+      <ul>
+        <li>Written pre-session brief, both charts</li>
+        <li>30-minute live Overlap Map session</li>
+        <li>Decision Framework Worksheet</li>
+        <li>30-day written follow-up</li>
+      </ul>
+    </div>
+    <div style="margin-top:28px;">
+      <a href="https://buy.stripe.com/8x29AU3oo5eXa9Q03M7AI05" class="btn">Book Your Session</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <h2>You already have good instincts. This just shows you exactly where to point them.</h2>
+  </div>
+</section>
+
+<footer>
+  <p>Already know your child's placements? <a href="https://buy.stripe.com/00w3cw5wwazha9QaIq7AI04" style="color:var(--gold-deep);font-weight:700;">Start with the $197 reading →</a></p>
+</footer>
+
+</body>
+</html>
