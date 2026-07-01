@@ -128,6 +128,25 @@
     opacity:0.5; transition:opacity 0.3s;
   }
   .nav-link:hover { opacity:1; }
+  .nav-dropdown { position:relative; display:inline-flex; align-items:center; }
+  .nav-dropdown > .nav-link { display:inline-flex; align-items:center; gap:5px; }
+  .nav-dropdown > .nav-link::after { content:"▾"; font-size:7px; opacity:0.7; }
+  .nav-dropdown-menu {
+    list-style:none; position:absolute; top:100%; left:50%;
+    transform:translateX(-50%); background:rgba(8,5,26,0.97);
+    border:1px solid rgba(201,168,76,0.25); border-radius:4px;
+    min-width:220px; padding:10px 0; backdrop-filter:blur(8px);
+    opacity:0; visibility:hidden; transition:opacity 0.3s, visibility 0.3s;
+    z-index:250;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown.open .nav-dropdown-menu { opacity:1; visibility:visible; }
+  .nav-dropdown-menu li { display:block; }
+  .nav-dropdown-menu a {
+    display:block; font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--gold); opacity:0.6; text-decoration:none;
+    padding:9px 18px; white-space:nowrap; transition:opacity 0.3s;
+  }
+  .nav-dropdown-menu a:hover { opacity:1; }
   .nav-portal {
     font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.2em;
     color:rgba(201,168,76,0.32); text-decoration:none; text-transform:uppercase;
@@ -720,7 +739,14 @@
     <span class="nav-name">Stella Polaris<br>Publishing™</span>
   </div>
   <div class="nav-right">
-    <a href="/advisory.html" class="nav-link">Stella Polaris Advisory</a>
+    <div class="nav-dropdown">
+      <a href="/advisory.html" class="nav-link">Stella Polaris Advisory</a>
+      <ul class="nav-dropdown-menu">
+        <li><a href="/advisory.html">Private Advisory</a></li>
+        <li><a href="/decode-your-childs-chart.html">Decode Your Child's Chart</a></li>
+        <li><a href="/shepherd-framework.html">The Shepherd Framework</a></li>
+      </ul>
+    </div>
     <a href="/authored.html" class="nav-link">Authored™</a>
     <a href="/the-itinerary.html" class="nav-link">The Itinerary</a>
     <a href="/blog.html" class="nav-link">Journal</a>
@@ -1131,5 +1157,22 @@ document.addEventListener('keydown', function(e) {
 })();
 </script>
 <!-- END FOUNDATIONS OF FAITH POPUP -->
+<script>
+  document.querySelectorAll('.nav-dropdown > .nav-link').forEach(function (toggle) {
+    toggle.addEventListener('click', function (e) {
+      var parent = toggle.parentElement;
+      if (window.matchMedia('(hover: none)').matches && !parent.classList.contains('open')) {
+        e.preventDefault();
+        document.querySelectorAll('.nav-dropdown.open').forEach(function (p) { p.classList.remove('open'); });
+        parent.classList.add('open');
+      }
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (p) { p.classList.remove('open'); });
+    }
+  });
+</script>
 </body>
 </html>
