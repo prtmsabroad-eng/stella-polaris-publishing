@@ -1,7 +1,14 @@
 // Serves advisory_inquiries leads to Studio using the service role key server-side.
-// Requires the caller to present the real Studio passcode as a bearer token —
-// this replaces the old approach of Studio querying Supabase directly with the
-// anon key, which any anonymous visitor could also use to read every lead.
+// Requires the caller to present the real Studio passcode in the X-Studio-Passcode
+// header — this replaces the old approach of Studio querying Supabase directly
+// with the anon key, which any anonymous visitor could also use to read every lead.
+//
+// The passcode is intentionally NOT read from the Authorization header: Supabase's
+// platform gateway enforces its own JWT check on that header before a request ever
+// reaches this code, and the dashboard's "Via Editor" deploy flow doesn't expose a
+// way to turn that off. So the client sends the (already-public) anon key in
+// Authorization to satisfy the platform gate, and the real secret in this custom
+// header, which only this function checks.
 //
 // Set the STUDIO_PASSCODE secret before deploying:
 //   supabase secrets set STUDIO_PASSCODE=<a long, unique passphrase>
@@ -11,7 +18,7 @@
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-studio-passcode",
 };
 
 function safeEqual(a: string, b: string): boolean {
@@ -28,7 +35,7 @@ Deno.serve(async (req) => {
     return new Response(null, { headers: cors });
   }
 
-  const provided = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "");
+  const provided = req.headers.get("X-Studio-Passcode") || "";
   const expected = Deno.env.get("STUDIO_PASSCODE") || "";
 
   if (!expected || !provided || !safeEqual(provided, expected)) {

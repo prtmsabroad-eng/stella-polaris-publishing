@@ -924,7 +924,14 @@ let studioPasscode = sessionStorage.getItem('studio-passcode') || null;
 
 async function fetchLeads() {
   const res = await fetch(`${SUPABASE_URL}/functions/v1/get-leads`, {
-    headers: { 'Authorization': `Bearer ${studioPasscode || ''}` }
+    headers: {
+      // Satisfies Supabase's own platform gateway check on this header — this key
+      // is already public, it isn't the real protection here.
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'apikey': SUPABASE_ANON,
+      // The actual secret: only the function checks this, against STUDIO_PASSCODE.
+      'X-Studio-Passcode': studioPasscode || ''
+    }
   });
   if (!res.ok) throw new Error('unauthorized');
   return res.json();
