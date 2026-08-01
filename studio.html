@@ -145,6 +145,10 @@ nav button:hover { color:var(--purple); }
 .checklist li::before { content:'→'; color:var(--gold); font-weight:700; flex-shrink:0; }
 
 /* CALENDAR */
+.cycle-header { margin:24px 0 10px; padding-bottom:6px; border-bottom:2px solid var(--gold); display:flex; align-items:baseline; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.cycle-header:first-child { margin-top:0; }
+.cycle-title { font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--dark); }
+.cycle-range { font-size:0.7rem; color:#999; font-family:'Space Mono',monospace; }
 .week-label { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--purple); padding:12px 0 8px; border-bottom:1px solid #eee; margin-bottom:10px; }
 .week-note { font-size:0.72rem; color:#999; font-weight:400; font-family:'DM Sans',sans-serif; }
 .cal-day {
@@ -154,8 +158,8 @@ nav button:hover { color:var(--purple); }
 }
 .cal-day:hover { transform:translateY(-1px); }
 .cal-day.today-highlight { box-shadow:0 0 0 2px var(--gold),0 4px 16px rgba(0,0,0,0.1); }
-.cal-day.red-light{border-left-color:var(--coral)}
-.cal-day.purple-light{border-left-color:var(--violet)}
+.cal-day.red{border-left-color:var(--coral)}
+.cal-day.purple{border-left-color:var(--violet)}
 .cal-day.expat{border-left-color:var(--teal)}
 .cal-day.parenting{border-left-color:var(--pink)}
 .cal-day.legacy{border-left-color:var(--gold)}
@@ -179,6 +183,8 @@ nav button:hover { color:var(--purple); }
 .grant-urgency { font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:4px 8px; border-radius:4px; white-space:nowrap; font-family:'Space Mono',monospace; min-width:52px; text-align:center; flex-shrink:0; }
 .urgent{background:#FFE5E5;color:#C0392B} .soon{background:#FFF3CD;color:#856404}
 .open{background:#E8F5E9;color:#2E7D32} .rolling{background:#E3F2FD;color:#1565C0}
+.recurring{background:#EDE7F6;color:#5E35B1}
+.grants-recurring-sub { font-size:0.78rem; color:#888; margin:22px 0 10px; padding-top:14px; border-top:1px solid #eee; }
 .grant-info h4 { font-size:0.88rem; font-weight:700; color:var(--dark); margin-bottom:3px; }
 .grant-amount { font-family:'Space Mono',monospace; font-size:0.82rem; color:var(--purple-mid); font-weight:700; margin-bottom:3px; }
 .grant-deadline { font-size:0.72rem; color:#888; margin-bottom:3px; }
@@ -279,6 +285,33 @@ nav button:hover { color:var(--purple); }
 .intention-input-wrap textarea:focus { border-color:var(--ordained); }
 .intention-save-btn { align-self:flex-end; background:var(--ordained); color:white; border:none; padding:7px 18px; border-radius:20px; font-size:0.75rem; font-weight:700; cursor:pointer; font-family:'DM Sans',sans-serif; }
 
+/* WHAT'S AHEAD (calendar sync) */
+#whats-ahead { background:white; padding:14px 16px; border-bottom:2px solid #eee; overflow-x:auto; }
+#whats-ahead-label { font-size:0.62rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--purple-mid); margin-bottom:8px; font-family:'Space Mono',monospace; }
+#whats-ahead-list { display:flex; gap:10px; }
+.ahead-chip { flex-shrink:0; background:var(--cream); border:1px solid var(--gold); border-radius:10px; padding:8px 14px; min-width:120px; }
+.ahead-date { font-family:'Space Mono',monospace; font-size:0.65rem; color:var(--purple-mid); margin-bottom:3px; }
+.ahead-title { font-size:0.8rem; font-weight:600; color:var(--dark); white-space:normal; }
+.ahead-empty { color:#aaa; font-size:0.8rem; white-space:normal; }
+
+/* PAIN -> PURPOSE */
+.thread-card { background:white; border-radius:14px; margin-bottom:12px; box-shadow:0 2px 10px rgba(0,0,0,0.06); overflow:hidden; }
+.thread-header { padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; }
+.thread-label { font-size:0.62rem; font-weight:700; letter-spacing:2px; color:var(--purple-mid); font-family:'Space Mono',monospace; margin-bottom:4px; }
+.thread-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--dark); }
+.thread-chevron { color:#ccc; font-size:1rem; transition:transform 0.2s; flex-shrink:0; }
+.thread-chevron.open { transform:rotate(180deg); color:var(--ordained); }
+.thread-body { padding:0 18px 18px; display:none; }
+.thread-body.open { display:block; }
+.thread-subhead { font-size:0.62rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:3px 10px; border-radius:20px; display:inline-block; margin-bottom:8px; font-family:'Space Mono',monospace; }
+.thread-subhead.built { color:var(--gold); background:rgba(201,168,76,0.12); }
+.thread-subhead.unlock { color:#2E7D32; background:rgba(46,125,50,0.1); }
+.thread-list { list-style:none; margin-bottom:14px; }
+.thread-list li { font-size:0.82rem; color:#444; line-height:1.55; padding:5px 0 5px 16px; position:relative; }
+.thread-list li::before { content:''; position:absolute; left:0; top:12px; width:5px; height:5px; border-radius:50%; }
+.thread-list.built li::before { background:var(--gold); }
+.thread-list.unlock li::before { background:#2E7D32; }
+
 /* RESPONSIVE */
 @media(max-width:480px) { .light-grid{grid-template-columns:1fr} }
 </style>
@@ -303,6 +336,12 @@ nav button:hover { color:var(--purple); }
     </div>
   </header>
 
+  <!-- WHAT'S AHEAD -->
+  <div id="whats-ahead">
+    <div id="whats-ahead-label">📅 What's Ahead — Next 14 Days</div>
+    <div id="whats-ahead-list"><div class="ahead-empty">Loading calendar…</div></div>
+  </div>
+
   <nav>
     <button class="active" onclick="showTab('today',this)">📍 Today</button>
     <button onclick="showTab('leads',this)" id="leads-nav-btn">⚡ Leads</button>
@@ -316,6 +355,7 @@ nav button:hover { color:var(--purple); }
     <button onclick="showTab('notes',this)">📓 Notes</button>
     <button onclick="showTab('astro',this)">🔮 Transits</button>
     <button onclick="showTab('framework',this)">💡 Framework</button>
+    <button onclick="showTab('painpurpose',this)">🗝️ Pain→Purpose</button>
   </nav>
 
   <!-- TODAY -->
@@ -378,17 +418,13 @@ nav button:hover { color:var(--purple); }
       </ul>
     </div>
 
-    <div class="card">
-      <div class="card-header"><div class="card-icon" style="background:#E6FFF8">🎯</div><h3>This Week</h3></div>
-      <ul class="checklist" id="week-focus"></ul>
-    </div>
   </div>
 
   <!-- CALENDAR -->
   <div class="section" id="tab-calendar">
-    <div class="section-title">30-Day Content Calendar</div>
-    <div class="section-sub">Starts June 10 · Post what's trending until then · Calendar resets after the move</div>
-    <div id="cal-grid"></div>
+    <div class="section-title">Content Calendar</div>
+    <div class="section-sub">Every cycle you've run, kept for reference. Add a new cycle to the <code>cycles</code> array in the code whenever you plan the next one.</div>
+    <div id="cal-cycles"></div>
   </div>
 
   <!-- PROJECTS -->
@@ -703,6 +739,8 @@ nav button:hover { color:var(--purple); }
     <div class="section-title">Grant Tracker</div>
     <div class="section-sub">One application per week minimum. Check deadlines every Sunday morning.</div>
     <div id="grants-list"></div>
+    <div class="grants-recurring-sub">🔁 Recurring — closed for this year, watch for these again</div>
+    <div id="grants-recurring-list"></div>
   </div>
 
   <!-- UGC -->
@@ -729,7 +767,7 @@ nav button:hover { color:var(--purple); }
 
     <div class="pitch-block">
       <h4>Cold Pitch Template</h4>
-      <p>Hi [Brand], I'm Tashia Monique — founder, author, homeschooling mom and creator documenting a life built entirely on purpose. Relocating from Mexico to Albania with my daughter Nova, building content around intentional parenting, legacy, and living abroad as a Black American woman.<br><br>
+      <p>Hi [Brand], I'm Tashia Monique — founder, author, homeschooling mom and creator documenting a life built entirely on purpose. Based in Tirana, Albania with my daughter Nova after relocating from Mexico, building content around intentional parenting, legacy, and living abroad as a Black American woman.<br><br>
       Posts regularly reaching 1,000–1,400 non-follower accounts organically with an internationally distributed website audience across 33 countries. All content created natively in Instagram Edits for maximum platform reach.<br><br>
       I'd love to explore a UGC partnership for [product category]. Full portfolio at stellapolarispublishing.com.</p>
     </div>
@@ -835,6 +873,13 @@ nav button:hover { color:var(--purple); }
     </div>
   </div>
 
+  <!-- PAIN -> PURPOSE -->
+  <div class="section" id="tab-painpurpose">
+    <div class="section-title">Pain → Purpose</div>
+    <div class="section-sub">Every hard chapter, mapped to what it already built — and what's still unlocking.</div>
+    <div id="thread-list"></div>
+  </div>
+
   <!-- LEADS -->
   <div class="section" id="tab-leads">
     <div class="section-title">Advisory Leads</div>
@@ -886,46 +931,7 @@ function showTab(id, btn) {
   if (id === 'leads') loadLeads();
 }
 
-const startDate = new Date('2026-06-10');
-
-const calData = [
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Love is not an emotion. It is a force. Here is how I taught my daughter to live inside it."',trial:'"Most people think love is something you feel. Nova taught me it is something you do."'},
-  {bucket:'expat',tag:'tag-expat',feed:'Expat reframe: "I did not move abroad for the aesthetic. Here is what I needed my daughter to witness before she turned 7."',trial:'"What I stopped tolerating the moment we left."'},
-  {bucket:'red',tag:'tag-red',feed:'Red Light: Hot take on something trending — school systems, parenting debates, or cultural moment of the day',trial:'"Say what everyone is thinking but nobody will say."'},
-  {bucket:'parenting',tag:'tag-parenting',feed:'Intentional Parenting: "Nova asked me a question last week that I was not ready for. Here is what I said."',trial:'"Raising a child who questions everything is terrifying and also exactly right."'},
-  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "I built a publishing company because the industry would not make space. Here is what that actually looked like."',trial:'"The book exists because she asked a question I could not answer with anything on the shelf."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Belief — you are not manifesting things into your life. You are organizing your reality around what you already believe is true."',trial:'"What you believe is literally building the room you are standing in right now."'},
-  {bucket:'expat',tag:'tag-expat',feed:'Expat: "Here is what homeschooling abroad actually looks like on a Tuesday." (show Nova, make it real)',trial:'"Two BAPs from Decatur, learning and exploring the world."'},
-  {bucket:'red',tag:'tag-red',feed:'Red Light: React to a trending conversation about parenting, faith, or Black culture',trial:'"I had this thought as a kid... I am 43 now and it still applies."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: Mary Magdalene — "She was not a sinner. She was the one who understood what he was actually teaching. Here is why that matters for how I raise Nova."',trial:'"The story they told about her was always about controlling what women know."'},
-  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "What I refuse to pass down. And what I am being intentional about handing her instead."',trial:'"Generational patterns do not break themselves."'},
-  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: The Law of Correspondence — "As within, so without. Your external life is a printout of your internal state. This is why the books exist."',trial:'"Nova asked me what magic is. Here is what I told her."'},
-  {bucket:'expat',tag:'tag-expat',feed:'Expat reframe: "What community actually looks like when you build it on purpose instead of defaulting to geography."',trial:'"I chose who gets access to my daughter\'s everyday life. That was the most intentional parenting decision I ever made."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Resistance — everything you fight gets stronger. Here is what I stopped fighting and what happened next."',trial:'"The Tinkerbee exists because Nova showed me what resistance actually looks like in a child."'},
-  {bucket:'red',tag:'tag-red',feed:'Red Light: Hot take — pick the most unhinged thing in your feed this week and respond from your actual framework',trial:'"Why are people like this." (let them tag their friends)'},
-  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "We are moving to Albania in days. Here is every question Nova has asked me about it and every answer I gave."',trial:'"Homeschooling means the whole world is the classroom."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Gospel of Thomas says the kingdom is not coming. It is already here. You are already in it. Here is what that changed for me."',trial:'"114 sayings. No miracles. No story. Just instructions."'},
-  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "What I needed my daughter to understand about where we come from before we left the continent."',trial:'"Ebbie Lee. Willie Odessa. Mary Jane. Lillian. This is who the books are for."'},
-  {bucket:'expat',tag:'tag-expat',feed:'Expat: "Last week in Mexico. Here is what this chapter gave us." (reflection, gratitude, no sentimentality)',trial:'"New life. New country. Follow our journey abroad."'},
-  {bucket:'red',tag:'tag-red',feed:'Red Light: "Everything people got wrong about moving abroad with kids."',trial:'"I was not running away. I was running toward something very specific."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "Why I teach Nova universal laws instead of religion. And why that is the most spiritual thing I have ever done."',trial:'"Christ consciousness is not Christianity. Here is the difference."'},
-  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "Nova designed the logo for our publishing company before she could write her name conventionally. Here is what that taught me about intelligence."',trial:'"She signs it like a signet. Because she has always known she is royalty."'},
-  {bucket:'expat',tag:'tag-expat',feed:'ALBANIA DAY 1: "We are here. Here is what the first 24 hours actually felt like." (raw, real)',trial:'"New life. New country. We made it."'},
-  {bucket:'cooking',tag:'tag-cooking',feed:'COOKING UNLOCKED: "First meal cooked in our new Albanian kitchen. Here is what I made and why it mattered."',trial:'"A professional chef in a new country with new ingredients. Watch what happens."'},
-  {bucket:'beauty',tag:'tag-beauty',feed:'BEAUTY UNLOCKED: "First getting-ready in Albania. Same face, new light, new life."',trial:'"Your girl did not lose her edge crossing the Atlantic."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light from Albania: "The Law of Correspondence hits different when your external life finally matches what you built internally for years."',trial:'"I knew this place before I arrived. My astrocartography said so."'},
-  {bucket:'parenting',tag:'tag-parenting',feed:'Parenting in Albania: "Nova\'s first week learning in a new country. What she noticed that I missed completely."',trial:'"Children are not confused by change. They are confused by adults who pretend change is not happening."'},
-  {bucket:'red',tag:'tag-red',feed:'Red Light: React to something trending from your new Albanian vantage point',trial:'"The view is different from here."'},
-  {bucket:'cooking',tag:'tag-cooking',feed:'Cooking: "Albanian ingredients I had no idea what to do with. Here is what I figured out."',trial:'"Chef brain does not turn off just because the country changed."'},
-  {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "Here is what Stella Polaris Publishing is actually building. And why the books are just the beginning."',trial:'"I founded a publishing house because infrastructure matters more than a single book."'},
-  {bucket:'purple',tag:'tag-purple',feed:'Purple Light: Full circle — "The Law of Correspondence. I came to the place my birth chart said was mine. Here is what I found when I got here."',trial:'"Some people call it astrology. I call it directions."'},
-];
-
 const grants = [
-  {urgency:'urgent',label:'URGENT',name:'AT&T Women\'s Small Business Grant',amount:'$50,000',deadline:'May 31, 2026',why:'Women-owned, social impact, US-based. Closes in days.',url:'https://womenfoundersnetwork.org/about-fast-pitch'},
-  {urgency:'urgent',label:'URGENT',name:'Alan Andres Picture Book Writer Fellowship',amount:'$25,000',deadline:'June 5, 2026',why:'Emerging children\'s book writer. Stella Polaris fits exactly.',url:'https://www.associatesbpl.org/events-and-programs/picture-book-writer-fellowship/'},
-  {urgency:'soon',label:'SOON',name:'Famous Amos Ingredients for Success',amount:'$50,000',deadline:'June 1, 2026',why:'Black-owned business under 5 years. Requires pitch video.',url:'https://www.uschamber.com/co/run/business-financing'},
-  {urgency:'soon',label:'SOON',name:'Stimpunks Foundation Creator Grant',amount:'Up to $3,000',deadline:'Opens June 1, 2026',why:'Neurodivergent creator. Self-identification accepted.',url:'https://stimpunks.org/creators/grant/'},
   {urgency:'open',label:'OPEN',name:'Miss Sarah Fellowship — Black Women Writers',amount:'Residency + stipend',deadline:'2026 cycle open',why:'Black woman writer. Writing time and space. Love Overload + Nova series.',url:'https://www.trilliumartsnc.org/writing-fellowships-guidelines'},
   {urgency:'open',label:'OPEN',name:'Her Agenda Grant',amount:'$5,000',deadline:'September 18, 2026',why:'Women entrepreneur, 1+ year in business. Subscribe to newsletter before applying.',url:'https://heragenda.com'},
   {urgency:'open',label:'OPEN',name:'NAACP Powershift Entrepreneur Grant',amount:'$25,000',deadline:'November 1, 2026',why:'Black business owner. Prepare materials now — this one takes lead time.',url:'https://naacp.org'},
@@ -933,6 +939,279 @@ const grants = [
   {urgency:'rolling',label:'ROLLING',name:'Fearless Strivers Grant',amount:'$10,000',deadline:'Rolling',why:'Black women business owners. Strong brand story is your asset.',url:'https://fearlessfund.com'},
   {urgency:'rolling',label:'ROLLING',name:'Astraea Foundation',amount:'$5,000–$30,000',deadline:'Rolling',why:'LGBTQI people of color. Racial and gender justice mission. Stella Polaris fits.',url:'https://astraeafoundation.org'},
 ];
+
+// Grants that run on an annual cycle — this year's window already closed, but they'll reopen
+// around the same time next year. Kept here (instead of deleted) so you have advance notice
+// next time instead of finding out after the deadline again.
+const recurringGrants = [
+  {label:'ANNUAL',name:'AT&T Women\'s Small Business Grant',amount:'$50,000',deadline:'Closed for 2026 — typically closes ~May 31',why:'Women-owned, social impact, US-based. Start prepping materials by April next year.',url:'https://womenfoundersnetwork.org/about-fast-pitch'},
+  {label:'ANNUAL',name:'Alan Andres Picture Book Writer Fellowship',amount:'$25,000',deadline:'Closed for 2026 — typically closes ~June 5',why:'Emerging children\'s book writer. Stella Polaris fits exactly — watch for the next opening.',url:'https://www.associatesbpl.org/events-and-programs/picture-book-writer-fellowship/'},
+  {label:'ANNUAL',name:'Famous Amos Ingredients for Success',amount:'$50,000',deadline:'Closed for 2026 — typically closes ~June 1',why:'Black-owned business under 5 years. Requires a pitch video — start filming early next cycle.',url:'https://www.uschamber.com/co/run/business-financing'},
+  {label:'ANNUAL',name:'Stimpunks Foundation Creator Grant',amount:'Up to $3,000',deadline:'Opens annually ~June 1',why:'Neurodivergent creator. Self-identification accepted. Check if the 2026 window is still open.',url:'https://stimpunks.org/creators/grant/'},
+];
+
+// Every content cycle you've run, kept as a permanent reference. To start a new one,
+// copy this shape (label, startDate, days[]) and push it onto the array — old cycles
+// are never overwritten, so a year from now you'll have several to look back through.
+const cycles = [
+  {
+    id: 'cycle-1',
+    label: 'Cycle 1',
+    startDate: '2026-06-10',
+    weekNotes: ['Establishing the frequency','Building community','Pre-Albania anticipation','🇦🇱 Albania — cooking + beauty unlock','Closing the sprint'],
+    days: [
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Love is not an emotion. It is a force. Here is how I taught my daughter to live inside it."',trial:'"Most people think love is something you feel. Nova taught me it is something you do."'},
+      {bucket:'expat',tag:'tag-expat',feed:'Expat reframe: "I did not move abroad for the aesthetic. Here is what I needed my daughter to witness before she turned 7."',trial:'"What I stopped tolerating the moment we left."'},
+      {bucket:'red',tag:'tag-red',feed:'Red Light: Hot take on something trending — school systems, parenting debates, or cultural moment of the day',trial:'"Say what everyone is thinking but nobody will say."'},
+      {bucket:'parenting',tag:'tag-parenting',feed:'Intentional Parenting: "Nova asked me a question last week that I was not ready for. Here is what I said."',trial:'"Raising a child who questions everything is terrifying and also exactly right."'},
+      {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "I built a publishing company because the industry would not make space. Here is what that actually looked like."',trial:'"The book exists because she asked a question I could not answer with anything on the shelf."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Belief — you are not manifesting things into your life. You are organizing your reality around what you already believe is true."',trial:'"What you believe is literally building the room you are standing in right now."'},
+      {bucket:'expat',tag:'tag-expat',feed:'Expat: "Here is what homeschooling abroad actually looks like on a Tuesday." (show Nova, make it real)',trial:'"Two BAPs from Decatur, learning and exploring the world."'},
+      {bucket:'red',tag:'tag-red',feed:'Red Light: React to a trending conversation about parenting, faith, or Black culture',trial:'"I had this thought as a kid... I am 43 now and it still applies."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: Mary Magdalene — "She was not a sinner. She was the one who understood what he was actually teaching. Here is why that matters for how I raise Nova."',trial:'"The story they told about her was always about controlling what women know."'},
+      {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "What I refuse to pass down. And what I am being intentional about handing her instead."',trial:'"Generational patterns do not break themselves."'},
+      {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: The Law of Correspondence — "As within, so without. Your external life is a printout of your internal state. This is why the books exist."',trial:'"Nova asked me what magic is. Here is what I told her."'},
+      {bucket:'expat',tag:'tag-expat',feed:'Expat reframe: "What community actually looks like when you build it on purpose instead of defaulting to geography."',trial:'"I chose who gets access to my daughter\'s everyday life. That was the most intentional parenting decision I ever made."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Law of Resistance — everything you fight gets stronger. Here is what I stopped fighting and what happened next."',trial:'"The Tinkerbee exists because Nova showed me what resistance actually looks like in a child."'},
+      {bucket:'red',tag:'tag-red',feed:'Red Light: Hot take — pick the most unhinged thing in your feed this week and respond from your actual framework',trial:'"Why are people like this." (let them tag their friends)'},
+      {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "We are moving to Albania in days. Here is every question Nova has asked me about it and every answer I gave."',trial:'"Homeschooling means the whole world is the classroom."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "The Gospel of Thomas says the kingdom is not coming. It is already here. You are already in it. Here is what that changed for me."',trial:'"114 sayings. No miracles. No story. Just instructions."'},
+      {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "What I needed my daughter to understand about where we come from before we left the continent."',trial:'"Ebbie Lee. Willie Odessa. Mary Jane. Lillian. This is who the books are for."'},
+      {bucket:'expat',tag:'tag-expat',feed:'Expat: "Last week in Mexico. Here is what this chapter gave us." (reflection, gratitude, no sentimentality)',trial:'"New life. New country. Follow our journey abroad."'},
+      {bucket:'red',tag:'tag-red',feed:'Red Light: "Everything people got wrong about moving abroad with kids."',trial:'"I was not running away. I was running toward something very specific."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: "Why I teach Nova universal laws instead of religion. And why that is the most spiritual thing I have ever done."',trial:'"Christ consciousness is not Christianity. Here is the difference."'},
+      {bucket:'parenting',tag:'tag-parenting',feed:'Parenting: "Nova designed the logo for our publishing company before she could write her name conventionally. Here is what that taught me about intelligence."',trial:'"She signs it like a signet. Because she has always known she is royalty."'},
+      {bucket:'expat',tag:'tag-expat',feed:'ALBANIA DAY 1: "We are here. Here is what the first 24 hours actually felt like." (raw, real)',trial:'"New life. New country. We made it."'},
+      {bucket:'cooking',tag:'tag-cooking',feed:'COOKING UNLOCKED: "First meal cooked in our new Albanian kitchen. Here is what I made and why it mattered."',trial:'"A professional chef in a new country with new ingredients. Watch what happens."'},
+      {bucket:'beauty',tag:'tag-beauty',feed:'BEAUTY UNLOCKED: "First getting-ready in Albania. Same face, new light, new life."',trial:'"Your girl did not lose her edge crossing the Atlantic."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light from Albania: "The Law of Correspondence hits different when your external life finally matches what you built internally for years."',trial:'"I knew this place before I arrived. My astrocartography said so."'},
+      {bucket:'parenting',tag:'tag-parenting',feed:'Parenting in Albania: "Nova\'s first week learning in a new country. What she noticed that I missed completely."',trial:'"Children are not confused by change. They are confused by adults who pretend change is not happening."'},
+      {bucket:'red',tag:'tag-red',feed:'Red Light: React to something trending from your new Albanian vantage point',trial:'"The view is different from here."'},
+      {bucket:'cooking',tag:'tag-cooking',feed:'Cooking: "Albanian ingredients I had no idea what to do with. Here is what I figured out."',trial:'"Chef brain does not turn off just because the country changed."'},
+      {bucket:'legacy',tag:'tag-legacy',feed:'Legacy: "Here is what Stella Polaris Publishing is actually building. And why the books are just the beginning."',trial:'"I founded a publishing house because infrastructure matters more than a single book."'},
+      {bucket:'purple',tag:'tag-purple',feed:'Purple Light: Full circle — "The Law of Correspondence. I came to the place my birth chart said was mine. Here is what I found when I got here."',trial:'"Some people call it astrology. I call it directions."'},
+    ]
+  }
+  // Add Cycle 2, Cycle 3, etc. here — same shape as Cycle 1 above.
+];
+
+function findActiveCycle(now) {
+  for (const cycle of cycles) {
+    const start = new Date(cycle.startDate);
+    const dayIndex = Math.floor((now - start) / 86400000);
+    if (dayIndex >= 0 && dayIndex < cycle.days.length) return { cycle, dayIndex };
+  }
+  return null;
+}
+
+function renderTodayMission(now) {
+  const active = findActiveCycle(now);
+  if (active) {
+    const { cycle, dayIndex } = active;
+    const d = cycle.days[dayIndex];
+    document.getElementById('today-heading').textContent = `${cycle.label} — Day ${dayIndex + 1} of ${cycle.days.length}`;
+    document.getElementById('today-tasks').innerHTML = `
+      <div class="task-row"><div class="task-type">FEED</div><div class="task-content">${d.feed}</div></div>
+      <div class="task-row" style="border-left-color:var(--teal)"><div class="task-type" style="color:var(--teal)">TRIAL</div><div class="task-content">${d.trial}</div></div>`;
+    return;
+  }
+  const last = cycles[cycles.length - 1];
+  const lastEnd = new Date(last.startDate);
+  lastEnd.setDate(lastEnd.getDate() + last.days.length - 1);
+  const upcoming = last.days.length && now < new Date(last.startDate);
+  document.getElementById('today-heading').textContent = upcoming
+    ? `${last.label} starts ${new Date(last.startDate).toLocaleDateString('en-US',{month:'long',day:'numeric'})}`
+    : 'No active content cycle — plan the next one';
+  document.getElementById('today-tasks').innerHTML = upcoming
+    ? '<div class="task-row"><div class="task-content">Queue your drafts. Organize Edits. Launch day is coming.</div></div>'
+    : `<div class="task-row"><div class="task-content">${last.label} ended ${lastEnd.toLocaleDateString('en-US',{month:'long',day:'numeric'})}. See the Calendar tab for the full archive — ready to plan the next cycle?</div></div>`;
+}
+
+function renderCalendar(now) {
+  const container = document.getElementById('cal-cycles');
+  if (!container) return;
+  container.innerHTML = '';
+  const active = findActiveCycle(now);
+
+  cycles.forEach(cycle => {
+    const start = new Date(cycle.startDate);
+    const end = new Date(start); end.setDate(end.getDate() + cycle.days.length - 1);
+    const header = document.createElement('div');
+    header.className = 'cycle-header';
+    header.innerHTML = `<div class="cycle-title">${cycle.label}</div><div class="cycle-range">${start.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${end.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>`;
+    container.appendChild(header);
+
+    for (let w = 0; w < Math.ceil(cycle.days.length / 7); w++) {
+      const weekStart = w * 7, weekEnd = Math.min(weekStart + 7, cycle.days.length);
+      const wStartDate = new Date(start); wStartDate.setDate(wStartDate.getDate() + weekStart);
+      const wEndDate = new Date(start); wEndDate.setDate(wEndDate.getDate() + weekEnd - 1);
+      const wl = document.createElement('div');
+      wl.className = 'week-label';
+      const note = cycle.weekNotes && cycle.weekNotes[w] ? ` <span class="week-note">— ${cycle.weekNotes[w]}</span>` : '';
+      wl.innerHTML = `Week ${w + 1} — ${wStartDate.toLocaleDateString('en-US',{month:'short',day:'numeric'})}-${wEndDate.toLocaleDateString('en-US',{day:'numeric'})}${note}`;
+      container.appendChild(wl);
+
+      for (let i = weekStart; i < weekEnd; i++) {
+        const d = cycle.days[i];
+        const dd = new Date(start); dd.setDate(dd.getDate() + i);
+        const ds = dd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+        const isToday = !!active && active.cycle.id === cycle.id && active.dayIndex === i;
+        const doneKey = `done-${cycle.id}-${i}`;
+        const saved = localStorage.getItem(doneKey) === 'true';
+        const el = document.createElement('div');
+        el.className = `cal-day ${d.bucket}${isToday ? ' today-highlight' : ''}`;
+        const bucketLabel = d.bucket.replace('red','🔴 Red').replace('purple','🟣 Purple').replace('expat','🌍 Expat').replace('parenting','💛 Parenting').replace('legacy','⭐ Legacy').replace('cooking','🍳 Cooking').replace('beauty','💄 Beauty');
+        el.innerHTML = `
+          <div class="cal-day-header">
+            <div><div class="cal-day-num">Day ${i + 1}${isToday ? ' ← TODAY' : ''}</div><div class="cal-day-date">${ds}</div></div>
+            <span class="bucket-tag ${d.tag}">${bucketLabel}</span>
+          </div>
+          <div class="cal-feed-hook">${d.feed}</div>
+          <div style="margin-top:7px"><div class="cal-trial-label">Trial Reel</div><div class="cal-trial-hook">${d.trial}</div></div>
+          <button class="done-btn ${saved ? 'done' : ''}" onclick="toggleDone('${doneKey}',this)">${saved ? '✓ Done' : 'Mark done'}</button>`;
+        container.appendChild(el);
+      }
+    }
+  });
+}
+
+function toggleDone(key, btn) {
+  const isDone = btn.classList.contains('done');
+  btn.classList.toggle('done', !isDone);
+  btn.textContent = isDone ? 'Mark done' : '✓ Done';
+  localStorage.setItem(key, (!isDone).toString());
+}
+
+const painThreads = [
+  {
+    num:'01', title:'Family / What Was Done',
+    built:[
+      'Love Overload (all 20 chapters, ISBN 978-1-963741-00-2) — family survival architecture metabolized into literary nonfiction.',
+      '"Regulated Rebellion™" as a brand philosophy — the family system alchemized into a market position.'
+    ],
+    unlocking:[
+      "The drama series (Maya and Devlin) — fictionalized, can go places the book can't yet.",
+      'Advisory practice reads this pattern in executive clients and names it before they do.'
+    ]
+  },
+  {
+    num:'02', title:'Being Behind the Glass',
+    built:[
+      'Stella Polaris Publishing — built because she understood the industry from inside its kitchens and classrooms.',
+      'Authored™ — a writing tool built by a former educator who knows what the creative process actually needs.'
+    ],
+    unlocking:[
+      'Tashia Monique Speaks is where TV credits (TLC, Bravo, The Talk) become content authority.',
+      'The pivot from private chef to founder with a media strategy is the TMS through-line no one else can tell.'
+    ]
+  },
+  {
+    num:'03', title:'Solo Parenting Nova',
+    built:[
+      'Nova & the Magic of Faith.',
+      'Twinklebee.',
+      "Children's education product line specificity (single fonts, tactile engagement, multi-modal) exists because there was no room for guessing."
+    ],
+    unlocking:[
+      'Solo parent founder story as credential, not vulnerability. "Built this with no co-parent, no institutional backing, across multiple countries" is an authority position that compounds.',
+      'Keynote material.'
+    ]
+  },
+  {
+    num:'04', title:'Financial & Geographic Precarity',
+    built:[
+      'Multi-brand publishing house with no investors, digital-first, geography-independent.',
+      'Infrastructure built out of necessity (Wise, lean overhead, distributed products) is the model the next wave of creator-founders is trying to figure out.'
+    ],
+    unlocking:[
+      'Turkish Airlines formal complaint and media strategy is live material.',
+      '"How I built a publishing house across three countries as a solo parent with no outside capital" is a keynote, masterclass, and TMS episode.'
+    ]
+  },
+  {
+    num:'05', title:"Systems That Didn't See You",
+    built:[
+      'Stella Polaris is the answer to traditional publishing gatekeeping.',
+      'The advisory practice is the answer to leadership consulting that ignores timing and intuition.',
+      "The children's product line is the answer to curricula that couldn't hold Nova."
+    ],
+    unlocking:[
+      '"Build what didn\'t exist for you" is the through-line across every brand under Stella Polaris.',
+      'This is the keynote, the media angle, and the thought leadership position that makes her categorical rather than competitive.'
+    ]
+  }
+];
+
+function renderThreads() {
+  const container = document.getElementById('thread-list');
+  if (!container) return;
+  container.innerHTML = painThreads.map((t, i) => `
+    <div class="thread-card">
+      <div class="thread-header" onclick="toggleThread(${i})">
+        <div>
+          <div class="thread-label">THREAD ${t.num}</div>
+          <div class="thread-title">${t.title}</div>
+        </div>
+        <div class="thread-chevron" id="thread-chevron-${i}">▼</div>
+      </div>
+      <div class="thread-body" id="thread-body-${i}">
+        <div class="thread-subhead built">Already Built</div>
+        <ul class="thread-list built">${t.built.map(b => `<li>${b}</li>`).join('')}</ul>
+        <div class="thread-subhead unlock">Still Unlocking</div>
+        <ul class="thread-list unlock">${t.unlocking.map(u => `<li>${u}</li>`).join('')}</ul>
+      </div>
+    </div>`).join('');
+}
+
+function toggleThread(i) {
+  const body = document.getElementById('thread-body-' + i);
+  const chevron = document.getElementById('thread-chevron-' + i);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+  chevron.textContent = isOpen ? '▼' : '▲';
+}
+
+// REPLACE WITH YOUR GOOGLE API KEY (Google Cloud Console → Credentials)
+// Restrict this key to the Calendar API only, and add an HTTP referrer restriction
+// for stellapolarispublishing.com — this file is public, so an unrestricted key is exposed to anyone who views source.
+const GOOGLE_CALENDAR_API_KEY = 'YOUR_API_KEY';
+// REPLACE WITH YOUR CALENDAR ID (found in Google Calendar Settings → your calendar → Integrate calendar)
+// Also make sure the calendar's sharing settings allow "Make available to public" (or at least API access) or the API will return nothing.
+const GOOGLE_CALENDAR_ID = 'YOUR_CALENDAR_ID';
+
+async function loadWhatsAhead() {
+  const list = document.getElementById('whats-ahead-list');
+  if (!list) return;
+  if (GOOGLE_CALENDAR_API_KEY === 'YOUR_API_KEY' || GOOGLE_CALENDAR_ID === 'YOUR_CALENDAR_ID') {
+    list.innerHTML = '<div class="ahead-empty">Add your Google Calendar API key + Calendar ID in the code to activate this.</div>';
+    return;
+  }
+  const timeMin = new Date().toISOString();
+  const timeMax = new Date(Date.now() + 14 * 86400000).toISOString();
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(GOOGLE_CALENDAR_ID)}/events`
+    + `?key=${GOOGLE_CALENDAR_API_KEY}&timeMin=${encodeURIComponent(timeMin)}&timeMax=${encodeURIComponent(timeMax)}`
+    + `&singleEvents=true&orderBy=startTime&maxResults=20`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.items || !data.items.length) {
+      list.innerHTML = '<div class="ahead-empty">Nothing on the calendar in the next 14 days.</div>';
+      return;
+    }
+    list.innerHTML = data.items.map(ev => {
+      const start = ev.start.dateTime || ev.start.date;
+      const d = new Date(start);
+      const dateStr = d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+      return `<div class="ahead-chip">
+        <div class="ahead-date">${dateStr}</div>
+        <div class="ahead-title">${ev.summary || 'Untitled event'}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    list.innerHTML = '<div class="ahead-empty">Could not load calendar.</div>';
+  }
+}
 
 function initDashboard() {
   const now = new Date();
@@ -942,71 +1221,18 @@ function initDashboard() {
   // Load leads summary on dashboard open
   loadLeadsSummary();
 
-
-  const dayIndex = Math.floor((now - startDate) / 86400000);
-  const todayData = (dayIndex >= 0 && dayIndex < calData.length) ? calData[dayIndex] : null;
-
-  if (todayData) {
-    document.getElementById('today-heading').textContent = 'Day ' + (dayIndex+1) + ' of 30';
-    document.getElementById('today-tasks').innerHTML = `
-      <div class="task-row"><div class="task-type">FEED</div><div class="task-content">${todayData.feed}</div></div>
-      <div class="task-row" style="border-left-color:var(--teal)"><div class="task-type" style="color:var(--teal)">TRIAL</div><div class="task-content">${todayData.trial}</div></div>`;
-  } else if (dayIndex < 0) {
-    document.getElementById('today-heading').textContent = 'Starts May 19 — Get Ready';
-    document.getElementById('today-tasks').innerHTML = '<div class="task-row"><div class="task-content">Queue your drafts. Organize Edits. Launch day is coming.</div></div>';
-  } else {
-    document.getElementById('today-heading').textContent = '30-Day Sprint Complete. Build the next one.';
-  }
-
-  const weekFocuses = {
-    0:['Establish red/purple light rhythm','Post daily from Edits natively','Start Trial reels for cold discovery','Law of Love content — feed into book awareness'],
-    1:['Mary Magdalene purple light series','Pitch one UGC brand this week','Apply for one grant before Sunday','Law of Resistance content'],
-    2:['Albania departure — document everything','Build Kickstarter launch anticipation','Apply for Famous Amos before June 1','Gospel of Thomas series'],
-    3:['Albania arrival — cooking + beauty unlocked','Law of Correspondence purple light','Apply for Stimpunks Creator Grant','Kickstarter launch window now open'],
-    4:['Close the sprint strong','Build next 30-day calendar','Review follower growth vs goal','Plan July content arc toward birthday']
-  };
-  const wk = Math.min(Math.floor(Math.max(dayIndex,0)/7), 4);
-  document.getElementById('week-focus').innerHTML = (weekFocuses[wk]||weekFocuses[0]).map(f=>`<li>${f}</li>`).join('');
-
-  // Calendar
-  const grid = document.getElementById('cal-grid');
-  const weeks = [
-    {label:'Week 1 — May 19-25',note:'Establishing the frequency',days:[0,1,2,3,4,5,6]},
-    {label:'Week 2 — May 26 - June 1',note:'Building community',days:[7,8,9,10,11,12,13]},
-    {label:'Week 3 — June 2-8',note:'Pre-Albania anticipation',days:[14,15,16,17,18,19,20]},
-    {label:'Week 4 — June 9-15',note:'🇦🇱 Albania — cooking + beauty unlock',days:[21,22,23,24,25,26,27]},
-    {label:'Week 5 — June 16-17',note:'Closing the sprint',days:[28,29]},
-  ];
-  weeks.forEach(week => {
-    const wl = document.createElement('div');
-    wl.className = 'week-label';
-    wl.innerHTML = `${week.label} <span class="week-note">— ${week.note}</span>`;
-    grid.appendChild(wl);
-    week.days.forEach(i => {
-      const d = calData[i];
-      const dd = new Date(startDate); dd.setDate(dd.getDate()+i);
-      const ds = dd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-      const isToday = i===dayIndex;
-      const saved = localStorage.getItem('done-'+i)==='true';
-      const el = document.createElement('div');
-      el.className = `cal-day ${d.bucket}${isToday?' today-highlight':''}`;
-      const bucketLabel = d.bucket.replace('red','🔴 Red').replace('purple','🟣 Purple').replace('expat','🌍 Expat').replace('parenting','💛 Parenting').replace('legacy','⭐ Legacy').replace('cooking','🍳 Cooking').replace('beauty','💄 Beauty');
-      el.innerHTML = `
-        <div class="cal-day-header">
-          <div><div class="cal-day-num">Day ${i+1}${isToday?' ← TODAY':''}</div><div class="cal-day-date">${ds}</div></div>
-          <span class="bucket-tag ${d.tag}">${bucketLabel}</span>
-        </div>
-        <div class="cal-feed-hook">${d.feed}</div>
-        <div style="margin-top:7px"><div class="cal-trial-label">Trial Reel</div><div class="cal-trial-hook">${d.trial}</div></div>
-        <button class="done-btn ${saved?'done':''}" onclick="toggleDone(${i},this)">${saved?'✓ Done':'Mark done'}</button>`;
-      grid.appendChild(el);
-    });
-  });
+  renderTodayMission(now);
+  renderCalendar(now);
 
   // Grants
   const gl = document.getElementById('grants-list');
   grants.forEach(g => {
     gl.innerHTML += `<div class="grant-card"><div class="grant-urgency ${g.urgency}">${g.label}</div><div class="grant-info"><h4>${g.name}</h4><div class="grant-amount">${g.amount}</div><div class="grant-deadline">📅 ${g.deadline}</div><div class="grant-why">${g.why}</div><a href="${g.url}" target="_blank" class="grant-apply">Apply →</a></div></div>`;
+  });
+
+  const grl = document.getElementById('grants-recurring-list');
+  recurringGrants.forEach(g => {
+    grl.innerHTML += `<div class="grant-card"><div class="grant-urgency recurring">${g.label}</div><div class="grant-info"><h4>${g.name}</h4><div class="grant-amount">${g.amount}</div><div class="grant-deadline">📅 ${g.deadline}</div><div class="grant-why">${g.why}</div><a href="${g.url}" target="_blank" class="grant-apply">View →</a></div></div>`;
   });
 
   // Notes
@@ -1016,13 +1242,8 @@ function initDashboard() {
   if (localStorage.getItem("notif-granted") === "true") scheduleDaily();
   initCountdown();
   loadChecklists();
-}
-
-function toggleDone(i, btn) {
-  const isDone = btn.classList.contains('done');
-  btn.classList.toggle('done', !isDone);
-  btn.textContent = isDone ? 'Mark done' : '✓ Done';
-  localStorage.setItem('done-'+i, (!isDone).toString());
+  renderThreads();
+  loadWhatsAhead();
 }
 
 function saveNote() {
