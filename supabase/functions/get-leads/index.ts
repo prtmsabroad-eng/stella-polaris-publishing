@@ -55,7 +55,10 @@ Deno.serve(async (req) => {
       { headers: { apikey: serviceKey!, Authorization: `Bearer ${serviceKey}` } },
     );
     if (!res.ok) {
-      return new Response(JSON.stringify({ error: "Upstream query failed" }), {
+      // Temporary: surface the real upstream error while we're debugging this.
+      // Safe to include here since the caller already passed the passcode check.
+      const detail = await res.text();
+      return new Response(JSON.stringify({ error: "Upstream query failed", status: res.status, detail }), {
         status: 502,
         headers: { ...cors, "Content-Type": "application/json" },
       });
