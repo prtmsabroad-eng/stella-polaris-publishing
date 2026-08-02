@@ -312,6 +312,78 @@ nav button:hover { color:var(--purple); }
 .thread-list.built li::before { background:var(--gold); }
 .thread-list.unlock li::before { background:#2E7D32; }
 
+/* PROMO PLAN */
+.promo-stat-bar { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:#eee; border-radius:12px; overflow:hidden; margin-bottom:14px; }
+.promo-stat-item { background:white; padding:16px 10px; text-align:center; }
+.promo-stat-num { font-family:'Playfair Display',serif; font-size:1.8rem; color:var(--ordained); line-height:1; margin-bottom:4px; }
+.promo-stat-label { font-size:0.65rem; text-transform:uppercase; letter-spacing:1px; color:#999; }
+.angle-strip { display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; margin-bottom:16px; scrollbar-width:none; }
+.angle-strip::-webkit-scrollbar { display:none; }
+.angle-card { flex:0 0 200px; background:white; border-radius:12px; padding:14px; box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+@media(min-width:700px) { .angle-strip { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); overflow:visible; } .angle-card { flex:none; } }
+.angle-num { font-family:'Playfair Display',serif; font-size:1.3rem; color:#ddd; margin-bottom:2px; }
+.angle-title { font-size:0.82rem; font-weight:700; color:var(--dark); margin-bottom:4px; }
+.angle-hook { font-size:0.75rem; color:#888; font-style:italic; line-height:1.4; }
+.promo-phase-header { display:flex; align-items:center; gap:10px; margin:22px 0 12px; flex-wrap:wrap; }
+.promo-phase-badge { font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; padding:4px 10px; border-radius:20px; color:white; }
+.promo-phase-badge.ph-gold { background:var(--gold); color:var(--dark); }
+.promo-phase-badge.ph-lavender { background:var(--violet); }
+.promo-phase-badge.ph-red { background:var(--coral); }
+.promo-phase-title { font-family:'Playfair Display',serif; font-size:1.05rem; color:var(--dark); }
+.promo-phase-dates { margin-left:auto; font-size:0.72rem; color:#999; font-family:'Space Mono',monospace; }
+.promo-day-card { background:white; border-radius:12px; padding:14px 16px; margin-bottom:10px; border-left:4px solid #ddd; box-shadow:0 1px 6px rgba(0,0,0,0.05); transition:opacity 0.2s; }
+.promo-day-card.ph-gold { border-left-color:var(--gold); }
+.promo-day-card.ph-lavender { border-left-color:var(--violet); }
+.promo-day-card.ph-red { border-left-color:var(--coral); }
+.promo-day-card.anchor { border-left-width:6px; padding:18px 20px; }
+.promo-day-card.is-past { opacity:0.4; }
+.promo-day-top { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+.promo-day-date { font-family:'Space Mono',monospace; font-size:0.75rem; color:#999; }
+.promo-day-title { font-size:0.92rem; font-weight:700; color:var(--dark); }
+.promo-cosmic { margin-left:auto; font-size:0.72rem; color:var(--gold); white-space:nowrap; }
+.promo-day-body { font-size:0.83rem; color:#666; line-height:1.6; margin-bottom:10px; }
+.promo-check-item { display:flex; align-items:flex-start; gap:8px; font-size:0.82rem; color:#444; padding:5px 0; cursor:pointer; }
+.promo-check-item input { margin-top:3px; accent-color:var(--gold); flex-shrink:0; }
+
+/* SOLAR RETURN */
+.sr-stat-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:1px; background:#eee; border-radius:12px; overflow:hidden; margin-bottom:16px; }
+.sr-stat-cell { background:white; padding:12px 10px; }
+.sr-stat-label { font-size:0.6rem; text-transform:uppercase; letter-spacing:1px; color:#999; margin-bottom:3px; }
+.sr-stat-value { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--ordained); }
+.sr-compass-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-bottom:18px; }
+.sr-pillar { background:white; border-radius:12px; padding:16px; box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+.sr-pillar-title { font-family:'Playfair Display',serif; font-size:1rem; color:var(--ordained); margin-bottom:6px; }
+.sr-pillar-body { font-size:0.8rem; color:#666; line-height:1.55; }
+.sr-signature { background:white; border-radius:12px; padding:18px; margin-bottom:18px; box-shadow:0 1px 6px rgba(0,0,0,0.05); font-size:0.86rem; color:#555; line-height:1.7; }
+.sr-house-card { background:white; border-radius:12px; margin-bottom:10px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,0.05); border-left:4px solid #ddd; }
+.sr-house-card.power { border-left-color:var(--gold); }
+.sr-house-header { padding:14px 16px; display:flex; align-items:center; justify-content:space-between; gap:10px; cursor:pointer; }
+.sr-house-name { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--dark); }
+.sr-house-num { font-size:0.65rem; color:#999; letter-spacing:1px; text-transform:uppercase; display:block; margin-bottom:2px; }
+.sr-power-label { display:inline-block; font-size:0.6rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--dark); background:var(--gold); padding:2px 8px; border-radius:10px; margin-left:8px; }
+.sr-chevron { color:#ccc; flex-shrink:0; transition:transform 0.2s; }
+.sr-chevron.open { transform:rotate(180deg); color:var(--ordained); }
+.sr-house-body { padding:0 16px 16px; font-size:0.82rem; color:#666; line-height:1.6; display:none; }
+.sr-house-body.open { display:block; }
+.sr-dates-table { width:100%; border-collapse:collapse; background:white; border-radius:12px; overflow:hidden; box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+.sr-dates-table td { padding:12px 14px; font-size:0.8rem; border-bottom:1px solid #f0f0f0; vertical-align:top; }
+.sr-dates-table tr:last-child td { border-bottom:none; }
+.sr-dates-table .sr-date-col { font-family:'Space Mono',monospace; color:var(--gold); white-space:nowrap; width:110px; }
+.sr-dates-table .sr-event-col strong { display:block; color:var(--dark); margin-bottom:2px; }
+.sr-quarters { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:16px; }
+@media(max-width:480px) { .sr-quarters { grid-template-columns:1fr; } }
+.sr-quarter { background:white; border-radius:12px; padding:14px; box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+.sr-quarter-label { font-size:0.62rem; text-transform:uppercase; letter-spacing:1px; color:var(--gold); margin-bottom:4px; font-family:'Space Mono',monospace; }
+.sr-quarter-title { font-family:'Playfair Display',serif; font-size:0.95rem; color:var(--dark); margin-bottom:6px; }
+.sr-quarter-body { font-size:0.75rem; color:#888; line-height:1.5; }
+.sr-print-btn { background:none; border:1px solid var(--gold); color:var(--gold); padding:8px 18px; border-radius:20px; font-size:0.78rem; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; margin-bottom:16px; }
+.sr-print-btn:hover { background:var(--gold); color:white; }
+@media print {
+  body * { visibility:hidden; }
+  #tab-solarreturn, #tab-solarreturn * { visibility:visible; }
+  #tab-solarreturn { display:block !important; position:absolute; left:0; top:0; width:100%; padding:20px; }
+}
+
 /* RESPONSIVE */
 @media(max-width:480px) { .light-grid{grid-template-columns:1fr} }
 </style>
@@ -348,6 +420,8 @@ nav button:hover { color:var(--purple); }
     <button onclick="showTab('calendar',this)">📅 Calendar</button>
     <button onclick="showTab('move',this)">✈️ The Move</button>
     <button onclick="showTab('projects',this)">🚀 Projects</button>
+    <button onclick="showTab('promoplan',this)">🎯 Promo Plan</button>
+    <button onclick="showTab('solarreturn',this)">🌌 Solar Return</button>
     <button onclick="showTab('blog',this)">✍️ Blog</button>
     <button onclick="showTab('carousels',this)">🎠 Carousels</button>
     <button onclick="showTab('grants',this)">💰 Grants</button>
@@ -633,18 +707,24 @@ nav button:hover { color:var(--purple); }
       </ul>
     </div>
 
-    <div class="project-card pending">
+    <div class="project-card live">
       <div class="project-header">
         <div class="project-name">Kickstarter — Nova & the Magic of Faith</div>
-        <span class="status-pill pill-pending">PRE-LAUNCH</span>
+        <span class="status-pill pill-live">LIVE</span>
       </div>
       <ul class="checklist">
-        <li>Page exists — launch button not yet flipped</li>
-        <li>Purple light content = organic Kickstarter runway</li>
-        <li>Press releases staggered and ready for launch day</li>
+        <li>Purple light content is the organic Kickstarter runway</li>
+        <li>Press releases staggered and ready</li>
         <li>Emmanuel Lewis endorsement on file</li>
-        <li>Target: launch before Jupiter in Cancer closes June 30</li>
+        <li>Goal $3,000. Closes August 14, 2026</li>
+        <li>Days remaining: <span id="ks-days-remaining">--</span></li>
+        <li>Next celestial anchor: <span id="ks-next-anchor">--</span></li>
       </ul>
+      <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+        <label style="font-size:0.78rem;color:#888;">Backers</label>
+        <input type="number" id="ks-backers-input" min="0" placeholder="0" style="width:90px;padding:7px 10px;border:1px solid #ddd;border-radius:8px;font-size:0.85rem;font-family:'Space Mono',monospace;" onchange="saveBackers(this.value)">
+      </div>
+      <a href="https://www.kickstarter.com/projects/stellapolarispub/nova-and-the-magic-of-faith" target="_blank" class="project-link">View Campaign →</a>
     </div>
 
     <div class="project-card building">
@@ -685,6 +765,92 @@ nav button:hover { color:var(--purple); }
         <li>Calendly link still the missing piece for bookings</li>
       </ul>
       <a href="https://stellapolarispublishing.com/advisory-portal-login.html" target="_blank" class="project-link">Advisory Portal →</a>
+    </div>
+  </div>
+
+  <!-- PROMO PLAN -->
+  <div class="section" id="tab-promoplan">
+    <div class="section-title">18 Days to the Eclipse</div>
+    <div class="section-sub">Nova & the Magic of Faith. July 27, 2026 to August 14, 2026.</div>
+
+    <div class="promo-stat-bar">
+      <div class="promo-stat-item"><div class="promo-stat-num" id="ps-cazimi">--</div><div class="promo-stat-label">Days to Jupiter Cazimi</div></div>
+      <div class="promo-stat-item"><div class="promo-stat-num" id="ps-eclipse">--</div><div class="promo-stat-label">Days to Eclipse</div></div>
+      <div class="promo-stat-item"><div class="promo-stat-num" id="ps-close">--</div><div class="promo-stat-label">Days to Close</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-header"><div class="card-icon" style="background:#FFF8E7">✦</div><h3>The Strategic Frame</h3></div>
+      <p style="font-size:0.85rem;color:#666;line-height:1.7;margin-bottom:10px;">The strongest window opens now and closes with a total solar eclipse in Leo on August 12. Three anchor moments carry the plan. Jupiter cazimi July 29. The eclipse August 12. The campaign close August 14.</p>
+      <p style="font-size:0.85rem;color:#666;line-height:1.7;margin-bottom:0;">Mercury went direct July 23. The communication runway is clear. Every post from here forward carries that.</p>
+      <ul class="checklist" style="margin-top:12px;">
+        <li>The viewer is always the hero. Lead with what they receive</li>
+        <li>One piece of content every 1 to 2 days during Phase 2, not more</li>
+        <li>Personal outreach outperforms broadcast every time</li>
+        <li>Phase 3 is daily. Urgency is earned, not performed</li>
+        <li>The eclipse post on August 12 is the biggest content moment of the year</li>
+      </ul>
+    </div>
+
+    <div class="section-title" style="font-size:1.1rem;margin-top:22px;">10 Content Angles</div>
+    <div class="section-sub">Rotate through these during Phase 2.</div>
+    <div class="angle-strip" id="angle-strip"></div>
+
+    <div id="promo-phases"></div>
+  </div>
+
+  <!-- SOLAR RETURN -->
+  <div class="section" id="tab-solarreturn">
+    <div class="section-title">Solar Return 2026 / 2027</div>
+    <div class="section-sub">Celestial Foundation</div>
+
+    <button class="sr-print-btn" onclick="window.print()">Print this chart</button>
+
+    <div class="sr-stat-row">
+      <div class="sr-stat-cell"><div class="sr-stat-label">Name</div><div class="sr-stat-value">LaTashia Surrey-Thomas</div></div>
+      <div class="sr-stat-cell"><div class="sr-stat-label">Location</div><div class="sr-stat-value">Tirana, Albania</div></div>
+      <div class="sr-stat-cell"><div class="sr-stat-label">Return Date</div><div class="sr-stat-value">Jul 24, 2026</div></div>
+      <div class="sr-stat-cell"><div class="sr-stat-label">Return Time</div><div class="sr-stat-value">2:10 AM local</div></div>
+      <div class="sr-stat-cell"><div class="sr-stat-label">SR Ascendant</div><div class="sr-stat-value">Gemini 17°</div></div>
+      <div class="sr-stat-cell"><div class="sr-stat-label">SR Midheaven</div><div class="sr-stat-value">Aquarius 21°</div></div>
+    </div>
+
+    <div class="section-title" style="font-size:1.05rem;">Year Compass</div>
+    <div class="sr-compass-grid">
+      <div class="sr-pillar"><div class="sr-pillar-title">✦ Voice Clears</div><div class="sr-pillar-body">Mercury stations direct the day before the birthday. Revenue clarity follows message clarity. The income house clears the moment the message does.</div></div>
+      <div class="sr-pillar"><div class="sr-pillar-title">✦ Jupiter Expands</div><div class="sr-pillar-body">Sun and Jupiter conjunct in Leo in the 3rd house. Thirteen months of expansion in the house of publishing and voice. The published word is not the strategy. It is the expansion.</div></div>
+      <div class="sr-pillar"><div class="sr-pillar-title">✦ North Node at MC</div><div class="sr-pillar-body">Career direction and soul's calling point to the same thing. The public begins to recognize the distinction this year.</div></div>
+      <div class="sr-pillar"><div class="sr-pillar-title">✦ Mars Rising</div><div class="sr-pillar-body">Mars conjunct SR Ascendant. The year's identity is defined by motion, decisiveness, and voice. You lead with urgency.</div></div>
+    </div>
+
+    <div class="sr-signature">
+      <strong style="display:block;color:var(--dark);margin-bottom:6px;font-family:'Playfair Display',serif;font-size:1rem;">Chart Signature</strong>
+      Tirana changed the reading. The Sun and Jupiter do not land in the 1st house in the Tirana chart. They land in the 3rd house of publishing, content, and written communication. That shift is the entire story of this solar return year.
+    </div>
+
+    <div class="section-title" style="font-size:1.05rem;">House by House</div>
+    <div id="sr-houses"></div>
+
+    <div class="section-title" style="font-size:1.05rem;margin-top:20px;">Key Dates</div>
+    <table class="sr-dates-table">
+      <tbody>
+        <tr><td class="sr-date-col">Jul 29, 2026</td><td class="sr-event-col"><strong>Jupiter Cazimi</strong>6°24' Leo. Peak expansion.</td></tr>
+        <tr><td class="sr-date-col">Aug 12, 2026</td><td class="sr-event-col"><strong>Solar Eclipse</strong>20°01' Leo. The campaign closes in the eclipse field.</td></tr>
+        <tr><td class="sr-date-col">Aug 14, 2026</td><td class="sr-event-col"><strong>Kickstarter Closes</strong></td></tr>
+        <tr><td class="sr-date-col">Aug 31, 2026</td><td class="sr-event-col"><strong>Jupiter Trine Saturn</strong>Expansion meets structure.</td></tr>
+        <tr><td class="sr-date-col">Nov 10, 2026</td><td class="sr-event-col"><strong>Jupiter Retrograde</strong>Review phase begins.</td></tr>
+        <tr><td class="sr-date-col">Dec 2026</td><td class="sr-event-col"><strong>Kickstarter Fulfillment Complete</strong></td></tr>
+        <tr><td class="sr-date-col">Mar 11, 2027</td><td class="sr-event-col"><strong>Jupiter Direct</strong>0° Leo. Back on natal Mercury.</td></tr>
+        <tr><td class="sr-date-col">Jul 26, 2027</td><td class="sr-event-col"><strong>Jupiter Exits Leo</strong>The solar return year closes.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-title" style="font-size:1.05rem;margin-top:20px;">Quarterly Compass</div>
+    <div class="sr-quarters">
+      <div class="sr-quarter"><div class="sr-quarter-label">Q3 2026 · Jul-Sep</div><div class="sr-quarter-title">Launch. Fund. Deliver.</div><div class="sr-quarter-body">Kickstarter lives and closes. The eclipse closes the campaign.</div></div>
+      <div class="sr-quarter"><div class="sr-quarter-label">Q4 2026 · Oct-Dec</div><div class="sr-quarter-title">Fulfill. Deepen. Build.</div><div class="sr-quarter-body">Jupiter retrograde in November. Review and refine rather than launch.</div></div>
+      <div class="sr-quarter"><div class="sr-quarter-label">Q1 2027 · Jan-Mar</div><div class="sr-quarter-title">Prepare the Second Wave.</div><div class="sr-quarter-body">Deep work while Jupiter is retrograde. Book 2 development.</div></div>
+      <div class="sr-quarter"><div class="sr-quarter-label">Q2 2027 · Apr-Jun</div><div class="sr-quarter-title">Second Activation.</div><div class="sr-quarter-body">Jupiter moves through Leo a second time. Launch the next chapter here.</div></div>
     </div>
   </div>
 
@@ -1141,6 +1307,251 @@ function toggleDone(key, btn) {
   localStorage.setItem(key, (!isDone).toString());
 }
 
+// ── PROMO PLAN + SOLAR RETURN ──────────────────────────────────
+
+function daysUntil(dateStr) {
+  const target = new Date(dateStr + 'T00:00:00');
+  const now = new Date();
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.round((target - todayMid) / 86400000);
+}
+function formatCountdown(dateStr) {
+  const d = daysUntil(dateStr);
+  if (d > 0) return String(d);
+  if (d === 0) return 'Today';
+  return 'Passed';
+}
+
+const celestialAnchors = [
+  {label:'Jupiter Cazimi', date:'2026-07-29'},
+  {label:'Solar Eclipse', date:'2026-08-12'},
+  {label:'Campaign Closes', date:'2026-08-14'},
+  {label:'Jupiter Trine Saturn', date:'2026-08-31'},
+  {label:'Jupiter Retrograde', date:'2026-11-10'},
+  {label:'Fulfillment Complete', date:'2026-12-31'},
+  {label:'Jupiter Direct', date:'2027-03-11'},
+  {label:'Jupiter Exits Leo', date:'2027-07-26'}
+];
+
+function updateKickstarterCard() {
+  const daysEl = document.getElementById('ks-days-remaining');
+  if (daysEl) {
+    const d = daysUntil('2026-08-14');
+    daysEl.textContent = d > 0 ? d + ' days' : (d === 0 ? 'Closes today' : 'Closed');
+  }
+  const anchorEl = document.getElementById('ks-next-anchor');
+  if (anchorEl) {
+    const now = new Date();
+    const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const next = celestialAnchors.find(a => new Date(a.date + 'T00:00:00') >= todayMid);
+    anchorEl.textContent = next ? `${next.label}, ${formatCountdown(next.date) === 'Today' ? 'today' : formatCountdown(next.date) + ' days'}` : 'None upcoming';
+  }
+  const backersInput = document.getElementById('ks-backers-input');
+  if (backersInput) {
+    const saved = localStorage.getItem('spp_campaign_backers');
+    if (saved !== null) backersInput.value = saved;
+  }
+}
+function saveBackers(val) {
+  localStorage.setItem('spp_campaign_backers', val);
+}
+
+const contentAngles = [
+  {num:'01', title:'The Question That Started It', hook:'"My daughter asked me a question I could not answer."'},
+  {num:'02', title:'Nova as Co-Author', hook:'The child who asked is the child on the cover.'},
+  {num:'03', title:'What Your Child Receives', hook:'Permission to ask. Language for what they already feel.'},
+  {num:'04', title:'The Reward Tier Walk', hook:'Show each tier. Make the bookplate, manuscripts, and call real.'},
+  {num:'05', title:'Why Faith Books Fail Children', hook:'They answer before the child asks. This series starts with the question.'},
+  {num:'06', title:'The Publishing House Vision', hook:'Stella Polaris exists because the books Nova needed did not exist yet.'},
+  {num:'07', title:'Backer Appreciation', hook:'Thank backers by name. Show the community forming.'},
+  {num:'08', title:'The Four-Book Arc', hook:'Love → Believer → Faith → Flow.'},
+  {num:'09', title:'Behind the Series', hook:'Guatemala Holy Week 2025. The moment it became inevitable.'},
+  {num:'10', title:'Eclipse Build', hook:'"Something rare is closing. Here is what you will be part of before it does."'}
+];
+
+function renderContentAngles() {
+  const el = document.getElementById('angle-strip');
+  if (!el) return;
+  el.innerHTML = contentAngles.map(a => `<div class="angle-card"><div class="angle-num">${a.num}</div><div class="angle-title">${a.title}</div><div class="angle-hook">${a.hook}</div></div>`).join('');
+}
+
+const promoPhases = [
+  {
+    key:'p1', label:'Phase 1', title:'Ignition', color:'gold', range:'Jul 27 to Jul 29',
+    days:[
+      {
+        date:'2026-07-27', title:'Personal Outreach Only', cosmic:null, anchor:false,
+        body:'No broadcast today. Text or DM 10 specific warm people individually. Use their name. Tell them what you are building. Ask directly.',
+        actions:[
+          {id:'jul27_contacts', label:'Identify 10 warm contacts'},
+          {id:'jul27_messages', label:'Write individual messages, no copy paste'},
+          {id:'jul27_send', label:'Send all 10 today'}
+        ]
+      },
+      {
+        date:'2026-07-28', title:'Film Content Day', cosmic:'1 day to Jupiter Cazimi', anchor:false,
+        body:'Film everything today. Do not post yet, build the bank. TikTok: talking head or voiceover on the question that started it. Instagram: reel or carousel on the four books and the word order.',
+        actions:[
+          {id:'jul28_tiktok', label:'Film TikTok, angle 01'},
+          {id:'jul28_ig', label:'Film or design Instagram asset'},
+          {id:'jul28_queue', label:'Edit and queue both for Jul 29'}
+        ]
+      },
+      {
+        date:'2026-07-29', title:'Jupiter Cazimi', cosmic:"Jupiter at heart of Sun, 6°24' Leo, peak expansion", anchor:true,
+        body:'Real launch day. Post after cazimi time, 2:11 PM Tirana local. TikTok: post the Jul 28 video. Instagram feed: post the reel or carousel. Instagram story: link sticker, "We are live. This is what we are building."',
+        actions:[
+          {id:'jul29_tiktok', label:'Post TikTok after 2:11 PM Tirana'},
+          {id:'jul29_feed', label:'Post Instagram feed'},
+          {id:'jul29_story', label:'Post Instagram story with link sticker'},
+          {id:'jul29_followup', label:'Follow up on Jul 27 DMs'}
+        ]
+      }
+    ]
+  },
+  {
+    key:'p2', label:'Phase 2', title:'Build', color:'lavender', range:'Jul 30 to Aug 9',
+    days:[
+      {date:'2026-07-30', endDate:'2026-07-31', title:'Nova as Co-Author', cosmic:null, anchor:false,
+       body:'Angle 02. The child who asked the question is the child on the cover. She is the co-author. The most emotionally resonant angle in the campaign. TikTok or reel: "She is 6. She is on the cover. This is her book too."',
+       actions:[{id:'jul30_post', label:'Post the co-author angle'}]},
+      {date:'2026-08-01', endDate:'2026-08-02', title:'What Your Child Receives', cosmic:null, anchor:false,
+       body:'Angle 03. The viewer is the hero. Lead with what their child gets. Permission to wonder. Permission to not know yet.',
+       actions:[{id:'aug1_post', label:'Post the angle 03 content'}]},
+      {date:'2026-08-03', endDate:'2026-08-04', title:'Reward Tier Walk', cosmic:null, anchor:false,
+       body:'Angle 04. Make the tiers real and visual. Show the bookplate. Tell people what the 30-minute call actually is.',
+       actions:[{id:'aug3_post', label:'Post the reward tier walk'}]},
+      {date:'2026-08-05', endDate:'2026-08-06', title:'Why Faith Books Fail Children', cosmic:null, anchor:false,
+       body:'Angle 05. Most books answer before the child asks. This series starts with the question. That is a publishing philosophy.',
+       actions:[{id:'aug5_post', label:'Post the angle 05 content'}]},
+      {date:'2026-08-07', endDate:'2026-08-08', title:'Backer Appreciation', cosmic:null, anchor:false,
+       body:'Angle 07. Thank backers publicly. Show the community forming.',
+       actions:[{id:'aug7_post', label:'Post backer appreciation'}]},
+      {date:'2026-08-09', title:'Eclipse Teaser', cosmic:null, anchor:false,
+       body:'Angle 10. Start seeding eclipse urgency without naming it as astrology. "Something rare is happening this week. The campaign closes inside it."',
+       actions:[{id:'aug9_post', label:'Post the eclipse teaser'}]}
+    ]
+  },
+  {
+    key:'p3', label:'Phase 3', title:'Eclipse Surge', color:'red', range:'Aug 10 to Aug 14',
+    days:[
+      {date:'2026-08-10', title:'96 Hours, Open the Surge', cosmic:null, anchor:false,
+       body:'Daily posting begins. Post both TikTok and Instagram. Story with countdown sticker and link every day through close.',
+       actions:[{id:'aug10_tiktok', label:'Post TikTok, 96 hours urgency'},{id:'aug10_story', label:'Post Instagram story with countdown and link'}]},
+      {date:'2026-08-11', title:'72 Hours, $50 Tier Spotlight', cosmic:'1 day to eclipse', anchor:false,
+       body:'Signed bookplate. First edition only. Ships worldwide December 2026. Having this bookplate before the series is known is an artifact.',
+       actions:[{id:'aug11_spotlight', label:'Post the $50 tier spotlight'},{id:'aug11_story', label:'Story with link sticker'},{id:'aug11_outreach', label:'Second wave personal outreach to new warm contacts'}]},
+      {date:'2026-08-12', title:'Solar Eclipse in Leo', cosmic:"Total solar eclipse, 20°01' Leo, 7:45 PM Tirana", anchor:true,
+       body:'The biggest content moment of the entire campaign. Post after the eclipse exact time. Say the exact thing that has been softened. Not the pitch. The truth. Why this book exists. What you want for the child who reads it.',
+       actions:[{id:'aug12_post', label:'Post after 7:45 PM Tirana'},{id:'aug12_tiktok', label:'TikTok, the real reason'},{id:'aug12_ig', label:'Instagram feed, long caption allowed'},{id:'aug12_story', label:'Story, 48 hours left, plus link'}]},
+      {date:'2026-08-13', title:'Final 24 Hours', cosmic:null, anchor:false,
+       body:'Maximum urgency. Minimum words. "24 hours. First edition. Then this closes." Post morning and evening. Ask your top 5 backers to share today.',
+       actions:[{id:'aug13_morning', label:'Morning post, TikTok and Instagram'},{id:'aug13_evening', label:'Evening story, final hours'},{id:'aug13_ask', label:'Ask top 5 backers to share the campaign'}]},
+      {date:'2026-08-14', title:'Campaign Closes', cosmic:null, anchor:false,
+       body:'One morning post. Last call. Then let it close. Draft the funded announcement before the close happens.',
+       actions:[{id:'aug14_morning', label:'Morning final call, all platforms'},{id:'aug14_monitor', label:'Monitor as it closes'},{id:'aug14_draft', label:'Draft the funded announcement'}]}
+    ]
+  }
+];
+
+function fmtShortDate(dateStr) {
+  return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+function fmtDayRange(day) {
+  if (day.endDate) return `${fmtShortDate(day.date)} to ${fmtShortDate(day.endDate)}`;
+  const d = new Date(day.date + 'T00:00:00');
+  return `${fmtShortDate(day.date)} · ${d.toLocaleDateString('en-US', {weekday:'long'})}`;
+}
+function isDayPast(day, todayMid) {
+  const end = new Date((day.endDate || day.date) + 'T23:59:59');
+  return end < todayMid;
+}
+
+function updatePromoStats() {
+  const map = {'ps-cazimi':'2026-07-29', 'ps-eclipse':'2026-08-12', 'ps-close':'2026-08-14'};
+  Object.keys(map).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = formatCountdown(map[id]);
+  });
+}
+
+function renderPromoPlan() {
+  const container = document.getElementById('promo-phases');
+  if (!container) return;
+  const now = new Date();
+  const todayMid = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  container.innerHTML = promoPhases.map(phase => {
+    const daysHtml = phase.days.map(day => {
+      const past = isDayPast(day, todayMid);
+      const actionsHtml = day.actions.map(a => {
+        const key = 'spp_promo_' + a.id;
+        const checked = localStorage.getItem(key) === 'true';
+        return `<label class="promo-check-item"><input type="checkbox" ${checked ? 'checked' : ''} onchange="localStorage.setItem('${key}', this.checked)">${a.label}</label>`;
+      }).join('');
+      return `<div class="promo-day-card ph-${phase.color}${day.anchor ? ' anchor' : ''}${past ? ' is-past' : ''}">
+        <div class="promo-day-top">
+          <div class="promo-day-date">${fmtDayRange(day)}</div>
+          <div class="promo-day-title">${day.title}</div>
+          ${day.cosmic ? `<div class="promo-cosmic">${day.cosmic}</div>` : ''}
+        </div>
+        <div class="promo-day-body">${day.body}</div>
+        ${actionsHtml}
+      </div>`;
+    }).join('');
+
+    return `<div class="promo-phase-header">
+      <span class="promo-phase-badge ph-${phase.color}">${phase.label}</span>
+      <span class="promo-phase-title">${phase.title}</span>
+      <span class="promo-phase-dates">${phase.range}</span>
+    </div>
+    ${daysHtml}`;
+  }).join('');
+}
+
+const srHouses = [
+  {num:'3RD HOUSE', name:'Voice & Publishing', power:true, open:true,
+   body:"Sun and Jupiter in Leo. Everything flows from here. The Kickstarter. The book series. TikTok. Instagram. Every piece of content carries the full force of this year's expansion. Publishing is not the marketing strategy. It is the expansion."},
+  {num:'1ST HOUSE', name:'Identity & Presence', power:false, open:false,
+   body:'Mars conjunct Ascendant. Fast, verbal, decisive all year. People encounter you as someone in forward motion.'},
+  {num:'2ND HOUSE', name:'Income & Worth', power:false, open:false,
+   body:'Mercury stationing direct in Cancer. Revenue confusion resolves when the message does. Say the true thing and the money recognizes it.'},
+  {num:'4TH HOUSE', name:'Home & Foundation', power:false, open:false,
+   body:'Venus in Virgo. The Albanian home base is intentional, ordered, beautiful, functional. The relocation is the condition that makes the work possible at this level.'},
+  {num:'6TH HOUSE', name:'Daily Work & Rhythm', power:false, open:false,
+   body:"Moon at 29° Scorpio, a critical degree. Intense, transformative routines. Honor the weight without being consumed by it."},
+  {num:'10TH HOUSE', name:'Career & Reputation', power:false, open:false,
+   body:'North Node right at the MC. The publishing house is not the job. It is the calling. This year the public starts to see it that way.'},
+  {num:'11TH HOUSE', name:'Audience & Community', power:false, open:false,
+   body:'Saturn retrograde and Neptune in Aries. Built through disciplined spiritual consistency. Neither shortcuts nor viral moments build this community. Presence does.'},
+  {num:'12TH HOUSE', name:'Private Healing', power:false, open:false,
+   body:'Chiron in Taurus and Uranus in Gemini. The most important shifts happen below the surface before they appear in public.'}
+];
+
+function renderSrHouses() {
+  const el = document.getElementById('sr-houses');
+  if (!el) return;
+  el.innerHTML = srHouses.map((h, i) => {
+    const saved = localStorage.getItem('spp_solar_accordion_' + i);
+    const isOpen = saved !== null ? saved === 'true' : h.open;
+    return `<div class="sr-house-card${h.power ? ' power' : ''}">
+      <div class="sr-house-header" onclick="toggleSrHouse(${i})">
+        <div><span class="sr-house-num">${h.num}${h.power ? '<span class="sr-power-label">Power Center</span>' : ''}</span><span class="sr-house-name">${h.name}</span></div>
+        <span class="sr-chevron${isOpen ? ' open' : ''}" id="sr-chevron-${i}">▼</span>
+      </div>
+      <div class="sr-house-body${isOpen ? ' open' : ''}" id="sr-house-body-${i}">${h.body}</div>
+    </div>`;
+  }).join('');
+}
+function toggleSrHouse(i) {
+  const body = document.getElementById('sr-house-body-' + i);
+  const chevron = document.getElementById('sr-chevron-' + i);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+  localStorage.setItem('spp_solar_accordion_' + i, (!isOpen).toString());
+}
+
 const painThreads = [
   {
     num:'01', title:'Family / What Was Done',
@@ -1282,6 +1693,11 @@ function initDashboard() {
 
   renderTodayMission(now);
   renderCalendar(now);
+  updatePromoStats();
+  renderContentAngles();
+  renderPromoPlan();
+  updateKickstarterCard();
+  renderSrHouses();
 
   // Grants
   const gl = document.getElementById('grants-list');
