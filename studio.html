@@ -908,20 +908,83 @@ nav button:hover { color:var(--purple); }
 </style>
 
 <script>
-const PASSWORD = 'alchemy';
+const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+// Used only for the push-subscription insert below (requestNotifications) — that
+// table only accepts anonymous inserts, not reads, so this one is fine to keep.
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
 
-function checkPw() {
-  const val = document.getElementById('pw-input').value.toLowerCase().trim();
-  if (val === PASSWORD) {
-    document.getElementById('gate').style.display = 'none';
-    document.getElementById('dashboard').style.display = 'block';
-    initDashboard();
-  } else {
+// The old version of this gate compared the entered password to a string
+// hardcoded right here in the page's JS ("alchemy") — visible to anyone via
+// view-source, regardless of whether they ever unlocked the dashboard. There is
+// no way to check a "real" secret purely in client-side JS, since the JS itself
+// is public. So instead, entering the passcode calls a Supabase Edge Function
+// (get-leads) that checks it server-side against a secret only Supabase holds —
+// the passcode is never written into this file or committed to the repo.
+let studioPasscode = sessionStorage.getItem('studio-passcode') || null;
+
+async function fetchLeads() {
+  const res = await fetch(`${SUPABASE_URL}/functions/v1/get-leads`, {
+    headers: {
+      // Satisfies Supabase's own platform gateway check on this header — this key
+      // is already public, it isn't the real protection here.
+      'Authorization': `Bearer ${SUPABASE_ANON}`,
+      'apikey': SUPABASE_ANON,
+      // The actual secret: only the function checks this, against STUDIO_PASSCODE.
+      'X-Studio-Passcode': studioPasscode || ''
+    }
+  });
+  if (!res.ok) throw new Error('unauthorized');
+  return res.json();
+}
+
+async function checkPw() {
+  const val = document.getElementById('pw-input').value.trim();
+  if (!val) return;
+  const btn = document.querySelector('#gate button');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Checking…';
+  studioPasscode = val;
+
+  // Only auth failures should land here — a bug later in initDashboard() must
+  // never get misreported as "wrong passcode" and wipe a valid session.
+  try {
+    await fetchLeads();
+  } catch (e) {
+    studioPasscode = null;
+    sessionStorage.removeItem('studio-passcode');
     document.getElementById('gate-error').style.display = 'block';
     document.getElementById('pw-input').value = '';
     document.getElementById('pw-input').focus();
+    btn.disabled = false;
+    btn.textContent = original;
+    return;
   }
+
+  sessionStorage.setItem('studio-passcode', val);
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  btn.disabled = false;
+  btn.textContent = original;
+  initDashboard();
 }
+
+// If this tab already unlocked Studio earlier in the session, skip the gate —
+// still re-verifies against the server on every load rather than trusting
+// the cached value blindly.
+(async function tryAutoUnlock() {
+  if (!studioPasscode) return;
+  try {
+    await fetchLeads();
+  } catch (e) {
+    studioPasscode = null;
+    sessionStorage.removeItem('studio-passcode');
+    return;
+  }
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  initDashboard();
+})();
 
 function showTab(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1307,8 +1370,6 @@ function loadDailyMessage() {
 }
 
 const VAPID_PUBLIC_KEY = 'BIAFxTDoAOpiQd_HlCvVtkzz4qnMpf-pPYAuiccU-nfx98cP3a1Dj5pxikx_5yzZMUKCvnSVHdAfIW0Y8V4T3GM';
-const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
 
 function urlBase64ToUint8Array(base64String) {
   const padding = '='.repeat((4 - base64String.length % 4) % 4);
@@ -1428,13 +1489,8 @@ function loadNotes() {
 }
 
 async function loadLeadsSummary() {
-  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
-  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/advisory_inquiries?select=id,name,created_at&order=created_at.desc`, {
-      headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` }
-    });
-    const leads = await res.json();
+    const leads = await fetchLeads();
     if (!Array.isArray(leads) || leads.length === 0) return;
 
     const contacted = JSON.parse(localStorage.getItem('leads-contacted') || '[]');
@@ -1455,17 +1511,11 @@ async function loadLeadsSummary() {
 }
 
 async function loadLeads() {
-  const SUPABASE_URL = 'https://wshqygrcfsxxcamxitbs.supabase.co';
-  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
-
   const list = document.getElementById('leads-list');
   const sub = document.getElementById('leads-sub');
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/rest/v1/advisory_inquiries?select=*&order=created_at.desc`, {
-      headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` }
-    });
-    const leads = await res.json();
+    const leads = await fetchLeads();
 
     if (!Array.isArray(leads) || leads.length === 0) {
       sub.textContent = 'No inquiries yet.';
@@ -1507,7 +1557,7 @@ async function loadLeads() {
     }).join('');
 
   } catch(e) {
-    sub.textContent = 'Could not load leads. Run the SQL in schema.sql to enable Studio reads.';
+    sub.textContent = 'Could not load leads. Check that the get-leads function is deployed and STUDIO_PASSCODE is set.';
     list.innerHTML = '';
   }
 }
