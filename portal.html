@@ -535,7 +535,12 @@ async function handleSignIn() {
   if (!pw)
     return showError('si-error', 'Please enter your password.');
 
-  if (email === 'tashia2g@gmail.com' && pw === 'alchemy') {
+  // Route straight to Studio for the owner without checking a password here —
+  // this used to hardcode a specific password ("alchemy") right in this file,
+  // the same problem we fixed on studio.html itself. studio.html's own gate is
+  // the real protection now (a passcode checked server-side), so this is just
+  // routing, not a security boundary — no password worth checking belongs here.
+  if (email === OWNER_EMAIL) {
     window.location.href = '/studio.html';
     return;
   }
