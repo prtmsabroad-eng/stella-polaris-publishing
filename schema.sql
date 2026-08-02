@@ -58,8 +58,12 @@ revoke select on public.advisory_inquiries from anon;
 
 -- Reading leads now requires either:
 --   a) Supabase Dashboard → Table Editor, logged in as yourself, or
---   b) A server-side function using the service role key (e.g. extend
---      supabase/functions/notify-inquiry) gated behind real auth —
+--   b) A server-side function using the service role key (see
+--      supabase/functions/get-leads) gated behind real auth —
 --      never the anon key directly from the browser.
--- Until (b) exists, the Leads tab in studio.html will show no results.
--- That's this fix working as intended, not a bug.
+--
+-- service_role bypasses RLS policies, but RLS bypass is a separate layer from
+-- plain table-level GRANTs — this table never had an explicit SELECT grant for
+-- service_role, so get-leads failed with "permission denied for table
+-- advisory_inquiries" (Postgres error 42501) until this line was added.
+grant select on public.advisory_inquiries to service_role;
