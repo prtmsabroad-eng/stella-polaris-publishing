@@ -67,3 +67,29 @@ revoke select on public.advisory_inquiries from anon;
 -- service_role, so get-leads failed with "permission denied for table
 -- advisory_inquiries" (Postgres error 42501) until this line was added.
 grant select on public.advisory_inquiries to service_role;
+
+-- Free lead-magnet signups (Peace Passport, Foundations of Faith, Gathering, etc.)
+-- Submitted client-side with the anon key from index.html, move-abroad.html, and
+-- gathering-v1.html — this table was referenced by all three forms but never
+-- actually created, so every real submission failed with "Something went wrong"
+-- (table not found / permission denied on public.subscribers).
+create table if not exists public.subscribers (
+  id         uuid        default gen_random_uuid() primary key,
+  email      text        not null unique,
+  source     text,
+  created_at timestamptz default now() not null
+);
+
+alter table public.subscribers enable row level security;
+
+-- Same pattern as advisory_inquiries: public signup form submits with the
+-- anon key — inserts only, no read access. The unique constraint above is
+-- what makes a repeat signup come back as a 409 (Postgres 23505), which the
+-- front-end already treats as a non-error ("duplicate email — still grant access").
+drop policy if exists "Anon insert only" on public.subscribers;
+create policy "Anon insert only"
+  on public.subscribers for insert
+  with check (true);
+
+grant insert on public.subscribers to anon;
+revoke select on public.subscribers from anon;
