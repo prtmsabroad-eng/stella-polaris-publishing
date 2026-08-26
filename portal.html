@@ -10,6 +10,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Josefin+Sans:wght@200;300;400&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -307,11 +312,13 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <canvas id="stars"></canvas>
 <div class="nebula"></div>
 
-<main class="page">
+<main id="main-content" tabindex="-1" class="page">
 
   <div class="star-mark">✦</div>
 

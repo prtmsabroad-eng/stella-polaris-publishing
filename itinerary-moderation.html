@@ -14,6 +14,11 @@
 </script>
 
 <style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     --gold: #C9A84C; --gold-light: #F0D080; --rose: #D4547A;
@@ -241,6 +246,8 @@
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <div class="toast" id="toast"></div>
 
@@ -257,13 +264,13 @@
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboard">
+<div id="dashboard" tabindex="-1">
   <nav class="dash-nav">
     <div class="dash-brand">The Itinerary <span>· Moderation</span></div>
     <a href="/studio.html" class="dash-back">← Back to Studio</a>
   </nav>
 
-  <div class="dash-header">
+  <div id="main-content" class="dash-header" role="main">
     <h1 class="dash-title">Community Posts</h1>
     <p class="dash-sub">Review and approve submissions from Roaming Stellas before they go live.</p>
   </div>

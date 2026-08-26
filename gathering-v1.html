@@ -11,6 +11,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
   :root{
     --purple-deep:#2D0A3E;
     --purple-glow:#7B2D9E;
@@ -218,13 +223,15 @@
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 <div class="stars"></div>
 
 <div class="topbar">
   <a href="/index.html">Stella Polaris Publishing™</a>
 </div>
 
-<section class="hero">
+<section id="main-content" tabindex="-1" class="hero" role="main">
   <div class="wrap">
     <img src="/gathering-emblem.png" alt="The Magic of Faith: Gathering emblem — Atlanta, Georgia. Rooted in Heritage, Lifted by Faith, Guided by Purpose, Sung into Eternity." class="emblem">
     <span class="eyebrow">✦ Magic of Faith · Monthly Gathering</span>

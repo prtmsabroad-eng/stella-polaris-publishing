@@ -29,6 +29,11 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
 <style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
 :root {
   --cream: #FFF8F0;
   --parchment: #F5EDD8;
@@ -330,13 +335,15 @@ nav {
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <nav>
   <a href="index.html" class="nav-logo">STELLA POLARIS</a>
   <a href="index.html" class="nav-back">← Back to site</a>
 </nav>
 
-<div class="blog-header">
+<div id="main-content" tabindex="-1" class="blog-header" role="main">
   <h1>Notes from the North Star</h1>
   <p>On universal laws, intentional parenting, and what happens when you stop waiting for permission.</p>
 </div>
