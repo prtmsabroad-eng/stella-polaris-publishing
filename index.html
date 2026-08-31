@@ -808,6 +808,258 @@
   </div>
 </section>
 
+<!-- ══════════════════════════════════════════════════════════════
+     STELLA POLARIS PUBLISHING — Mission Accordion Section
+     Requires the Google Fonts already loaded in <head>:
+       Cormorant Garamond + Cinzel + Jost
+     ══════════════════════════════════════════════════════════════ -->
+
+<style>
+  /* ── Section shell ────────────────────────────────────────────── */
+  .spp-mission {
+    position: relative;
+    z-index: 10;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 72px 32px 80px;
+  }
+
+  /* ── Tagline header ───────────────────────────────────────────── */
+  .spp-mission__tagline {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold, #C9A84C);
+    text-align: center;
+    margin: 0 0 12px;
+    opacity: 0.9;
+  }
+
+  .spp-mission__sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--mist, rgba(245,237,216,0.6));
+    text-align: center;
+    margin: 0 0 56px;
+    line-height: 1.65;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Divider ──────────────────────────────────────────────────── */
+  .spp-mission__divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold-dim, rgba(201,168,76,0.3));
+    margin: 0 auto 52px;
+  }
+
+  /* ── Accordion ────────────────────────────────────────────────── */
+  .spp-accordion {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .spp-accordion-item {
+    border-top: 1px solid rgba(201,168,76,0.18);
+  }
+
+  .spp-accordion-item:last-child {
+    border-bottom: 1px solid rgba(201,168,76,0.18);
+  }
+
+  /* ── Trigger ──────────────────────────────────────────────────── */
+  .spp-accordion-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 26px 0;
+    text-align: left;
+    color: var(--parchment, #F5EDD8);
+    gap: 20px;
+  }
+
+  .spp-accordion-trigger:hover .spp-accordion-label {
+    color: var(--gold, #C9A84C);
+  }
+
+  .spp-accordion-label {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.78rem, 2vw, 0.9rem);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mist, rgba(245,237,216,0.75));
+    transition: color 0.25s;
+  }
+
+  /* ── Icon — a simple plus that rotates to × ───────────────────── */
+  .spp-accordion-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    opacity: 0.5;
+    transition: opacity 0.25s, transform 0.35s ease;
+  }
+
+  .spp-accordion-icon::before,
+  .spp-accordion-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--gold, #C9A84C);
+    border-radius: 1px;
+  }
+
+  .spp-accordion-icon::before {
+    width: 14px; height: 1px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .spp-accordion-icon::after {
+    width: 1px; height: 14px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.35s ease, opacity 0.35s ease;
+  }
+
+  .spp-accordion-item.open .spp-accordion-icon {
+    transform: rotate(45deg);
+    opacity: 0.9;
+  }
+
+  /* ── Body ─────────────────────────────────────────────────────── */
+  .spp-accordion-body {
+    display: none;
+    padding: 0 0 36px;
+    max-width: 660px;
+  }
+
+  .spp-accordion-item.open .spp-accordion-body {
+    display: block;
+  }
+
+  .spp-accordion-body p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.2vw, 1.1rem);
+    line-height: 1.85;
+    color: var(--mist, rgba(245,237,216,0.78));
+    margin: 0 0 18px;
+  }
+
+  .spp-accordion-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .spp-accordion-body .lead {
+    color: var(--parchment, #F5EDD8);
+    font-weight: 600;
+  }
+
+  /* ── Responsive ───────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .spp-mission { padding: 56px 20px 64px; }
+    .spp-accordion-trigger { padding: 22px 0; }
+  }
+</style>
+
+
+<section class="spp-mission">
+
+  <!-- Tagline -->
+  <p class="spp-mission__tagline">Human hands and hearts, writing for human beings.</p>
+
+  <div class="spp-mission__divider"></div>
+
+  <p class="spp-mission__sub">
+    Books and tools for the spiritually and physically homeless —
+    families who still believe in something, just not in the boxes they were handed.
+  </p>
+
+  <!-- Accordion -->
+  <div class="spp-accordion">
+
+    <!-- WHO WE ARE -->
+    <div class="spp-accordion-item">
+      <button class="spp-accordion-trigger" aria-expanded="false">
+        <span class="spp-accordion-label">Who We Are</span>
+        <span class="spp-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="spp-accordion-body">
+        <p class="lead">Stella Polaris Publishing is an independent publishing house founded in 2025 with one purpose: to create literary resources for the spiritually and physically homeless.</p>
+        <p>We publish children's books, adult nonfiction, and educational tools that help families build values, character, and identity without dogma, guilt, or religious structure. Our books are written for the families who still believe in something — just not in the boxes they were handed.</p>
+        <p>We also created Authored, a writing tool designed to scaffold the creative writing process for neurodivergent authors and creatives who need accommodations to get their stories out of their heads and onto the page. Human authored books belong on shelves. We are here to make sure they stay there.</p>
+      </div>
+    </div>
+
+    <!-- WHO WE SERVE -->
+    <div class="spp-accordion-item">
+      <button class="spp-accordion-trigger" aria-expanded="false">
+        <span class="spp-accordion-label">Who We Serve</span>
+        <span class="spp-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="spp-accordion-body">
+        <p class="lead">We serve the spiritually homeless and the physically homeless — and often, they are the same person.</p>
+        <p>A spiritually homeless person is someone who still believes in something but no longer has a community, a framework, or a place where that belief feels like home.</p>
+        <p>They may have grown up in a church, a mosque, a temple, or any structured religious community — and at some point, that structure stopped fitting. Maybe they were hurt inside it. Maybe they simply evolved beyond it. Maybe the doctrine asked them to choose between their faith and their truth, and they chose their truth. Either way, they walked away — or were pushed out — and now they exist in a space where they still feel something, but they have no language, no community, and no framework to hold it.</p>
+        <p>They are not atheists, necessarily. They are not lost, necessarily. They are people who believe in something but have nowhere to belong with that belief. No Sunday morning. No community meal. No ritual. No elders. No one to call when life falls apart who speaks the same spiritual language.</p>
+        <p>That is spiritual homelessness. And it is far more common than anyone talks about — especially among women who have survived trauma, because surviving often forces you to question everything you were taught about God, about goodness, and about why things happen to people who did not deserve them.</p>
+        <p>The spiritual literary space is saturated with religion. We are offering something different: humanity. Our books give children and adults clarity and grounding without doctrine, guilt, or dogma. We are not trying to convert anyone to anything. We are creating an inclusive space for those who felt left out everywhere else. That is the gap we fill. That is the community we are building.</p>
+      </div>
+    </div>
+
+    <!-- WHERE WE ARE GOING -->
+    <div class="spp-accordion-item">
+      <button class="spp-accordion-trigger" aria-expanded="false">
+        <span class="spp-accordion-label">Where We Are Going</span>
+        <span class="spp-accordion-icon" aria-hidden="true"></span>
+      </button>
+      <div class="spp-accordion-body">
+        <p class="lead">We are building a multinational publishing house with a philanthropy arm that does the work most organizations only talk about.</p>
+        <p>The next phase of Stella Polaris Publishing includes expanding our catalog, establishing an international headquarters, growing Authored into a full platform for independent and neurodivergent writers, and building a community that connects the families we serve to each other.</p>
+        <p>The phase after that is the one closest to our heart: funding and coordinating safe relocation for domestic violence survivors and their children who are ready to start over — the way we did. We know what the other side looks like. We want more mothers to experience it with their children.</p>
+        <p>A complete three-month family transition package — covering rent, security deposit, utilities, school enrollment, healthcare access, groceries, transportation, and emergency costs — runs between $4,500 and $6,500 depending on family size and location. Every dollar raised toward this mission will be deployed directly and individually, one family at a time, until it is gone.</p>
+        <p>We do not believe in waiting until we are a multi-million dollar company to begin this work. The need exists right now. We already know the way out. We are building the door.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<script>
+  (function () {
+    var triggers = document.querySelectorAll('.spp-accordion-trigger');
+    triggers.forEach(function (trigger) {
+      trigger.addEventListener('click', function () {
+        var item = trigger.closest('.spp-accordion-item');
+        var isOpen = item.classList.contains('open');
+
+        // Close all
+        document.querySelectorAll('.spp-accordion-item').forEach(function (i) {
+          i.classList.remove('open');
+          i.querySelector('.spp-accordion-trigger').setAttribute('aria-expanded', 'false');
+        });
+
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  })();
+</script>
+
+<!-- ══ End mission accordion block ══ -->
+
 <!-- PARENT HOOK -->
 <section class="hook-section">
   <div class="hook-inner">
