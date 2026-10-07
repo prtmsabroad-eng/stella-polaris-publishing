@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Stella Polaris Publishing™</title>
+<link rel="icon" type="image/png" href="/favicon.png?v=3">
+<link rel="apple-touch-icon" href="/favicon.png?v=3">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --purple-deep:   #2D0A3E;
+    --purple-mid:    #7B2D9E;
+    --gold-light:    #F0D080;
+    --gold-mid:      #D4A840;
+    --gold-dark:     #C8922A;
+    --text-main:     #EDE5F5;
+    --text-muted:    #B09EC2;
+    --rule:          rgba(240,208,128,0.18);
+    --rule-solid:    rgba(240,208,128,0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--purple-deep);
+    color: var(--text-main);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  header {
+    background: radial-gradient(ellipse at 50% 0%, #7B2D9E 0%, #2D0A3E 65%);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--rule-solid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F0D080' fill-opacity='0.04'%3E%3Cpath d='M30 0l1 29 29 1-29 1-1 29-1-29-29-1 29-1z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .star-mark { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); letter-spacing: 0.6em; display: block; margin-bottom: 1.2rem; opacity: 0.9; position: relative; }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    line-height: 1.3;
+  }
+
+  header .brand { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-muted); margin-top: 0.6rem; letter-spacing: 0.08em; position: relative; }
+
+  .doc-meta {
+    background: rgba(0,0,0,0.25);
+    text-align: center;
+    padding: 0.7rem 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  main { max-width: 800px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .intro-block {
+    border-left: 2px solid var(--gold-mid);
+    padding: 1rem 1.5rem;
+    margin-bottom: 3rem;
+    background: rgba(123,45,158,0.12);
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.9;
+  }
+
+  section { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-mid);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  h2::after { content: ''; flex: 1; height: 1px; background: var(--rule-solid); }
+
+  p { margin-bottom: 0.85rem; font-size: 0.95rem; }
+  p:last-child { margin-bottom: 0; }
+  ul { padding-left: 1.6rem; margin-bottom: 0.85rem; }
+  ul li { font-size: 0.95rem; margin-bottom: 0.45rem; }
+  ul li::marker { color: var(--gold-dark); }
+  strong { font-weight: 600; color: var(--gold-light); }
+  a { color: var(--gold-mid); text-decoration: none; }
+  a:hover { color: var(--gold-light); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; margin: 1.2rem 0; border: 1px solid var(--rule-solid); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+
+  th {
+    background: rgba(123,45,158,0.5);
+    color: var(--gold-light);
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--rule-solid);
+  }
+
+  td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+    color: var(--text-main);
+    font-size: 0.9rem;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(123,45,158,0.08); }
+
+  .contact-box {
+    background: linear-gradient(135deg, rgba(123,45,158,0.35), rgba(45,10,62,0.6));
+    border: 1px solid var(--rule-solid);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .contact-box p { font-style: italic; font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .contact-box a { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.12em; color: var(--gold-mid); }
+
+  footer {
+    text-align: center;
+    padding: 1.75rem 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-top: 1px solid var(--rule);
+    opacity: 0.7;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="star-mark">✦ ✦ ✦</span>
+  <h1>Privacy Policy</h1>
+  <div class="brand">Stella Polaris Publishing™</div>
+</header>
+
+<div class="doc-meta">Effective Date: April 27, 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Last Updated: October 7, 2026</div>
+
+<main>
+
+  <div class="intro-block">
+    We take your privacy seriously. This Policy explains what information we collect, why we collect it, how we use it, and what rights you have regarding your data.
+  </div>
+
+  <section>
+    <h2>1. Who This Policy Applies To</h2>
+    <p>This Privacy Policy applies to all visitors and users of the Stella Polaris Publishing™ website and related platforms, including individuals who purchase products, sign up for our mailing list, support our Kickstarter campaign, book an advisory consultation or reading, use our Client Portal, or share a story with The Itinerary community.</p>
+    <p>We do not knowingly collect personal information directly from children under 13. If you are a parent or guardian and believe your child has provided us with personal data, please contact us and we will delete it promptly. Information that parents choose to share about their children is covered in Section 4.</p>
+  </section>
+
+  <section>
+    <h2>2. What Information We Collect</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Type of Data</th>
+            <th>Examples</th>
+            <th>How We Get It</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Contact Information</strong></td>
+            <td>Name, email address</td>
+            <td>When you sign up for updates or contact us</td>
+          </tr>
+          <tr>
+            <td><strong>Purchase Data</strong></td>
+            <td>Order details, shipping address</td>
+            <td>When you buy a product through our platform or Amazon</td>
+          </tr>
+          <tr>
+            <td><strong>Campaign Data</strong></td>
+            <td>Pledge amount, reward tier, backer name</td>
+            <td>Via Kickstarter when you support our campaign</td>
+          </tr>
+          <tr>
+            <td><strong>Advisory &amp; Reading Information</strong></td>
+            <td>Name, email, your answers to our intake questions, birth date, birth time, and birth location</td>
+            <td>When you submit an advisory inquiry or book a reading</td>
+          </tr>
+          <tr>
+            <td><strong>Client Portal Account</strong></td>
+            <td>Email address, login credentials, and the readings delivered to you</td>
+            <td>When we set up your Client Portal account and you sign in</td>
+          </tr>
+          <tr>
+            <td><strong>Community Submissions</strong></td>
+            <td>Name, email, your travel story, photos, TikTok or YouTube links, and your children&rsquo;s ages</td>
+            <td>When you share a story with The Itinerary</td>
+          </tr>
+          <tr>
+            <td><strong>Usage Data</strong></td>
+            <td>Pages visited, time on site, device type, and how you found us (such as the ad or link you clicked)</td>
+            <td>Automatically via standard web analytics and the links you arrive from</td>
+          </tr>
+          <tr>
+            <td><strong>Communications</strong></td>
+            <td>Messages you send us, email replies</td>
+            <td>When you contact us directly</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>We do not collect payment card data directly. Payment processing is handled by third-party processors (Stripe, Amazon Payments, Kickstarter) subject to their own security standards and privacy policies.</p>
+  </section>
+
+  <section>
+    <h2>3. How We Use Your Information</h2>
+    <p>We use the information we collect to:</p>
+    <ul>
+      <li>Fulfill product orders and Kickstarter reward tiers</li>
+      <li>Prepare and deliver your readings and advisory documents</li>
+      <li>Give you secure access to your materials through the Client Portal</li>
+      <li>Review and publish the community stories you submit to The Itinerary</li>
+      <li>Communicate with you about your purchase or pledge</li>
+      <li>Send updates about new releases, campaigns, or content (only if you have opted in)</li>
+      <li>Improve our website and understand how people are engaging with our content</li>
+      <li>Comply with legal obligations</li>
+    </ul>
+    <p>We do not sell, rent, or trade your personal information to third parties for their marketing purposes.</p>
+  </section>
+
+  <section>
+    <h2>4. Information About Children</h2>
+    <p>Some of our readings, such as <em>Decode Your Child&rsquo;s Chart</em>, are about a child. For these, a parent or guardian provides the child&rsquo;s name and birth details. We use this information only to prepare that reading. We never sell or share it, and we never contact a child directly.</p>
+    <p>Stories shared with The Itinerary may mention your children&rsquo;s ages. Please do not include your children&rsquo;s full names or other identifying details in a story or its photos.</p>
+    <p>A parent or guardian can ask us at any time to see or delete information they have shared about their child.</p>
+  </section>
+
+  <section>
+    <h2>5. Community Stories Are Public</h2>
+    <p>Stories, photos, and video links you submit to The Itinerary are reviewed before they appear. Once approved, they are published on our website where anyone can see them. Your email address is never published. If you would like a story removed, contact us and we will take it down.</p>
+  </section>
+
+  <section>
+    <h2>6. Third-Party Services</h2>
+    <p>We use the following third-party services, each governed by their own privacy policies:</p>
+    <ul>
+      <li><strong>Kickstarter</strong> — for crowdfunding campaign management</li>
+      <li><strong>Amazon / KDP</strong> — for book distribution and sales</li>
+      <li><strong>Stripe</strong> — for payment processing</li>
+      <li><strong>Supabase</strong> — for securely storing mailing list signups, inquiries, community submissions, and Client Portal accounts</li>
+      <li><strong>Brevo</strong> — for sending email</li>
+      <li><strong>Cloudflare</strong> — for hosting our website</li>
+      <li><strong>Social media platforms</strong> (TikTok, Instagram, YouTube) — for content distribution</li>
+      <li><strong>Google Analytics (GA4)</strong> — for website analytics</li>
+      <li><strong>Microsoft Clarity</strong> — for user experience analytics, including recordings of how visitors move through our pages</li>
+    </ul>
+    <p>We encourage you to review each platform's privacy policy when interacting with them directly.</p>
+  </section>
+
+  <section>
+    <h2>7. Cookies and Tracking</h2>
+    <p>Our website uses cookies and tracking technologies to understand how visitors interact with our content. These include:</p>
+    <ul>
+      <li><strong>Essential cookies</strong> — necessary for the site to function</li>
+      <li><strong>Analytics cookies</strong> — to understand traffic and usage patterns (Google Analytics, Microsoft Clarity)</li>
+      <li><strong>Marketing pixels</strong> — to measure ad campaign performance (TikTok Pixel)</li>
+    </ul>
+    <p>You can adjust your browser settings to refuse cookies. Note that disabling cookies may affect some website functionality.</p>
+  </section>
+
+  <section>
+    <h2>8. Your Rights</h2>
+    <p>Depending on your location, you may have the following rights regarding your personal data:</p>
+    <ul>
+      <li><strong>Access</strong> — request a copy of the data we hold about you</li>
+      <li><strong>Correction</strong> — request we correct inaccurate information</li>
+      <li><strong>Deletion</strong> — request we delete your personal data</li>
+      <li><strong>Opt-out</strong> — unsubscribe from marketing communications at any time</li>
+      <li><strong>Portability</strong> — request your data in a portable format (where applicable)</li>
+    </ul>
+    <p>To exercise any of these rights, contact us at the email below. We will respond within 30 days.</p>
+  </section>
+
+  <section>
+    <h2>9. Data Retention</h2>
+    <p>We retain your personal information only as long as necessary to fulfill the purposes outlined in this Policy, or as required by applicable law. Purchase and transaction records may be retained for up to 7 years for accounting and legal compliance purposes.</p>
+  </section>
+
+  <section>
+    <h2>10. International Users</h2>
+    <p>Stella Polaris Publishing™ operates internationally. By using our website or services, you understand that your data may be processed in the United States or other countries where data protection laws may differ from those in your jurisdiction. We handle all data with care regardless of location.</p>
+  </section>
+
+  <section>
+    <h2>11. Changes to This Policy</h2>
+    <p>We may update this Privacy Policy periodically. When we do, we will revise the "Last Updated" date at the top of this page. Material changes will be communicated to active subscribers via email where possible.</p>
+  </section>
+
+  <div class="contact-box">
+    <p>Privacy questions or data requests?</p>
+    <a href="mailto:hello@stellapolarispublishing.com">hello@stellapolarispublishing.com</a>
+  </div>
+
+</main>
+
+<footer>&copy; 2026 Stella Polaris Publishing™ &nbsp; All Rights Reserved
+<div class="legal-links" role="navigation" aria-label="Legal" style="margin-top:0.9rem;"><a href="/index.html">Home</a> &nbsp;·&nbsp; <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/terms-of-service.html">Terms of Service</a> &nbsp;·&nbsp; <a href="/advisory-disclaimer.html">Advisory Terms</a></div>
+</footer>
+
+</body>
+</html>

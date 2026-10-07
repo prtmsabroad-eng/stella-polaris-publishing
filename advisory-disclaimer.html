@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service and Disclaimer | Stella Polaris Publishing™</title>
+<link rel="icon" type="image/png" href="/favicon.png?v=3">
+<link rel="apple-touch-icon" href="/favicon.png?v=3">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+  :root {
+    --purple-deep:   #2D0A3E;
+    --purple-mid:    #7B2D9E;
+    --gold-light:    #F0D080;
+    --gold-mid:      #D4A840;
+    --gold-dark:     #C8922A;
+    --text-main:     #EDE5F5;
+    --text-muted:    #B09EC2;
+    --rule:          rgba(240,208,128,0.18);
+    --rule-solid:    rgba(240,208,128,0.35);
+    --warn-bg:       rgba(200,146,42,0.1);
+    --warn-border:   rgba(200,146,42,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--purple-deep);
+    color: var(--text-main);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1rem;
+    line-height: 1.85;
+  }
+
+  header {
+    background: radial-gradient(ellipse at 50% 0%, #7B2D9E 0%, #2D0A3E 65%);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    border-bottom: 1px solid var(--rule-solid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23F0D080' fill-opacity='0.04'%3E%3Cpath d='M30 0l1 29 29 1-29 1-1 29-1-29-29-1 29-1z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .star-mark { font-family: 'Cinzel', serif; font-size: 1.1rem; color: var(--gold-light); letter-spacing: 0.6em; display: block; margin-bottom: 1.2rem; opacity: 0.9; position: relative; }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    line-height: 1.3;
+  }
+
+  header .brand { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--text-muted); margin-top: 0.5rem; letter-spacing: 0.08em; position: relative; }
+  header .sub { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dark); margin-top: 0.4rem; position: relative; }
+
+  .doc-meta {
+    background: rgba(0,0,0,0.25);
+    text-align: center;
+    padding: 0.7rem 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  main { max-width: 800px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  /* IMPORTANT banner */
+  .banner {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .banner .label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-mid);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+
+  .banner p {
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.85;
+    margin-bottom: 0;
+  }
+
+  section { margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--rule); }
+  section:last-of-type { border-bottom: none; }
+
+  h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 400;
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-mid);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  h2::after { content: ''; flex: 1; height: 1px; background: var(--rule-solid); }
+
+  p { margin-bottom: 0.85rem; font-size: 0.95rem; }
+  p:last-child { margin-bottom: 0; }
+  ul { padding-left: 1.6rem; margin-bottom: 0.85rem; }
+  ul li { font-size: 0.95rem; margin-bottom: 0.45rem; }
+  ul li::marker { color: var(--gold-dark); }
+  strong { font-weight: 600; color: var(--gold-light); }
+  a { color: var(--gold-mid); text-decoration: none; }
+  a:hover { color: var(--gold-light); }
+
+  .highlight {
+    border-left: 2px solid var(--gold-mid);
+    padding: 0.9rem 1.4rem;
+    margin: 1rem 0;
+    background: rgba(123,45,158,0.12);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .contact-box {
+    background: linear-gradient(135deg, rgba(123,45,158,0.35), rgba(45,10,62,0.6));
+    border: 1px solid var(--rule-solid);
+    padding: 2rem;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .contact-box p { font-style: italic; font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .contact-box a { font-family: 'Cinzel', serif; font-size: 0.75rem; letter-spacing: 0.12em; color: var(--gold-mid); }
+
+  footer {
+    text-align: center;
+    padding: 1.75rem 2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border-top: 1px solid var(--rule);
+    opacity: 0.7;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="star-mark">✦</span>
+  <h1>Terms of Service &amp; Disclaimer</h1>
+  <div class="brand">Stella Polaris Publishing™</div>
+  <div class="sub">Spiritual Advisory &amp; Astrological Consultation Services</div>
+</header>
+
+<div class="doc-meta">Effective Date: April 27, 2026 &nbsp;&nbsp;|&nbsp;&nbsp; Last Updated: April 27, 2026</div>
+
+<main>
+
+  <div class="banner">
+    <span class="label">Important Notice — Please Read Before Booking</span>
+    <p>All services offered through this practice, including astrological readings, energy readings, and spiritual advisory consultations, are provided for informational, educational, and personal growth purposes only. They do not constitute medical, psychological, legal, financial, or any other licensed professional advice.</p>
+  </div>
+
+  <section>
+    <h2>1. Nature of Services</h2>
+    <p>This practice offers spiritual advisory services, astrological executive summaries, and intuitive energy readings to adult clients. These services are rooted in metaphysical frameworks including Western astrology, ancestral wisdom traditions, and consciousness-based inquiry.</p>
+    <p>By engaging these services, you acknowledge and affirm that:</p>
+    <ul>
+      <li>You are an adult (18 years of age or older) seeking services for personal growth and self-reflection</li>
+      <li>You understand these services are not a substitute for licensed mental health care, medical treatment, legal counsel, or financial advice</li>
+      <li>You are exercising your own free will and independent judgment in how you interpret and apply any insights received</li>
+      <li>Results are not guaranteed. Spiritual and astrological work is experiential, not predictive in an absolute sense</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>2. Disclaimer of Professional Advice</h2>
+    <div class="highlight">
+      Nothing communicated in the course of a consultation, reading, or written report constitutes professional medical, psychiatric, psychological, financial, or legal advice. If you are experiencing a mental health crisis, medical emergency, or require legal or financial guidance, please seek qualified licensed professionals.
+    </div>
+    <p>Astrological chart interpretation is based on symbolic systems and interpretive frameworks. Chart readings reflect one practitioner's analysis of celestial patterns and their traditional and contemporary associations. They are not deterministic predictions of future events.</p>
+    <p>Energy readings and clairvoyant work are offered within a spiritual framework. These experiences are subjective and interpretive in nature. The practitioner makes no representations or warranties about the accuracy of any specific insight.</p>
+  </section>
+
+  <section>
+    <h2>3. Client Responsibility and Informed Consent</h2>
+    <p>By scheduling and/or purchasing a consultation, you confirm that:</p>
+    <ul>
+      <li>You have read and understood this disclaimer</li>
+      <li>You are voluntarily seeking this service of your own accord</li>
+      <li>You take full personal responsibility for any decisions you make based on the insights received</li>
+      <li>You will not hold this practice liable for outcomes resulting from your use of any information, guidance, or interpretation provided</li>
+    </ul>
+    <p>You further acknowledge that spiritual and astrological work functions as a complement to, not a replacement for, sound decision-making, professional counsel, and personal agency.</p>
+  </section>
+
+  <section>
+    <h2>4. Confidentiality</h2>
+    <p>This practice handles all client information with strict discretion. Your identity, session content, and any personal details you share will not be disclosed to third parties without your express consent.</p>
+    <p>Anonymized case examples may be used for educational or marketing purposes without any identifying information. If you prefer your case not be used in any form, please state this in writing prior to your consultation.</p>
+    <p>All birth data (date, time, location) provided for chart work is used solely for the purpose of astrological analysis and is stored securely. We do not sell or share this data.</p>
+  </section>
+
+  <section>
+    <h2>5. Payments, Cancellations, and Refunds</h2>
+    <p>All consultations are by application or direct engagement only. Payment is due prior to session delivery unless otherwise agreed in writing.</p>
+    <ul>
+      <li><strong>Cancellations made 48 or more hours in advance</strong> — full credit toward a future session</li>
+      <li><strong>Cancellations made less than 48 hours in advance</strong> — 50% of the session fee is forfeited</li>
+      <li><strong>No-shows without notice</strong> — full session fee is forfeited</li>
+      <li><strong>Written reports and astrological summaries</strong> — non-refundable once delivered</li>
+    </ul>
+    <p>Given the nature of intuitive and advisory work, dissatisfaction with the content of a reading does not constitute grounds for a refund. If you have concerns about your session, please contact us directly and we will address them in good faith.</p>
+  </section>
+
+  <section>
+    <h2>6. Intellectual Property</h2>
+    <p>All written reports, astrological summaries, recorded sessions, and materials produced in the course of your consultation are the intellectual property of this practice. They are provided to you for your personal use only.</p>
+    <p>You may not reproduce, distribute, publish, or resell any session materials without written authorization. This includes sharing recordings or reports on social media without explicit permission.</p>
+  </section>
+
+  <section>
+    <h2>7. Right to Decline Service</h2>
+    <p>This practice reserves the right to decline, reschedule, or discontinue service to any client at any time, for any reason, with a pro-rated refund of any unused paid services. We maintain a high-discretion, application-based client model and are selective about fit.</p>
+  </section>
+
+  <section>
+    <h2>8. Limitation of Liability</h2>
+    <p>To the fullest extent permitted by applicable law, this practice shall not be liable for any indirect, incidental, consequential, emotional, or psychological damages arising from your participation in any consultation or your use of any insights, recommendations, or materials provided.</p>
+    <p>Total liability for any claim shall not exceed the amount paid for the specific service that gave rise to the claim.</p>
+  </section>
+
+  <section>
+    <h2>9. Governing Terms and Updates</h2>
+    <p>These Terms are governed by the laws of the State of Georgia and applicable United States federal law. We reserve the right to update these Terms at any time. Continued engagement with this practice following any update constitutes acceptance of the revised Terms.</p>
+    <p>By proceeding with any consultation, purchase, or application, you confirm that you have read, understood, and agree to these Terms in their entirety.</p>
+  </section>
+
+  <div class="contact-box">
+    <p>Questions before booking?</p>
+    <a href="mailto:hello@stellapolarispublishing.com">hello@stellapolarispublishing.com</a>
+  </div>
+
+</main>
+
+<footer>
+  &copy; 2026 Stella Polaris Publishing™ &nbsp; All Rights Reserved<br>
+  Spiritual Advisory Services &nbsp;|&nbsp; For Personal Growth Purposes Only
+
+<div class="legal-links" role="navigation" aria-label="Legal" style="margin-top:0.9rem;"><a href="/index.html">Home</a> &nbsp;·&nbsp; <a href="/privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp; <a href="/terms-of-service.html">Terms of Service</a> &nbsp;·&nbsp; <a href="/advisory-disclaimer.html">Advisory Terms</a></div>
+</footer>
+
+</body>
+</html>
