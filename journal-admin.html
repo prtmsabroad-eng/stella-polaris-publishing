@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal Admin — Stella Polaris</title>
+<link rel="icon" type="image/png" href="/favicon.png?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root {
+  --gold: #C8A96E;
+  --gold-light: #E2C99A;
+  --gold-dim: rgba(200,169,110,0.15);
+  --deep: #0A0710;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(200,169,110,0.2);
+  --border-focus: rgba(200,169,110,0.55);
+  --text: #D4C4A8;
+  --muted: rgba(212,196,168,0.5);
+  --error: #c97070;
+  --success: #70c9a0;
+  --cream: #FFF8F0;
+  --ink: #2A1A3E;
+  --purple: #4A0D5C;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; background: var(--deep); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+
+/* ── AUTH SCREEN ── */
+#auth-screen {
+  min-height: 100vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; padding: 2rem 1.5rem;
+  text-align: center;
+}
+.auth-mark { font-size: 1.4rem; color: var(--gold); margin-bottom: 1.5rem; letter-spacing: 0.3em; }
+.auth-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold-light); margin-bottom: 0.4rem; }
+.auth-sub { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; margin-bottom: 2rem; }
+.auth-form { width: 100%; max-width: 360px; }
+.auth-input {
+  width: 100%; background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+  padding: 14px 16px; outline: none; margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+.auth-input:focus { border-color: var(--border-focus); }
+.auth-btn {
+  width: 100%; background: transparent; border: 1px solid var(--gold);
+  color: var(--gold); font-family: 'DM Sans', sans-serif; font-size: 0.8rem;
+  font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 14px; cursor: pointer; transition: all 0.2s;
+}
+.auth-btn:hover { background: var(--gold-dim); }
+.auth-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.auth-msg { font-size: 0.82rem; margin-top: 14px; min-height: 1.2em; }
+.auth-msg.error { color: var(--error); }
+.auth-msg.success { color: var(--success); }
+
+/* ── MAIN APP ── */
+#app-screen { display: none; min-height: 100vh; }
+
+nav {
+  background: rgba(10,7,16,0.97); border-bottom: 1px solid var(--border);
+  padding: 16px 20px; display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+}
+.nav-logo { font-family: 'Playfair Display', serif; color: var(--gold-light); font-size: 0.9rem; letter-spacing: 2px; }
+.nav-right { display: flex; gap: 12px; align-items: center; }
+.nav-link { font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; cursor: pointer; }
+.nav-link:hover { color: var(--gold-light); }
+
+.app-inner { max-width: 780px; margin: 0 auto; padding: 28px 20px 80px; }
+
+/* ── TABS ── */
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.tab-btn {
+  background: none; border: none; color: var(--muted); font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all 0.2s;
+}
+.tab-btn.active { color: var(--gold-light); border-bottom-color: var(--gold); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ── FORM ── */
+.form-group { margin-bottom: 22px; }
+label {
+  display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 8px;
+}
+.field {
+  width: 100%; background: var(--surface); border: 1px solid var(--border);
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+  padding: 12px 14px; outline: none; transition: border-color 0.2s;
+}
+.field:focus { border-color: var(--border-focus); }
+select.field { appearance: none; cursor: pointer; }
+textarea.field { resize: vertical; line-height: 1.7; }
+.field::placeholder { color: var(--muted); }
+
+.format-hint {
+  font-size: 0.72rem; color: var(--muted); margin-top: 7px; line-height: 1.6;
+}
+.format-hint code {
+  background: rgba(200,169,110,0.1); padding: 1px 5px;
+  font-family: monospace; font-size: 0.72rem; color: var(--gold-light);
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+
+.submit-btn {
+  background: transparent; border: 1px solid var(--gold); color: var(--gold);
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; padding: 14px 32px;
+  cursor: pointer; transition: all 0.2s; width: 100%;
+}
+.submit-btn:hover { background: var(--gold-dim); }
+.submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.form-status { font-size: 0.82rem; margin-top: 14px; min-height: 1.2em; text-align: center; }
+.form-status.error { color: var(--error); }
+.form-status.success { color: var(--success); }
+
+/* ── PREVIEW ── */
+#preview-box {
+  display: none; background: var(--cream); color: var(--ink);
+  padding: 32px 28px; margin-top: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  border: 1px solid var(--border);
+}
+#preview-box h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 16px; }
+#preview-box .preview-tag {
+  font-family: 'DM Sans', sans-serif; font-size: 0.68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px; color: var(--purple);
+  margin-bottom: 8px;
+}
+#preview-box .preview-body p { font-size: 1.1rem; line-height: 1.85; margin-bottom: 18px; color: var(--ink); }
+#preview-box .preview-body .pull-quote {
+  border-left: 3px solid #C9A84C; padding: 14px 18px;
+  margin: 24px 0; background: rgba(74,13,92,0.05);
+}
+#preview-box .preview-body .pull-quote p {
+  font-style: italic; color: var(--purple); font-size: 1.1rem; margin: 0 !important;
+}
+
+/* ── POSTS LIST ── */
+.posts-list { display: flex; flex-direction: column; gap: 0; }
+.post-row {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--border);
+}
+.post-row:last-child { border-bottom: none; }
+.post-row-info { flex: 1; min-width: 0; }
+.post-row-num { font-size: 0.68rem; color: var(--gold); font-weight: 700; letter-spacing: 2px; margin-bottom: 4px; }
+.post-row-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--gold-light); line-height: 1.3; margin-bottom: 4px; }
+.post-row-tag { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; }
+.post-row-actions { display: flex; gap: 10px; flex-shrink: 0; padding-top: 2px; }
+.action-btn {
+  background: none; border: 1px solid var(--border); color: var(--muted);
+  font-size: 0.7rem; letter-spacing: 0.08em; padding: 5px 10px;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+}
+.action-btn:hover { border-color: var(--gold); color: var(--gold); }
+.action-btn.del:hover { border-color: var(--error); color: var(--error); }
+
+.empty-state { color: var(--muted); font-size: 0.85rem; padding: 40px 0; text-align: center; }
+
+.loading-row { color: var(--muted); font-size: 0.82rem; padding: 24px 0; text-align: center; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-mark">✦</div>
+  <div class="auth-title">Journal Admin</div>
+  <div class="auth-sub">Stella Polaris Publishing</div>
+  <div class="auth-form">
+    <input id="auth-email" class="auth-input" type="email" placeholder="your email" autocomplete="email">
+    <button class="auth-btn" id="auth-btn" onclick="sendMagicLink()">Send Magic Link</button>
+    <div class="auth-msg" id="auth-msg"></div>
+  </div>
+</div>
+
+<!-- APP SCREEN -->
+<div id="app-screen">
+  <nav>
+    <div class="nav-logo">STELLA POLARIS</div>
+    <div class="nav-right">
+      <a href="/blog.html" class="nav-link" target="_blank">View Journal ↗</a>
+      <span class="nav-link" onclick="signOut()">Sign Out</span>
+    </div>
+  </nav>
+
+  <div class="app-inner">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('write')">Write Post</button>
+      <button class="tab-btn" onclick="switchTab('posts')">All Posts</button>
+    </div>
+
+    <!-- WRITE TAB -->
+    <div class="tab-panel active" id="tab-write">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="post-title">Title</label>
+          <input id="post-title" class="field" type="text" placeholder="Post title">
+        </div>
+        <div class="form-group">
+          <label for="post-tag">Tag</label>
+          <select id="post-tag" class="field">
+            <option value="Universal Laws">Universal Laws</option>
+            <option value="Neurodivergent Life">Neurodivergent Life</option>
+            <option value="Intentional Parenting">Intentional Parenting</option>
+            <option value="Theology">Theology</option>
+            <option value="Expat Life">Expat Life</option>
+            <option value="Energetics">Energetics</option>
+            <option value="Astrology">Astrology</option>
+            <option value="Journal">Journal</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="post-excerpt">Excerpt <span style="font-weight:300;text-transform:none;letter-spacing:0">(shown on index)</span></label>
+        <textarea id="post-excerpt" class="field" rows="3" placeholder="One or two sentences that draw the reader in."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="post-body">Body</label>
+        <textarea id="post-body" class="field" rows="18" placeholder="Write here. Separate paragraphs with a blank line.&#10;&#10;For a pull-quote, wrap a paragraph like this:&#10;[quote]This is the pull-quote text.[/quote]&#10;&#10;For a section heading, wrap a line like this:&#10;[heading]Part Two — The Work[/heading]"></textarea>
+        <div class="format-hint">
+          Blank line = new paragraph &nbsp;·&nbsp;
+          <code>[quote]...[/quote]</code> = pull-quote &nbsp;·&nbsp;
+          <code>[heading]...[/heading]</code> = section header
+        </div>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <button class="submit-btn" onclick="previewPost()" style="flex:1;min-width:140px;border-color:rgba(200,169,110,0.4);color:var(--muted);">Preview</button>
+        <button class="submit-btn" id="publish-btn" onclick="publishPost()" style="flex:2;min-width:200px;">Publish Post</button>
+      </div>
+      <div class="form-status" id="form-status"></div>
+
+      <div id="preview-box">
+        <div class="preview-tag" id="preview-tag"></div>
+        <h2 id="preview-title"></h2>
+        <div class="preview-body" id="preview-body"></div>
+      </div>
+    </div>
+
+    <!-- POSTS TAB -->
+    <div class="tab-panel" id="tab-posts">
+      <div id="posts-container"><div class="loading-row">Loading posts…</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL  = 'https://wshqygrcfsxxcamxitbs.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI';
+const OWNER_EMAIL   = 'tashia2g@gmail.com';
+
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+// ── AUTH ──────────────────────────────────────────────────────────────────────
+async function sendMagicLink() {
+  const email = document.getElementById('auth-email').value.trim().toLowerCase();
+  const msg   = document.getElementById('auth-msg');
+  const btn   = document.getElementById('auth-btn');
+
+  if (!email) { showAuthMsg('Enter your email.', 'error'); return; }
+  if (email !== OWNER_EMAIL) { showAuthMsg('Not authorised for this page.', 'error'); return; }
+
+  btn.disabled = true;
+  showAuthMsg('Sending…', '');
+  const { error } = await sb.auth.signInWithOtp({
+    email,
+    options: { emailRedirectTo: window.location.origin + '/journal-admin.html' }
+  });
+  btn.disabled = false;
+  if (error) { showAuthMsg(error.message, 'error'); }
+  else { showAuthMsg('Magic link sent — check your inbox.', 'success'); }
+}
+
+function showAuthMsg(text, type) {
+  const el = document.getElementById('auth-msg');
+  el.textContent = text;
+  el.className = 'auth-msg' + (type ? ' ' + type : '');
+}
+
+async function signOut() {
+  await sb.auth.signOut();
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+}
+
+sb.auth.onAuthStateChange((event, session) => {
+  if (session?.user) {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+    loadPosts();
+  }
+});
+
+document.getElementById('auth-email').addEventListener('keydown', e => {
+  if (e.key === 'Enter') sendMagicLink();
+});
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  ['write','posts'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
+    document.querySelector(`.tab-btn:nth-child(${t === 'write' ? 1 : 2})`).classList.toggle('active', t === tab);
+  });
+  if (tab === 'posts') loadPosts();
+}
+
+// ── BODY PARSER ───────────────────────────────────────────────────────────────
+function bodyToHtml(raw) {
+  const blocks = raw.split(/\n\n+/);
+  return blocks.map(block => {
+    const trimmed = block.trim();
+    if (!trimmed) return '';
+    const quoteMatch = trimmed.match(/^\[quote\]([\s\S]*?)\[\/quote\]$/i);
+    if (quoteMatch) {
+      return `<div class="pull-quote"><p>${quoteMatch[1].trim()}</p></div>`;
+    }
+    const headingMatch = trimmed.match(/^\[heading\]([\s\S]*?)\[\/heading\]$/i);
+    if (headingMatch) {
+      return `<p><strong>${headingMatch[1].trim()}</strong></p>`;
+    }
+    return `<p>${trimmed.replace(/\n/g, '<br>')}</p>`;
+  }).join('\n');
+}
+
+// ── PREVIEW ───────────────────────────────────────────────────────────────────
+function previewPost() {
+  const title   = document.getElementById('post-title').value.trim();
+  const tag     = document.getElementById('post-tag').value;
+  const body    = document.getElementById('post-body').value;
+  const preview = document.getElementById('preview-box');
+
+  document.getElementById('preview-tag').textContent   = tag;
+  document.getElementById('preview-title').textContent = title || 'Untitled';
+  document.getElementById('preview-body').innerHTML    = bodyToHtml(body);
+  preview.style.display = 'block';
+  preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── PUBLISH ───────────────────────────────────────────────────────────────────
+async function publishPost() {
+  const title   = document.getElementById('post-title').value.trim();
+  const tag     = document.getElementById('post-tag').value;
+  const excerpt = document.getElementById('post-excerpt').value.trim();
+  const body    = document.getElementById('post-body').value.trim();
+  const btn     = document.getElementById('publish-btn');
+  const status  = document.getElementById('form-status');
+
+  if (!title)   { setStatus('Title is required.', 'error'); return; }
+  if (!excerpt) { setStatus('Excerpt is required.', 'error'); return; }
+  if (!body)    { setStatus('Body is required.', 'error'); return; }
+
+  btn.disabled = true;
+  setStatus('Publishing…', '');
+
+  const body_html = bodyToHtml(body);
+
+  const { error } = await sb.from('blog_posts').insert({
+    tag, title, excerpt, body_html, published: true
+  });
+
+  btn.disabled = false;
+  if (error) {
+    setStatus('Error: ' + error.message, 'error');
+  } else {
+    setStatus('Published! ✦', 'success');
+    document.getElementById('post-title').value   = '';
+    document.getElementById('post-excerpt').value = '';
+    document.getElementById('post-body').value    = '';
+    document.getElementById('preview-box').style.display = 'none';
+  }
+}
+
+function setStatus(text, type) {
+  const el = document.getElementById('form-status');
+  el.textContent = text;
+  el.className = 'form-status' + (type ? ' ' + type : '');
+}
+
+// ── LOAD POSTS ────────────────────────────────────────────────────────────────
+async function loadPosts() {
+  const container = document.getElementById('posts-container');
+  container.innerHTML = '<div class="loading-row">Loading posts…</div>';
+
+  const { data, error } = await sb.from('blog_posts')
+    .select('id, tag, title, created_at, published')
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    container.innerHTML = `<div class="empty-state">Could not load posts: ${error.message}</div>`;
+    return;
+  }
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="empty-state">No posts yet. Write your first entry.</div>';
+    return;
+  }
+
+  container.innerHTML = '<div class="posts-list">' +
+    data.map((p, i) => `
+      <div class="post-row" id="row-${p.id}">
+        <div class="post-row-info">
+          <div class="post-row-num">${String(data.length - i).padStart(2,'0')}</div>
+          <div class="post-row-title">${escHtml(p.title)}</div>
+          <div class="post-row-tag">${escHtml(p.tag)} · ${formatDate(p.created_at)}</div>
+        </div>
+        <div class="post-row-actions">
+          <button class="action-btn del" onclick="deletePost('${p.id}')">Delete</button>
+        </div>
+      </div>`
+    ).join('') +
+  '</div>';
+}
+
+async function deletePost(id) {
+  if (!confirm('Delete this post?')) return;
+  const { error } = await sb.from('blog_posts').delete().eq('id', id);
+  if (error) { alert('Delete failed: ' + error.message); return; }
+  document.getElementById('row-' + id)?.remove();
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+</script>
+</body>
+</html>

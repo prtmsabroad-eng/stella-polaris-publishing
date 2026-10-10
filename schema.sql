@@ -67,3 +67,32 @@ revoke select on public.advisory_inquiries from anon;
 -- service_role, so get-leads failed with "permission denied for table
 -- advisory_inquiries" (Postgres error 42501) until this line was added.
 grant select on public.advisory_inquiries to service_role;
+
+-- ── JOURNAL / BLOG POSTS ──────────────────────────────────────────────────────
+-- Run this block once in: Supabase Dashboard → SQL Editor → New Query
+
+create table if not exists public.blog_posts (
+  id         uuid        default gen_random_uuid() primary key,
+  tag        text        not null,
+  title      text        not null,
+  excerpt    text        not null,
+  body_html  text        not null,
+  published  boolean     default true not null,
+  created_at timestamptz default now() not null
+);
+
+alter table public.blog_posts enable row level security;
+
+-- Anyone can read published posts (the blog fetches with the anon key)
+create policy "Public can read published posts"
+  on public.blog_posts for select
+  using (published = true);
+
+-- Only the authenticated owner can insert / update / delete
+create policy "Owner can manage posts"
+  on public.blog_posts for all
+  using (auth.jwt() ->> 'email' = 'tashia2g@gmail.com')
+  with check (auth.jwt() ->> 'email' = 'tashia2g@gmail.com');
+
+grant select on public.blog_posts to anon;
+grant all    on public.blog_posts to authenticated;

@@ -386,6 +386,13 @@ nav {
     <a class="read-link" onclick="event.stopPropagation(); openPost('post6')">Read →</a>
   </div>
 
+  <div class="post-card" onclick="openPost('post7')">
+    <div class="post-meta"><span class="post-num">07</span><span class="post-tag">Universal Laws</span></div>
+    <div class="post-title">Breaking the Ritual</div>
+    <div class="post-excerpt">The strongest bonds are the ones formed by accident — through repetition, feeling, and a single act most people treat as casual. Here is how they form, how to sever them, and how to never walk into one unaware again.</div>
+    <a class="read-link" onclick="event.stopPropagation(); openPost('post7')">Read →</a>
+  </div>
+
   <!-- READ THE BOOKS STRIP -->
   <div class="books-strip">
     <div class="books-strip-label">Read the Books</div>
@@ -580,7 +587,51 @@ nav {
   </div>
 </div>
 
+<!-- POST 7 -->
+<div class="post-single" id="post7">
+  <div class="post-single-meta">
+    <button class="back-btn" onclick="closePost()">← All Posts</button>
+    <span class="post-tag">Universal Laws</span>
+  </div>
+  <h1>Breaking the Ritual</h1>
+  <div class="post-divider"></div>
+  <div class="post-body">
+    <p><strong>Part One — You Were Bound Without Meaning To Be</strong></p>
+    <p>You've been trying to walk away. You made the decision. Said it out loud, maybe more than once. And still, something in you turns back toward a person you no longer want to want.</p>
+    <p>That is not weakness. Something got made between you and them, and you never had to mean to make it.</p>
+    <p>We think binding takes a spell. A ceremony. A clear, focused intention. It doesn't. The strongest bonds are the ones formed by accident, through repetition and feeling and a single act most people treat as casual.</p>
+    <p>You didn't sign up for this. But you can undo it, and you can learn to never walk into it again.</p>
+
+    <p><strong>Part Two — Break It</strong></p>
+    <p>Before you do anything physical, set your perimeter. Stand still. Say this aloud:</p>
+    <div class="pull-quote"><p>Any person who calls my name in desire, who summons me in fantasy, who directs their want toward me without my invitation — the energy returns to them void. I do not receive it. I am not available. Romantically, sexually, energetically — if I did not call you in, you cannot reach me. What you send finds no home here.</p></div>
+    <p>Now find where you are carrying this person in your body. Chest, gut, throat — it lives somewhere specific. Put your hand there.</p>
+    <p>Take your dominant hand, two fingers together like scissors. Starting at that spot, snip down and away from your body. Slow the first time. Then faster. Keep cutting until something in that spot shifts.</p>
+    <p>While you cut, say this out loud:</p>
+    <div class="pull-quote"><p>Every cord attached to me that is not my will and not of my greatest and highest good — I cut it. Every thought, every word, every desire sent my way that was not my intention — I send it back. It is not welcome here. You are not welcome here.</p><p>I return my energy to myself. I return your energy to you. You are no longer granted access to pull on me — energetically, romantically, sexually — for any reason. Any attempt to reach me, summon me, or pull at my energy returns void to you, the sender.</p><p>My name spoken — for good or for evil, in gossip or in praise — benefits me. Every mention ushers in my highest timeline. Prosperity and abundance follow the sound of my name wherever it goes.</p><p>I am protected. I am safe. I am loved safely.</p></div>
+    <p>Bathe normally. Wash your body completely. Then prepare a separate bowl of salt water. Pour it over your body from head to toe and let it run down and off you into the drain. As it falls, speak the incantation again. Watch it drain. Every word, every cord, leaving with the water.</p>
+    <p>Step out. Air dry. Do not towel off.</p>
+    <p>When you are still, close with this:</p>
+    <div class="pull-quote"><p>I call my energy back to me. I call my sovereignty back to me. I call my autonomy back to me. My body is my own. I dwell within myself and I am free of any bonds.</p></div>
+
+    <p><strong>Part Three — Understand the Mechanism</strong></p>
+    <p>Sex is a binding ritual. People move casually into relationships that have no foundation built to last, and the bond still forms — all consuming — because the act itself closes a loop whether or not love is behind it.</p>
+    <div class="pull-quote"><p>Even the law knows this. A marriage can be annulled when it was never consummated, treated as though the bond never fully formed. The vows, the license, none of it closes the loop on its own. The act is what makes it whole.</p></div>
+
+    <p><strong>Part Four — Never Walk Into Another One Unaware</strong></p>
+    <p>Awareness is the only protection, since intention was never the requirement. Know who you are dealing with before the bond takes hold, not after.</p>
+    <p>This is where your chart becomes a discernment tool. Read the person's nature before you perform the act that binds you to it. See the energy clearly first. Bind on purpose, or don't bind at all.</p>
+  </div>
+  <div class="post-footer">
+    <div class="author-dot">T</div>
+    <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+const STATIC_POST_COUNT = 7;
+
 function openPost(id) {
   document.getElementById('blog-index').classList.add('hidden');
   document.querySelectorAll('.post-single').forEach(p => p.classList.remove('active'));
@@ -591,6 +642,69 @@ function closePost() {
   document.querySelectorAll('.post-single').forEach(p => p.classList.remove('active'));
   document.getElementById('blog-index').classList.remove('hidden');
   window.scrollTo(0,0);
+}
+
+// Load posts from Supabase and inject into the index + DOM
+(async function loadDynamicPosts() {
+  try {
+    const sb = window.supabase.createClient(
+      'https://wshqygrcfsxxcamxitbs.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI'
+    );
+    const { data } = await sb
+      .from('blog_posts')
+      .select('id, tag, title, excerpt, body_html, created_at')
+      .eq('published', true)
+      .order('created_at', { ascending: true });
+
+    if (!data || data.length === 0) return;
+
+    const index    = document.getElementById('blog-index');
+    const booksStrip = index.querySelector('.books-strip');
+
+    data.forEach((post, i) => {
+      const num   = STATIC_POST_COUNT + i + 1;
+      const dynId = 'dyn-' + post.id;
+
+      // Card in index
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.setAttribute('onclick', `openPost('${dynId}')`);
+      card.innerHTML = `
+        <div class="post-meta">
+          <span class="post-num">${String(num).padStart(2,'0')}</span>
+          <span class="post-tag">${esc(post.tag)}</span>
+        </div>
+        <div class="post-title">${esc(post.title)}</div>
+        <div class="post-excerpt">${esc(post.excerpt)}</div>
+        <a class="read-link" onclick="event.stopPropagation();openPost('${dynId}')">Read →</a>`;
+      index.insertBefore(card, booksStrip);
+
+      // Full post panel
+      const panel = document.createElement('div');
+      panel.className = 'post-single';
+      panel.id = dynId;
+      panel.innerHTML = `
+        <div class="post-single-meta">
+          <button class="back-btn" onclick="closePost()">← All Posts</button>
+          <span class="post-tag">${esc(post.tag)}</span>
+        </div>
+        <h1>${esc(post.title)}</h1>
+        <div class="post-divider"></div>
+        <div class="post-body">${post.body_html}</div>
+        <div class="post-footer">
+          <div class="author-dot">T</div>
+          <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+        </div>`;
+      document.body.insertBefore(panel, document.querySelector('script'));
+    });
+  } catch (e) {
+    // Supabase unavailable — static posts still work fine
+  }
+})();
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 <footer style="width:100%;padding:28px 16px 24px"><style>.sp-legal{display:block;margin-top:14px;font-size:12px;line-height:1.8;letter-spacing:.04em;opacity:.75;text-align:center}.sp-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}.sp-legal a:hover{opacity:1}</style><div class="sp-legal" role="navigation" aria-label="Legal"><a href="/privacy-policy.html">Privacy Policy</a> &middot; <a href="/terms-of-service.html">Terms of Service</a> &middot; <a href="/advisory-disclaimer.html">Advisory Terms &amp; Disclaimer</a></div></footer>
