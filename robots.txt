@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+Disallow: /portal.html
+Disallow: /studio.html
+Disallow: /journal-admin.html
+Disallow: /advisory-portal-payment.html
+Disallow: /product-checkout.html
+Disallow: /checkout.html
+Disallow: /itinerary-moderation.html
+Disallow: /ping.html
+
+Sitemap: https://stellapolarispublishing.com/sitemap.xml
