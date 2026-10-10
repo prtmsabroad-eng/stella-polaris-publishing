@@ -40,7 +40,33 @@
     {"@type": "Country", "name": "United States"},
     {"@type": "City", "name": "London"}
   ],
-  "url": "https://stellapolarispublishing.com/advisory.html"
+  "url": "https://stellapolarispublishing.com/advisory.html",
+  "review": [
+    {
+      "@type": "Review",
+      "reviewBody": "I read it twice the day it arrived and have returned to it every quarter since. The level of precision — not just of the astrology, but of the language — is unlike anything I had encountered before.",
+      "author": {"@type": "Person", "name": "A.M."},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+    },
+    {
+      "@type": "Review",
+      "reviewBody": "I booked this during a season where I genuinely did not know what was happening or why. The document gave me a map. I stopped white-knuckling the year and started working with it.",
+      "author": {"@type": "Person", "name": "N.O."},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+    },
+    {
+      "@type": "Review",
+      "reviewBody": "What I appreciated most was the honesty. She did not soften the harder transits into something palatable. She named them and told me exactly what to do with the energy. That is what I needed.",
+      "author": {"@type": "Person", "name": "T.W."},
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"}
+    }
+  ],
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "3",
+    "bestRating": "5"
+  }
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -326,6 +352,52 @@ section { position: relative; z-index: 2; }
 
 .services { background: var(--void); }
 .services-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.08); margin-top: 52px; }
+
+/* ── TESTIMONIALS ── */
+.testimonials { padding: 80px 24px; }
+.testimonials .section-inner { max-width: 860px; margin: 0 auto; }
+.testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 52px; }
+.testi-card {
+  border: 1px solid rgba(201,168,76,0.14);
+  background: rgba(13,10,26,0.6);
+  padding: 36px 32px 28px;
+  position: relative;
+}
+.testi-card::before {
+  content: '\201C';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 80px;
+  color: var(--gold-dim);
+  opacity: 0.35;
+  position: absolute;
+  top: 12px; left: 24px;
+  line-height: 1;
+}
+.testi-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-style: italic;
+  color: var(--mist);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  padding-top: 32px;
+}
+.testi-name {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 0.32em;
+  color: var(--gold-dim);
+}
+.testi-detail {
+  font-size: 11px;
+  color: var(--mist-dim);
+  margin-top: 4px;
+  opacity: 0.7;
+}
+@media (max-width: 600px) {
+  .testi-grid { grid-template-columns: 1fr; }
+  .testi-card { padding: 28px 24px 22px; }
+}
 .tile { background: var(--void); padding: 44px 32px; transition: background 0.3s; position: relative; }
 .tile::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background 0.3s; }
 .tile:hover { background: rgba(42,22,80,0.4); }
@@ -508,6 +580,30 @@ footer { border-top: 1px solid rgba(201,168,76,0.07); padding: 52px 32px; text-a
       <div class="tile"><span class="tile-tag">Private Advisory</span><div class="tile-name">Focused Transit Reading</div><div class="tile-body">A single transit or natal placement examined at depth. For when context already exists and precision is required on one specific question.</div><span class="tile-status">Inquire Via Intake</span></div>
       <div class="tile"><span class="tile-tag">Coming Soon</span><div class="tile-name">Partnership Synastry Analysis</div><div class="tile-body">Two charts in relationship — for significant business partnerships, collaborations, or high-stakes personal decisions requiring full clarity.</div><span class="tile-status">Waitlist Open</span></div>
       <div class="tile"><span class="tile-tag">Application Required</span><div class="tile-name">Ongoing Advisory Retainer</div><div class="tile-body">Quarterly summaries plus direct access as transits activate. For clients who operate in real time and require guidance that moves with them.</div><span class="tile-status">Limited Availability</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner">
+    <div class="section-tag">What Clients Say</div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-quote">I read it twice the day it arrived and have returned to it every quarter since. The level of precision — not just of the astrology, but of the language — is unlike anything I had encountered before.</div>
+        <div class="testi-name">A.M.</div>
+        <div class="testi-detail">Executive Advisory Client · New York</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">I booked this during a season where I genuinely did not know what was happening or why. The document gave me a map. I stopped white-knuckling the year and started working with it.</div>
+        <div class="testi-name">N.O.</div>
+        <div class="testi-detail">Executive Advisory Client · London</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-quote">What I appreciated most was the honesty. She did not soften the harder transits into something palatable. She named them and told me exactly what to do with the energy. That is what I needed.</div>
+        <div class="testi-name">T.W.</div>
+        <div class="testi-detail">Executive Advisory Client · Atlanta</div>
+      </div>
     </div>
   </div>
 </section>

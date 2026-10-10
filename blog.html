@@ -330,6 +330,64 @@ nav {
 }
 .author-name { font-size:0.85rem; font-weight:600; color:var(--dark); }
 .author-sub { font-size:0.75rem; color:#888; }
+
+/* ── ADVISORY CTA (injected after each post-footer) ── */
+.advisory-cta {
+  margin-top:48px;
+  border:1px solid rgba(74,24,97,0.25);
+  background:linear-gradient(135deg,rgba(45,10,62,0.06) 0%,rgba(74,24,97,0.1) 100%);
+  border-radius:4px;
+  padding:32px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  flex-wrap:wrap;
+}
+.advisory-cta-text { flex:1; min-width:200px; }
+.advisory-cta-eyebrow {
+  font-family:'Karla',sans-serif;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--gold-deep, #C8922A);
+  margin-bottom:6px;
+}
+.advisory-cta-headline {
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;
+  font-weight:600;
+  color:var(--dark, #2D0A3E);
+  margin-bottom:6px;
+  line-height:1.35;
+}
+.advisory-cta-body {
+  font-size:0.83rem;
+  color:#666;
+  line-height:1.6;
+}
+.advisory-cta-btn {
+  display:inline-block;
+  background:var(--ordained, #4A1861);
+  color:#fff;
+  font-family:'Karla',sans-serif;
+  font-size:0.82rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  padding:13px 24px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+  white-space:nowrap;
+  flex-shrink:0;
+  transition:background 0.2s;
+}
+.advisory-cta-btn:hover { background:var(--purple-mid, #7B2D9E); }
+@media(max-width:520px){
+  .advisory-cta { flex-direction:column; align-items:flex-start; }
+  .advisory-cta-btn { width:100%; text-align:center; padding:14px; }
+}
 </style>
 </head>
 <body>
@@ -709,6 +767,22 @@ function closePost() {
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+// Inject advisory CTA after every post-footer inside a post-single
+(function injectAdvisoryCTAs() {
+  const ctaHTML = `
+  <div class="advisory-cta">
+    <div class="advisory-cta-text">
+      <div class="advisory-cta-eyebrow">Stella Polaris Advisory™</div>
+      <div class="advisory-cta-headline">Want a private reading for your year ahead?</div>
+      <div class="advisory-cta-body">Your birth chart, your transits, four quarters mapped. A bespoke advisory document built for where you actually are.</div>
+    </div>
+    <a href="/advisory.html" class="advisory-cta-btn">Begin the Intake ✦</a>
+  </div>`;
+  document.querySelectorAll('.post-single .post-footer').forEach(function(footer) {
+    footer.insertAdjacentHTML('afterend', ctaHTML);
+  });
+})();
 </script>
 <footer style="width:100%;padding:28px 16px 24px"><style>.sp-legal{display:block;margin-top:14px;font-size:12px;line-height:1.8;letter-spacing:.04em;opacity:.75;text-align:center}.sp-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}.sp-legal a:hover{opacity:1}</style><div class="sp-legal" role="navigation" aria-label="Legal"><a href="/privacy-policy.html">Privacy Policy</a> &middot; <a href="/terms-of-service.html">Terms of Service</a> &middot; <a href="/advisory-disclaimer.html">Advisory Terms &amp; Disclaimer</a></div></footer>
 </body>
