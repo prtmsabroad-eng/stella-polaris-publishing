@@ -210,7 +210,7 @@ nav button:hover { color:var(--purple); }
 .blog-info h4 { font-size:0.88rem; font-weight:700; color:var(--dark); margin-bottom:3px; line-height:1.3; }
 .blog-info p { font-size:0.75rem; color:#888; line-height:1.4; }
 .blog-tag { display:inline-block; font-size:0.62rem; font-weight:700; padding:2px 8px; border-radius:10px; margin-top:5px; }
-.btag-ready{background:#e8f8e8;color:#2d7a2d} .btag-draft{background:#FFF3CD;color:#856404}
+.btag-ready{background:#e8f8e8;color:#2d7a2d} .btag-draft{background:#FFF3CD;color:#856404} .btag-live{background:#E8F0FF;color:#2d4fa8}
 
 /* CAROUSELS */
 .carousel-item { background:white; border-radius:12px; padding:14px; margin-bottom:10px; box-shadow:0 1px 6px rgba(0,0,0,0.05); display:flex; align-items:center; justify-content:space-between; gap:12px; }
@@ -856,25 +856,26 @@ nav button:hover { color:var(--purple); }
 
   <!-- BLOG -->
   <div class="section" id="tab-blog">
-    <div class="section-title">Blog Queue</div>
-    <div class="section-sub">6 posts ready to write. Build the blog page, drop them in.</div>
+    <div class="section-title">Journal</div>
+    <div class="section-sub">7 posts live · Add new entries anytime from the write screen</div>
 
-    <div class="card">
-      <div class="card-header"><div class="card-icon" style="background:#F0E6FF">🔧</div><h3>Next Step</h3></div>
-      <ul class="checklist">
-        <li>Build the blog page HTML on the Stella Polaris site</li>
-        <li>Each post below becomes a page or section</li>
-        <li>Purple light conversations = natural blog content</li>
-        <li>Every blog post is also a caption, a carousel, and a Trial reel hook</li>
-      </ul>
+    <div class="card" style="background:linear-gradient(135deg,var(--ordained),#1a0535);color:white;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+        <div>
+          <div style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(240,208,128,0.7);margin-bottom:4px;">Daily Writing</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--gold-light);">Write a New Journal Entry</div>
+        </div>
+        <a href="/journal-admin.html" target="_blank" style="background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--dark);text-decoration:none;padding:10px 22px;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border-radius:6px;white-space:nowrap;flex-shrink:0;">Open Write Screen ✦</a>
+      </div>
     </div>
 
-    <div class="blog-item"><div class="blog-num">01</div><div class="blog-info"><h4>What Nobody Told Me About Cleaning With a Neurodivergent Brain</h4><p>PDA, meltdowns, how cleaning was taught as demand not practice. Rewriting it for Nova. Clean spaces as mental health not performance.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
-    <div class="blog-item"><div class="blog-num">02</div><div class="blog-info"><h4>The Law of Love Is Not an Emotion</h4><p>Universal law as a living system not a governing one. How I teach Nova to live inside it instead of around it.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
-    <div class="blog-item"><div class="blog-num">03</div><div class="blog-info"><h4>She Was Never a Sinner — Mary Magdalene and What They Took From Us</h4><p>The story they told about her was always about controlling what women know. Why this matters for raising Nova.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
-    <div class="blog-item"><div class="blog-num">04</div><div class="blog-info"><h4>Why I Left and What I Needed My Daughter to See Before I Did</h4><p>Not inspiration content. The real reasons. What changes when you stop tolerating geography as default.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
-    <div class="blog-item"><div class="blog-num">05</div><div class="blog-info"><h4>114 Sayings, No Miracles — What the Gospel of Thomas Actually Says</h4><p>No resurrection story. No miracles. Just instructions. Why this is the most radical document in the canon.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
-    <div class="blog-item"><div class="blog-num">06</div><div class="blog-info"><h4>What I Heal in Me, She Never Has to Carry</h4><p>The Law of Correspondence through a parenting lens. Generational pattern work as the most spiritual act.</p><span class="blog-tag btag-ready">Ready to write</span></div></div>
+    <div class="blog-item"><div class="blog-num">01</div><div class="blog-info"><h4>What Nobody Told Me About Cleaning With a Neurodivergent Brain</h4><p>PDA, meltdowns, how cleaning was taught as demand not practice. Rewriting it for Nova. Clean spaces as mental health not performance.</p><span class="blog-tag btag-live">Live</span></div></div>
+    <div class="blog-item"><div class="blog-num">02</div><div class="blog-info"><h4>The Law of Love Is Not an Emotion</h4><p>Universal law as a living system not a governing one. How I teach Nova to live inside it instead of around it.</p><span class="blog-tag btag-live">Live</span></div></div>
+    <div class="blog-item"><div class="blog-num">03</div><div class="blog-info"><h4>She Was Never a Sinner — Mary Magdalene and What They Took From Us</h4><p>The story they told about her was always about controlling what women know. Why this matters for raising Nova.</p><span class="blog-tag btag-live">Live</span></div></div>
+    <div class="blog-item"><div class="blog-num">04</div><div class="blog-info"><h4>Why I Left and What I Needed My Daughter to See Before I Did</h4><p>Not inspiration content. The real reasons. What changes when you stop tolerating geography as default.</p><span class="blog-tag btag-live">Live</span></div></div>
+    <div class="blog-item"><div class="blog-num">05</div><div class="blog-info"><h4>114 Sayings, No Miracles — What the Gospel of Thomas Actually Says</h4><p>No resurrection story. No miracles. Just instructions. Why this is the most radical document in the canon.</p><span class="blog-tag btag-live">Live</span></div></div>
+    <div class="blog-item"><div class="blog-num">06</div><div class="blog-info"><h4>What I Heal in Me, She Never Has to Carry</h4><p>The Law of Correspondence through a parenting lens. Generational pattern work as the most spiritual act.</p><span class="blog-tag btag-live">Live</span></div></div>
+    <div class="blog-item"><div class="blog-num">07</div><div class="blog-info"><h4>Breaking the Ritual</h4><p>How bonds form without intention, and how to set yourself free. The mechanism, the practice, and how to never walk into one unaware again.</p><span class="blog-tag btag-live">Live</span></div></div>
   </div>
 
   <!-- CAROUSELS -->
