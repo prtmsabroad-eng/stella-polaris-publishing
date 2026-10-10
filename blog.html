@@ -628,7 +628,10 @@ nav {
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
+const STATIC_POST_COUNT = 7;
+
 function openPost(id) {
   document.getElementById('blog-index').classList.add('hidden');
   document.querySelectorAll('.post-single').forEach(p => p.classList.remove('active'));
@@ -639,6 +642,69 @@ function closePost() {
   document.querySelectorAll('.post-single').forEach(p => p.classList.remove('active'));
   document.getElementById('blog-index').classList.remove('hidden');
   window.scrollTo(0,0);
+}
+
+// Load posts from Supabase and inject into the index + DOM
+(async function loadDynamicPosts() {
+  try {
+    const sb = window.supabase.createClient(
+      'https://wshqygrcfsxxcamxitbs.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI'
+    );
+    const { data } = await sb
+      .from('blog_posts')
+      .select('id, tag, title, excerpt, body_html, created_at')
+      .eq('published', true)
+      .order('created_at', { ascending: true });
+
+    if (!data || data.length === 0) return;
+
+    const index    = document.getElementById('blog-index');
+    const booksStrip = index.querySelector('.books-strip');
+
+    data.forEach((post, i) => {
+      const num   = STATIC_POST_COUNT + i + 1;
+      const dynId = 'dyn-' + post.id;
+
+      // Card in index
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.setAttribute('onclick', `openPost('${dynId}')`);
+      card.innerHTML = `
+        <div class="post-meta">
+          <span class="post-num">${String(num).padStart(2,'0')}</span>
+          <span class="post-tag">${esc(post.tag)}</span>
+        </div>
+        <div class="post-title">${esc(post.title)}</div>
+        <div class="post-excerpt">${esc(post.excerpt)}</div>
+        <a class="read-link" onclick="event.stopPropagation();openPost('${dynId}')">Read →</a>`;
+      index.insertBefore(card, booksStrip);
+
+      // Full post panel
+      const panel = document.createElement('div');
+      panel.className = 'post-single';
+      panel.id = dynId;
+      panel.innerHTML = `
+        <div class="post-single-meta">
+          <button class="back-btn" onclick="closePost()">← All Posts</button>
+          <span class="post-tag">${esc(post.tag)}</span>
+        </div>
+        <h1>${esc(post.title)}</h1>
+        <div class="post-divider"></div>
+        <div class="post-body">${post.body_html}</div>
+        <div class="post-footer">
+          <div class="author-dot">T</div>
+          <div><div class="author-name">Tashia Monique</div><div class="author-sub">Founder, Stella Polaris Publishing</div></div>
+        </div>`;
+      document.body.insertBefore(panel, document.querySelector('script'));
+    });
+  } catch (e) {
+    // Supabase unavailable — static posts still work fine
+  }
+})();
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 </script>
 <footer style="width:100%;padding:28px 16px 24px"><style>.sp-legal{display:block;margin-top:14px;font-size:12px;line-height:1.8;letter-spacing:.04em;opacity:.75;text-align:center}.sp-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}.sp-legal a:hover{opacity:1}</style><div class="sp-legal" role="navigation" aria-label="Legal"><a href="/privacy-policy.html">Privacy Policy</a> &middot; <a href="/terms-of-service.html">Terms of Service</a> &middot; <a href="/advisory-disclaimer.html">Advisory Terms &amp; Disclaimer</a></div></footer>
