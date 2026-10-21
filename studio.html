@@ -9,6 +9,11 @@
 <title>Tash Studio — Command Center</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
 :root {
   --cream: #FFF8F0;
   --gold: #C9A84C;
@@ -389,6 +394,8 @@ nav button:hover { color:var(--purple); }
 </style>
 </head>
 <body>
+<a href="#dashboard" class="skip-link">Skip to main content</a>
+
 
 <div id="gate">
   <div class="gate-star">✦</div>
@@ -399,7 +406,7 @@ nav button:hover { color:var(--purple); }
   <p id="gate-error">Try again.</p>
 </div>
 
-<div id="dashboard">
+<div id="dashboard" tabindex="-1" role="main">
   <header>
     <div class="logo">TASH <span>✦</span> STUDIO</div>
     <div class="header-right">

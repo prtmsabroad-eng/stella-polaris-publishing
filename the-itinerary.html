@@ -14,6 +14,11 @@
 </script>
 
 <style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
@@ -289,6 +294,8 @@
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
 
 <!-- NAV -->
 <nav>
@@ -310,7 +317,7 @@
 </nav>
 
 <!-- HERO -->
-<section class="hub-hero">
+<section id="main-content" tabindex="-1" class="hub-hero" role="main">
   <div class="hub-hero-inner">
     <span class="hub-eyebrow">✦ A Roaming Stellas Community</span>
     <h1>The<br><em>Itinerary</em></h1>
