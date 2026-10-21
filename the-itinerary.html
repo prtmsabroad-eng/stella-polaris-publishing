@@ -22,10 +22,10 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --gold: #C9A84C;
+    --gold: #C9A84C; --gold-text: #6E5C29;
     --gold-light: #F0D080;
     --rose: #D4547A;
-    --teal: #3BBFB0;
+    --teal: #3BBFB0; --teal-text: #206960;
     --parchment: #F5EDD8;
     --violet: #2E1D60;
     --cream: #FDFAF4;
@@ -45,7 +45,7 @@
     justify-content: space-between; height: 64px;
   }
   .nav-brand { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid); text-decoration: none; }
-  .nav-brand span { color: var(--gold); }
+  .nav-brand span { color: var(--gold-text); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a { font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
   .nav-links a:hover, .nav-links a.active { color: var(--violet); }
@@ -146,7 +146,7 @@
     transition: all 0.2s; font-family: 'DM Sans', sans-serif;
   }
   .region-btn:hover, .region-btn.active {
-    border-color: var(--teal); color: var(--teal);
+    border-color: var(--teal); color: var(--teal-text);
     background: rgba(59,191,176,0.06);
   }
 
@@ -161,7 +161,7 @@
   }
   .section-eyebrow {
     font-family: 'Space Mono', monospace; font-size: 0.6rem;
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold);
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-text);
     display: block; margin-bottom: 0.3rem;
   }
   .section-title {
@@ -237,10 +237,10 @@
     margin-top: 1.2rem; padding-top: 0.8rem; border-top: 1px solid var(--border);
   }
   .dest-card-stories { font-size: 0.7rem; color: var(--mid); }
-  .dest-card-stories strong { color: var(--teal); }
+  .dest-card-stories strong { color: var(--teal-text); }
   .dest-card-arrow {
     font-family: 'Space Mono', monospace; font-size: 0.7rem;
-    color: var(--teal); letter-spacing: 0.05em;
+    color: var(--teal-text); letter-spacing: 0.05em;
   }
 
   /* LOADING / EMPTY */
@@ -284,7 +284,7 @@
   /* FOOTER */
   footer { background: var(--ink); padding: 2.5rem 2rem; text-align: center; }
   .footer-brand { font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
-  .footer-sub { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+  .footer-sub { font-size: 0.75rem; color: rgba(255,255,255,0.55); }
 
   @media (max-width: 768px) {
     .nav-links { display: none; }
