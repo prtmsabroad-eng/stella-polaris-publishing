@@ -16,7 +16,10 @@
      None of these load until the visitor clicks "Accept" on the
      cookie banner (see #cookie-consent-banner below). A prior
      Accept/Decline choice is remembered in localStorage so returning
-     visitors aren't re-prompted. Replace each placeholder ID before
+     visitors aren't re-prompted. A browser sending the Global Privacy
+     Control signal (navigator.globalPrivacyControl) is treated as an
+     automatic opt-out under CCPA/CPRA — see #gpc-notice below —
+     bypassing the banner entirely. Replace each placeholder ID before
      going live.
      ═══════════════════════════════════════════════════════════ -->
 <script>
@@ -86,10 +89,38 @@
     });
   }
 
+  function wireGpcNotice(){
+    var notice = document.getElementById('gpc-notice');
+    var okBtn = document.getElementById('gpc-notice-ok');
+    if (!notice) return;
+    notice.hidden = false;
+    if (okBtn) {
+      okBtn.addEventListener('click', function(){ notice.hidden = true; });
+    }
+    // Never blocks content — dismiss itself if the visitor doesn't interact.
+    setTimeout(function(){ notice.hidden = true; }, 8000);
+  }
+
+  function hasGPC(){
+    try { return navigator.globalPrivacyControl === true; } catch(e) { return false; }
+  }
+
   var stored = null;
   try { stored = localStorage.getItem(CONSENT_KEY); } catch(e) {}
 
-  if (stored === 'accepted') {
+  if (hasGPC()) {
+    // Global Privacy Control is a legally recognized opt-out signal under
+    // CCPA/CPRA. Honor it automatically — overriding even a previously
+    // stored "accepted" choice — and skip the ask-banner entirely, since
+    // the browser has already made the opt-out request on the visitor's
+    // behalf. Just show a brief, non-blocking confirmation.
+    try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch(e) {}
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wireGpcNotice);
+    } else {
+      wireGpcNotice();
+    }
+  } else if (stored === 'accepted') {
     loadAnalytics();
   } else if (stored !== 'declined') {
     // No prior choice on record: block all tracking and show the banner.
@@ -125,6 +156,16 @@
     .cookie-consent-inner { flex-direction: column; align-items: stretch; }
     .cookie-consent-actions { justify-content: stretch; }
     .cookie-btn { flex: 1; }
+  }
+
+  /* Global Privacy Control notice — informational only, auto-dismisses */
+  .gpc-notice { position: fixed; left: 0; right: 0; bottom: 0; z-index: 100000; background: #0F0B28; border-top: 1px solid rgba(201,168,76,0.3); padding: 18px 24px; box-shadow: 0 -4px 24px rgba(0,0,0,0.4); }
+  .gpc-notice[hidden] { display: none; }
+  .gpc-notice-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+  .gpc-notice-text { flex: 1 1 320px; color: #F5EDD8; font-size: 13px; line-height: 1.6; margin: 0; }
+  .gpc-notice-text a { color: #C9A84C; text-decoration: underline; }
+  @media (max-width: 640px) {
+    .gpc-notice-inner { flex-direction: column; align-items: stretch; }
   }
 
   :root {
@@ -778,6 +819,13 @@
       <button type="button" id="cookie-decline-btn" class="cookie-btn cookie-btn-decline">Decline</button>
       <button type="button" id="cookie-accept-btn" class="cookie-btn cookie-btn-accept">Accept</button>
     </div>
+  </div>
+</div>
+
+<div id="gpc-notice" class="gpc-notice" role="status" aria-live="polite" hidden>
+  <div class="gpc-notice-inner">
+    <p class="gpc-notice-text">We detected your browser's Global Privacy Control signal and automatically turned off tracking for you — no action needed. <a href="/privacy-policy.html">Privacy Policy</a></p>
+    <button type="button" id="gpc-notice-ok" class="cookie-btn cookie-btn-decline">Got it</button>
   </div>
 </div>
 
