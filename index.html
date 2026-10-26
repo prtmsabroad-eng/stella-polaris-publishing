@@ -12,67 +12,95 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 
 <!-- ═══════════════════════════════════════════════════════════
-     ANALYTICS STACK
-     Replace each placeholder ID before going live.
+     ANALYTICS STACK — consent-gated
+     None of these load until the visitor clicks "Accept" on the
+     cookie banner (see #cookie-consent-banner below). A prior
+     Accept/Decline choice is remembered in localStorage so returning
+     visitors aren't re-prompted. Replace each placeholder ID before
+     going live.
      ═══════════════════════════════════════════════════════════ -->
-
-<!-- Google Analytics 4
-     1. Go to analytics.google.com
-     2. Admin → Data Streams → your web stream → Measurement ID (starts with G-)
-     3. Replace both instances of G-XXXXXXXXXX below -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-P40MQCBTP9"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-P40MQCBTP9');
-</script>
+(function(){
+  var CONSENT_KEY = 'sp_cookie_consent'; // 'accepted' | 'declined'
 
-<!-- Microsoft Clarity
-     1. Go to clarity.microsoft.com → New Project
-     2. Copy the 10-character project ID from the setup snippet
-     3. Replace XXXXXXXXXX below -->
-<script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
-    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window,document,"clarity","script","wxd4xxbpby");
-</script>
+  function loadAnalytics(){
+    // Google Analytics 4
+    // 1. Go to analytics.google.com → Admin → Data Streams → your web stream → Measurement ID (starts with G-)
+    // 2. Replace both instances of G-P40MQCBTP9 below
+    var ga = document.createElement('script');
+    ga.async = true;
+    ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-P40MQCBTP9';
+    document.head.appendChild(ga);
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = window.gtag || function(){ dataLayer.push(arguments); };
+    gtag('js', new Date());
+    gtag('config', 'G-P40MQCBTP9');
 
-<!-- Meta (Facebook) Pixel
-     1. Go to business.facebook.com → Events Manager → Connect Data Sources → Web
-     2. Replace both instances of 0000000000000000 below with your Pixel ID -->
-<script>
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-  document,'script','https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init','0000000000000000');
-  fbq('track','PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=0000000000000000&ev=PageView&noscript=1"/></noscript>
+    // Microsoft Clarity — clarity.microsoft.com → New Project → 10-char project ID
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window,document,"clarity","script","wxd4xxbpby");
 
-<!-- TikTok Pixel
-     1. Go to ads.tiktok.com → Assets → Events → Manage → Website Pixel → Set Up Pixel
-     2. Replace C0000000000000000000 below with your Pixel ID -->
-<script>
-  !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
-  ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
-  ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
-  for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
-  ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
-  ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
-  ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._r=ttq._r||{},ttq._r[e]=n,
-  ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
-  var o=document.createElement("script");o.type="text/javascript",o.async=!0;
-  o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];
-  a.parentNode.insertBefore(o,a)};
-  ttq.load('D8B3KIBC77U7IG05MKL0');
-  ttq.page();
-  }(window,document,'ttq');
+    // Meta (Facebook) Pixel — business.facebook.com → Events Manager → Web → replace Pixel ID
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','0000000000000000');
+    fbq('track','PageView');
+
+    // TikTok Pixel — ads.tiktok.com → Assets → Events → Website Pixel → replace Pixel ID
+    !function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];
+    ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"];
+    ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};
+    for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);
+    ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e};
+    ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";
+    ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._r=ttq._r||{},ttq._r[e]=n,
+    ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};
+    var o=document.createElement("script");o.type="text/javascript",o.async=!0;
+    o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];
+    a.parentNode.insertBefore(o,a)};
+    ttq.load('D8B3KIBC77U7IG05MKL0');
+    ttq.page();
+    }(window,document,'ttq');
+  }
+
+  function wireBanner(){
+    var banner = document.getElementById('cookie-consent-banner');
+    var acceptBtn = document.getElementById('cookie-accept-btn');
+    var declineBtn = document.getElementById('cookie-decline-btn');
+    if (!banner || !acceptBtn || !declineBtn) return;
+    banner.hidden = false;
+    acceptBtn.addEventListener('click', function(){
+      try { localStorage.setItem(CONSENT_KEY, 'accepted'); } catch(e) {}
+      banner.hidden = true;
+      loadAnalytics();
+    });
+    declineBtn.addEventListener('click', function(){
+      try { localStorage.setItem(CONSENT_KEY, 'declined'); } catch(e) {}
+      banner.hidden = true;
+    });
+  }
+
+  var stored = null;
+  try { stored = localStorage.getItem(CONSENT_KEY); } catch(e) {}
+
+  if (stored === 'accepted') {
+    loadAnalytics();
+  } else if (stored !== 'declined') {
+    // No prior choice on record: block all tracking and show the banner.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', wireBanner);
+    } else {
+      wireBanner();
+    }
+  }
+  // stored === 'declined': do nothing — no scripts, no banner.
+})();
 </script>
 <!-- ═══════════════════════════════════════════════════════════ -->
 
@@ -81,6 +109,23 @@
   .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
   .skip-link:focus { left: 0; }
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
+  /* Cookie consent banner — blocks analytics/ad scripts until a choice is made */
+  .cookie-consent-banner { position: fixed; left: 0; right: 0; bottom: 0; z-index: 100000; background: #0F0B28; border-top: 1px solid rgba(201,168,76,0.3); padding: 18px 24px; box-shadow: 0 -4px 24px rgba(0,0,0,0.4); }
+  .cookie-consent-banner[hidden] { display: none; }
+  .cookie-consent-inner { max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px; }
+  .cookie-consent-text { flex: 1 1 320px; color: #F5EDD8; font-size: 13px; line-height: 1.6; margin: 0; }
+  .cookie-consent-text a { color: #C9A84C; text-decoration: underline; }
+  .cookie-consent-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .cookie-btn { font-family: inherit; font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 4px; cursor: pointer; border: 1px solid rgba(245,237,216,0.35); background: transparent; color: #F5EDD8; transition: background 0.2s, border-color 0.2s; }
+  .cookie-btn-decline:hover { background: rgba(245,237,216,0.1); }
+  .cookie-btn-accept { background: #C9A84C; color: #1C1812; border-color: #C9A84C; }
+  .cookie-btn-accept:hover { background: #ddc06f; }
+  @media (max-width: 640px) {
+    .cookie-consent-inner { flex-direction: column; align-items: stretch; }
+    .cookie-consent-actions { justify-content: stretch; }
+    .cookie-btn { flex: 1; }
+  }
 
   :root {
     --void: #08051A;
@@ -726,8 +771,15 @@
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
-
-
+<div id="cookie-consent-banner" class="cookie-consent-banner" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
+  <div class="cookie-consent-inner">
+    <p class="cookie-consent-text">We use cookies and similar tracking (analytics, advertising pixels) to understand site traffic and improve your experience. Nothing loads until you choose. <a href="/privacy-policy.html">Privacy Policy</a></p>
+    <div class="cookie-consent-actions">
+      <button type="button" id="cookie-decline-btn" class="cookie-btn cookie-btn-decline">Decline</button>
+      <button type="button" id="cookie-accept-btn" class="cookie-btn cookie-btn-accept">Accept</button>
+    </div>
+  </div>
+</div>
 
 <div class="sf" id="sf"></div>
 
