@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tashia Monique — Creator Media Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #180428;
+    --bg-card: #2D0A3E;
+    --bg-card-2: #3F195C;
+    --gold-light: #F0D080;
+    --gold-dark: #C8922A;
+    --gold-mid: #DDB050;
+    --text-primary: #F0E8D8;
+    --text-muted: #B09880;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-padding-top: var(--safe-top); }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100%;
+    padding-top: var(--safe-top);
+    padding-bottom: var(--safe-bottom);
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: var(--safe-top);
+    background: var(--bg);
+    z-index: 10;
+  }
+  .page { max-width: 720px; margin: 0 auto; padding: 0 24px 72px; }
+
+  /* HEADER */
+  .header {
+    padding: 52px 0 44px;
+    text-align: center;
+    border-bottom: 1px solid rgba(240,208,128,0.18);
+  }
+  .kit-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.28em;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .creator-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(34px, 8vw, 56px);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.08;
+    margin-bottom: 10px;
+  }
+  .creator-tagline {
+    font-size: 15px;
+    font-style: italic;
+    color: var(--gold-light);
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .creator-handle {
+    font-size: 14px;
+    color: rgba(176,152,128,0.7);
+    margin-bottom: 24px;
+  }
+  .header-bio {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 0 auto 28px;
+  }
+  .contact-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #F0D080 0%, #C8922A 100%);
+    color: #180428;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 11px 28px;
+    border-radius: 100px;
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 60px 0 16px;
+    text-align: center;
+  }
+  .hero-num {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(80px, 20vw, 128px);
+    font-weight: 700;
+    background: linear-gradient(145deg, #F0D080 10%, #C8922A 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .hero-sub { font-size: 19px; color: var(--text-muted); font-style: italic; margin-bottom: 10px; }
+  .hero-context {
+    font-size: 13px;
+    color: rgba(176,152,128,0.6);
+    font-style: italic;
+    margin-bottom: 52px;
+  }
+
+  /* SECTIONS */
+  .section { margin-bottom: 52px; }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--gold-mid);
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(240,208,128,0.14);
+  }
+
+  /* METRICS */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .metric-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(240,208,128,0.11);
+    border-radius: 10px;
+    padding: 20px 16px 18px;
+  }
+  .metric-val {
+    font-family: 'Cinzel', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--gold-light);
+    line-height: 1;
+    margin-bottom: 5px;
+  }
+  .metric-lbl { font-size: 12px; color: var(--text-muted); font-style: italic; line-height: 1.3; }
+  .metric-period { font-size: 10px; color: rgba(176,152,128,0.5); margin-top: 3px; }
+
+  /* AUDIENCE */
+  .aud-panels {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .aud-panel {
+    background: var(--bg-card);
+    border: 1px solid rgba(240,208,128,0.14);
+    border-radius: 10px;
+    padding: 20px 18px;
+  }
+  .aud-panel-title {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .aud-panel-sub {
+    font-size: 11px;
+    color: rgba(176,152,128,0.55);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+  .aud-full {
+    background: var(--bg-card);
+    border: 1px solid rgba(240,208,128,0.14);
+    border-radius: 10px;
+    padding: 20px 18px;
+    margin-bottom: 10px;
+  }
+  .aud-two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* Gender */
+  .gender-row { display: flex; justify-content: space-between; margin-bottom: 8px; }
+  .gender-label { font-size: 13px; color: var(--text-muted); }
+  .gender-label strong { color: var(--gold-light); font-weight: 500; font-style: normal; }
+  .gender-track {
+    height: 7px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.07);
+    overflow: hidden;
+    display: flex;
+  }
+  .g-f { background: linear-gradient(90deg, #F0D080, #C8922A); }
+  .g-m { flex: 1; }
+
+  /* Bars */
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .bar-row:last-child { margin-bottom: 0; }
+  .bar-name { font-size: 13px; color: var(--text-primary); width: 90px; flex-shrink: 0; }
+  .bar-name-sm { font-size: 12px; color: var(--text-primary); width: 76px; flex-shrink: 0; }
+  .bar-name-other { font-size: 12px; color: var(--text-muted); font-style: italic; width: 90px; flex-shrink: 0; }
+  .bar-name-other-sm { font-size: 12px; color: var(--text-muted); font-style: italic; width: 76px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+  .bar-track-other { flex: 1; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; }
+  .bar-fill { height: 100%; background: linear-gradient(90deg, #F0D080, #C8922A); border-radius: 3px; }
+  .bar-fill-other { height: 100%; background: rgba(176,152,128,0.3); border-radius: 3px; }
+  .bar-pct { font-size: 12px; color: var(--gold-light); width: 42px; text-align: right; flex-shrink: 0; }
+  .bar-pct-other { font-size: 12px; color: var(--text-muted); width: 42px; text-align: right; flex-shrink: 0; }
+
+  /* Follower callout */
+  .follower-us {
+    text-align: center;
+    padding: 20px 0 16px;
+  }
+  .follower-us-num {
+    font-family: 'Cinzel', serif;
+    font-size: 48px;
+    font-weight: 700;
+    background: linear-gradient(145deg, #F0D080 10%, #C8922A 90%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .follower-us-label { font-size: 14px; color: var(--text-muted); font-style: italic; }
+  .follower-divider {
+    border: none;
+    border-top: 1px solid rgba(240,208,128,0.1);
+    margin: 16px 0;
+  }
+  .follower-global-label {
+    font-family: 'Cinzel', serif;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: rgba(176,152,128,0.6);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .follower-countries {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  /* TOP POSTS */
+  .posts-list { display: flex; flex-direction: column; gap: 8px; }
+  .post-row {
+    background: var(--bg-card);
+    border: 1px solid rgba(240,208,128,0.11);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .post-title { font-size: 15px; color: var(--text-primary); line-height: 1.4; flex: 1; }
+  .post-date { font-size: 11px; color: var(--text-muted); font-style: italic; margin-top: 2px; }
+  .post-views {
+    font-family: 'Cinzel', serif;
+    font-size: 17px;
+    color: var(--gold-light);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* PITCH */
+  .pitch-card {
+    background: linear-gradient(135deg, #3F195C 0%, #2D0A3E 100%);
+    border: 1px solid rgba(240,208,128,0.22);
+    border-radius: 10px;
+    padding: 30px 26px;
+  }
+  .pitch-text { font-size: 19px; line-height: 1.72; color: var(--text-primary); font-style: italic; }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(240,208,128,0.14);
+    text-align: center;
+  }
+  .footer-name { font-family: 'Cinzel', serif; font-size: 14px; color: var(--gold-mid); letter-spacing: 0.1em; margin-bottom: 7px; }
+  .footer-role { font-size: 15px; font-style: italic; color: var(--text-muted); margin-bottom: 10px; }
+  .footer-link { font-size: 14px; color: var(--gold-light); text-decoration: none; }
+  .footer-note { margin-top: 22px; font-size: 10px; color: rgba(176,152,128,0.35); }
+
+  @media (max-width: 520px) {
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+    .aud-panels { grid-template-columns: 1fr; }
+    .aud-two-col { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="kit-label">Travel &amp; Lifestyle Creator &nbsp;·&nbsp; Media Kit</div>
+    <h1 class="creator-name">Tashia Monique</h1>
+    <div class="creator-tagline">Exploring the World. Bringing Her Audience Along.</div>
+    <div class="creator-handle">@tashiamoniquespeaks &nbsp;·&nbsp; TikTok</div>
+    <p class="header-bio">Author and lifestyle creator documenting international adventures across Europe, Latin America, the Caribbean, and beyond.</p>
+    <a class="contact-btn" href="mailto:partnership.tmsabroad@gmail.com">partnership.tmsabroad@gmail.com</a>
+  </div>
+
+  <div class="hero">
+    <div class="hero-num">1M</div>
+    <div class="hero-sub">viewers reached</div>
+    <div class="hero-context">Content production launched June 2026. The audience responded immediately.</div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Account Overview</div>
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-val">11.1K</div>
+        <div class="metric-lbl">Total Followers</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">143.6K</div>
+        <div class="metric-lbl">Total Likes</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">931.9K</div>
+        <div class="metric-lbl">New Viewers</div>
+        <div class="metric-period">Last 365 days</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">25.2K</div>
+        <div class="metric-lbl">Likes</div>
+        <div class="metric-period">Last 365 days</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">2.4K</div>
+        <div class="metric-lbl">Comments</div>
+        <div class="metric-period">Last 365 days</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val">1.1K</div>
+        <div class="metric-lbl">Shares</div>
+        <div class="metric-period">Last 365 days</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Audience Insights</div>
+
+    <!-- Gender -->
+    <div class="aud-panels">
+      <div class="aud-panel">
+        <div class="aud-panel-title">Viewers</div>
+        <div class="aud-panel-sub">Gender breakdown</div>
+        <div class="gender-row">
+          <div class="gender-label"><strong>63%</strong> Female</div>
+          <div class="gender-label"><strong>36%</strong> Male</div>
+        </div>
+        <div class="gender-track">
+          <div class="g-f" style="width:63%"></div>
+          <div class="g-m"></div>
+        </div>
+      </div>
+      <div class="aud-panel">
+        <div class="aud-panel-title">Followers</div>
+        <div class="aud-panel-sub">Gender breakdown</div>
+        <div class="gender-row">
+          <div class="gender-label"><strong>78%</strong> Female</div>
+          <div class="gender-label"><strong>22%</strong> Male</div>
+        </div>
+        <div class="gender-track">
+          <div class="g-f" style="width:78%"></div>
+          <div class="g-m"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Age -->
+    <div class="aud-full">
+      <div class="aud-panel-title">Age</div>
+      <div class="aud-panel-sub" style="margin-bottom:14px;">Viewer breakdown</div>
+      <div class="bar-row">
+        <div class="bar-name">25 – 34</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <div class="bar-pct">35.4%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">18 – 24</div>
+        <div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>
+        <div class="bar-pct">32.3%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">35 – 44</div>
+        <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
+        <div class="bar-pct">17.8%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">45 – 54</div>
+        <div class="bar-track"><div class="bar-fill" style="width:27%"></div></div>
+        <div class="bar-pct">9.7%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-name">55+</div>
+        <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+        <div class="bar-pct">4.8%</div>
+      </div>
+    </div>
+
+    <!-- Locations -->
+    <div class="aud-two-col">
+      <!-- Viewer Locations -->
+      <div class="aud-full" style="margin-bottom:0;">
+        <div class="aud-panel-title">Viewer Locations</div>
+        <div class="aud-panel-sub" style="margin-bottom:14px;">Where content reaches</div>
+        <div class="bar-row">
+          <div class="bar-name-sm">South Africa</div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+          <div class="bar-pct">16.2%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">United States</div>
+          <div class="bar-track"><div class="bar-fill" style="width:77%"></div></div>
+          <div class="bar-pct">12.5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Kenya</div>
+          <div class="bar-track"><div class="bar-fill" style="width:51%"></div></div>
+          <div class="bar-pct">8.3%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Nigeria</div>
+          <div class="bar-track"><div class="bar-fill" style="width:28%"></div></div>
+          <div class="bar-pct">4.5%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Mexico</div>
+          <div class="bar-track"><div class="bar-fill" style="width:23%"></div></div>
+          <div class="bar-pct">3.8%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Brazil</div>
+          <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+          <div class="bar-pct">3.6%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Uganda</div>
+          <div class="bar-track"><div class="bar-fill" style="width:21%"></div></div>
+          <div class="bar-pct">3.4%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Senegal</div>
+          <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+          <div class="bar-pct">3.2%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-sm">Ghana</div>
+          <div class="bar-track"><div class="bar-fill" style="width:17%"></div></div>
+          <div class="bar-pct">2.7%</div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-name-other-sm">Other</div>
+          <div class="bar-track-other"><div class="bar-fill-other" style="width:100%"></div></div>
+          <div class="bar-pct-other">41.8%</div>
+        </div>
+      </div>
+
+      <!-- Follower Locations -->
+      <div class="aud-full" style="margin-bottom:0;">
+        <div class="aud-panel-title">Follower Locations</div>
+        <div class="aud-panel-sub" style="margin-bottom:14px;">Where the core base lives</div>
+        <div class="follower-us">
+          <div class="follower-us-num">69%</div>
+          <div class="follower-us-label">United States</div>
+        </div>
+        <hr class="follower-divider">
+        <div class="follower-global-label">Global diaspora reach</div>
+        <div class="follower-countries">Nigeria &nbsp;·&nbsp; UK &nbsp;·&nbsp; Canada &nbsp;·&nbsp; South Africa &nbsp;·&nbsp; Cameroon &nbsp;·&nbsp; Ghana &nbsp;·&nbsp; Jamaica &nbsp;·&nbsp; Kenya &nbsp;·&nbsp; Trinidad &amp; Tobago &nbsp;·&nbsp; and more</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Top Performing Content</div>
+    <div class="posts-list">
+      <div class="post-row">
+        <div>
+          <div class="post-title">Chef teaching her 7-year-old to cook</div>
+          <div class="post-date">Jul 6, 2026</div>
+        </div>
+        <div class="post-views">263K</div>
+      </div>
+      <div class="post-row">
+        <div>
+          <div class="post-title">My big baby</div>
+          <div class="post-date">Jul 7, 2026</div>
+        </div>
+        <div class="post-views">194K</div>
+      </div>
+      <div class="post-row">
+        <div>
+          <div class="post-title">Travel series</div>
+          <div class="post-date">Jun 17, 2026</div>
+        </div>
+        <div class="post-views">168K</div>
+      </div>
+      <div class="post-row">
+        <div>
+          <div class="post-title">Travel series</div>
+          <div class="post-date">Jun 15, 2026</div>
+        </div>
+        <div class="post-views">88K</div>
+      </div>
+      <div class="post-row">
+        <div>
+          <div class="post-title">Was this a rip off?</div>
+          <div class="post-date">Jun 18, 2026</div>
+        </div>
+        <div class="post-views">64K</div>
+      </div>
+      <div class="post-row">
+        <div>
+          <div class="post-title">Moving to Europe at 7</div>
+          <div class="post-date">Sep 27, 2026</div>
+        </div>
+        <div class="post-views">60K</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Why This Audience</div>
+    <div class="pitch-card">
+      <div class="pitch-text">"I am a US-based creator who started documenting international travel in June 2026. Within weeks, the content went viral. My followers are 69% American, watching a Black American woman explore the world in real time. My viewers span six continents. When I use a product abroad, both audiences are watching."</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-name">Tashia Monique</div>
+    <div class="footer-role">Travel &amp; Lifestyle Creator</div>
+    <div class="footer-note">Analytics sourced from TikTok Studio &nbsp;·&nbsp; Nov 9, 2025 – Nov 8, 2026 &nbsp;·&nbsp; A Tashia Monique Speaks production under Stella Polaris Publishing™</div>
+  </div>
+
+</div>
+</body>
+</html>
