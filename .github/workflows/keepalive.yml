@@ -1,11 +1,22 @@
 name: Keepalive
 
-# Runs every 6 hours to prevent Supabase from pausing and to confirm
-# the site is reachable. Trigger manually any time via workflow_dispatch.
+# Runs every 6 hours to keep the free Supabase project from pausing and to
+# confirm the site is reachable. Trigger manually any time via workflow_dispatch.
+#
+# Supabase only counts real database queries as activity. Pinging the bare
+# /rest/v1/ root (or a table the anon key cannot read) does not count, which is
+# why the project was paused on 2026-10-30 even though this job ran every
+# 6 hours. The Supabase step below runs a real SELECT on blog_posts, which the
+# anon key is allowed to read (see schema.sql).
 on:
   schedule:
     - cron: '0 */6 * * *'   # 00:00, 06:00, 12:00, 18:00 UTC daily
   workflow_dispatch:
+
+env:
+  SUPABASE_URL: https://wshqygrcfsxxcamxitbs.supabase.co
+  # Public anon key (already in the site's HTML). Not a secret.
+  SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI
 
 jobs:
   ping:
@@ -16,21 +27,31 @@ jobs:
     steps:
       - name: Ping stellapolarispublishing.com
         run: |
-          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
+          # -L follows Cloudflare Pages' redirect from /ping.html to /ping
+          STATUS=$(curl -o /dev/null -sL -w "%{http_code}" \
             -A "Mozilla/5.0 (compatible; StellaPolaris-Monitor/1.0)" \
-            --max-time 15 \
-            https://stellapolarispublishing.com/ping.html)
-          echo "stellapolarispublishing.com/ping.html → HTTP $STATUS"
-          # Any response below 500 confirms the server/CDN is alive and responding
-          [[ "$STATUS" =~ ^[1-4][0-9]{2}$ ]] || exit 1
+            --max-time 15 --retry 2 --retry-delay 5 \
+            https://stellapolarispublishing.com/ping.html) || STATUS=000
+          echo "stellapolarispublishing.com/ping.html -> HTTP $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Site did not return 200 (got $STATUS)"
+            exit 1
+          fi
 
-      - name: Ping Supabase REST API
+      - name: Query Supabase (real database read)
         run: |
-          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
-            --max-time 15 \
-            -H "apikey: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
-            -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI" \
-            "https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/")
-          echo "Supabase REST API → HTTP $STATUS"
-          # Any response below 500 confirms Supabase is awake; only 5xx/000 is a real failure
-          [[ "$STATUS" =~ ^[1-4][0-9]{2}$ ]] || exit 1
+          STATUS=$(curl -o response.json -s -w "%{http_code}" \
+            --max-time 20 --retry 2 --retry-delay 5 \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            "$SUPABASE_URL/rest/v1/blog_posts?select=id&limit=1") || STATUS=000
+          echo "Supabase blog_posts query -> HTTP $STATUS"
+          if [ "$STATUS" = "000" ]; then
+            echo "::error::Could not reach Supabase. The project is probably paused. Restore it at https://supabase.com/dashboard/project/wshqygrcfsxxcamxitbs"
+            exit 1
+          fi
+          if [ "$STATUS" != "200" ]; then
+            echo "::error::Supabase query failed with HTTP $STATUS"
+            cat response.json || true
+            exit 1
+          fi
