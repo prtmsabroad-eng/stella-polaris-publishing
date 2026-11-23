@@ -76,3 +76,7 @@ footer a{color:inherit}
   .pull{margin:36px 0}
   .cta{padding:28px 20px}
 }
+.signs{list-style:none;margin:14px 0 22px}
+.signs li{padding:0 0 14px 28px;position:relative}
+.signs li::before{content:'✦';position:absolute;left:0;top:0;color:var(--gold)}
+.signs strong{display:block;font-weight:500}
