@@ -359,6 +359,8 @@
       }
 
       if (success) {
+        // Lead alert email to Tash. Fire and forget, never blocks the visitor.
+        fetch('https://wshqygrcfsxxcamxitbs.supabase.co/functions/v1/notify-inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind: 'signup', email: email, page: location.pathname, source: trafficSource }) }).catch(function(){});
         if (typeof gtag === 'function') {
           gtag('event', 'generate_lead', {
             event_category: 'email_capture',
