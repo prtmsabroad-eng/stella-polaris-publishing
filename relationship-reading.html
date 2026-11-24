@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/favicon.png?v=3">
+  <link rel="apple-touch-icon" href="/favicon.png?v=3">
+  <link rel="manifest" href="/manifest.json">
+<title>Relationship Reading London: Should I Stay or Go? | Stella Polaris</title>
+<meta name="description" content="Is something off? Should you stay or go? Get a private $88 relationship reading from your birth chart. For London, the UK, Europe and online.">
+<link rel="canonical" href="https://stellapolarispublishing.com/relationship-reading">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Stella Polaris Publishing">
+<meta property="og:title" content="Relationship Reading London: Should I Stay or Go? | Stella Polaris">
+<meta property="og:url" content="https://stellapolarispublishing.com/relationship-reading">
+<meta property="og:description" content="Is something off? Should you stay or go? Get a private $88 relationship reading from your birth chart. For London, the UK, Europe and online.">
+<meta property="og:image" content="https://stellapolarispublishing.com/img/og-advisory.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Service", "@id": "https://stellapolarispublishing.com/relationship-reading#service", "name": "Relationship Reading", "serviceType": "Relationship astrology reading", "url": "https://stellapolarispublishing.com/relationship-reading", "description": "A private written relationship reading from your birth chart, and your partner's if you have it, answering one question about love, trust or timing.", "provider": {"@type": "Organization", "@id": "https://stellapolarispublishing.com/#org", "name": "Stella Polaris Publishing"}, "areaServed": [{"@type": "City", "name": "London"}, {"@type": "Country", "name": "United Kingdom"}, {"@type": "Continent", "name": "Europe"}], "offers": {"@type": "Offer", "price": "88", "priceCurrency": "USD", "url": "https://stellapolarispublishing.com/relationship-reading"}}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Cinzel:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* Accessibility: skip link + visible focus indicator */
+  .skip-link { position: absolute; left: -9999px; top: 0; background: #1C1812; color: #FDFAF4; padding: 0.85rem 1.4rem; z-index: 99999; font-size: 0.95rem; font-weight: 600; text-decoration: none; border-radius: 0 0 6px 0; }
+  .skip-link:focus { left: 0; }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, [tabindex]:focus-visible { outline: 3px solid #2E90FA !important; outline-offset: 2px !important; box-shadow: 0 0 0 5px rgba(46,144,250,0.35) !important; }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --void: #07050f;
+  --deep: #0d0a1a;
+  --plum-dark: #160c2a;
+  --plum: #2a1650;
+  --plum-mid: #3d2070;
+  --plum-rich: #4a1a7a;
+  --royal: #5c1fa8;
+  --gold: #c9a84c;
+  --gold-bright: #e8cc80;
+  --gold-pale: #f0e0b0;
+  --gold-dim: #a07830;
+  --cream: #f0ece0;
+  --mist: #d4ccee;
+  --mist-dim: #a090c8;
+  --body-color: #c8bfe0;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--body-color);
+  font-family: 'Jost', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.03; pointer-events: none; z-index: 999;
+}
+
+/* ── HERO ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 0 0 72px;
+  /* No min-height - content determines height */
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 110% 80% at 50% 0%, rgba(74,26,122,0.85) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 15% 70%, rgba(42,22,80,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse 55% 45% at 85% 75%, rgba(22,12,42,0.4) 0%, transparent 55%),
+    var(--void);
+}
+
+.stars { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.star {
+  position: absolute; background: var(--gold-pale); border-radius: 50%;
+  animation: twinkle var(--d,5s) ease-in-out infinite var(--delay,0s);
+}
+@keyframes twinkle {
+  0%,100% { opacity: var(--op,.4); }
+  50% { opacity: calc(var(--op,.4)*0.12); }
+}
+
+/* ── ARCH
+   Key insight: arch is a BORDER drawn around the content via SVG.
+   We use padding-top on .arch-content to push content below the arch curve.
+   The arch SVG is absolutely positioned and stretches to match content height.
+   No fixed height = no dead space.
+── */
+.arch-wrapper {
+  position: relative;
+  z-index: 5;
+  width: min(560px, 93vw);
+  margin: 0 auto;
+}
+
+/* The SVG sits behind, sized by JS to match wrapper height */
+.arch-svg {
+  position: absolute; top: 0; left: 0;
+  width: 100%;
+  pointer-events: none; z-index: 1;
+  overflow: visible;
+}
+
+.arch-content {
+  position: relative; z-index: 4;
+  display: flex; flex-direction: column;
+  align-items: center; width: 100%;
+  /* padding-top creates the gap between arch top and brand name */
+  padding: 44px 32px 40px;
+}
+
+/* ── BRAND NAME - in the gap below moon phases ── */
+.hero-logo {
+  /* Key in the gap: small, decorative */
+  width: min(130px, 30vw);
+  margin-top: 36px;
+  margin-bottom: -20px;
+  position: relative; z-index: 5;
+  filter: drop-shadow(0 0 18px rgba(92,31,168,0.55)) drop-shadow(0 2px 8px rgba(0,0,0,0.7));
+  animation: keyFloat 9s ease-in-out infinite;
+}
+
+/* ── KEY - displayed larger, transparent padding cropped via object-fit trick ── */
+.hero-key-wrap {
+  /* Crop the transparent padding: the actual content is ~40% height, 47% width
+     We use a negative margin trick with overflow visible to show the full key
+     but take up less layout space */
+  width: min(280px, 58vw);   /* display size */
+  /* Crop top and bottom transparent padding using margin offsets */
+  margin-top: -10px;          /* slight pull up */
+  margin-bottom: -20px;       /* slight pull down */
+  position: relative; z-index: 5;
+  animation: northStarPulse 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 18px rgba(201,168,76,0.2));
+}
+.hero-key-wrap img {
+  width: 100%;
+  display: block;
+}
+
+@keyframes northStarPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 18px rgba(201,168,76,0.2)); }
+  50% { transform: scale(1.04); filter: drop-shadow(0 0 28px rgba(201,168,76,0.38)); }
+}
+@keyframes keyFloat {
+  0%,100% { transform: translateY(0) rotate(-1deg); }
+  45%     { transform: translateY(-10px) rotate(0.5deg); }
+  70%     { transform: translateY(-5px) rotate(0.8deg); }
+}
+
+/* ── MOON PHASES - above the divider bar ── */
+.moon-strip {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  position: relative; z-index: 5;
+  /* sits between title and divider */
+}
+
+.hero-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.42em;
+  color: var(--gold-dim);
+  margin-bottom: 20px;
+  text-align: center; position: relative; z-index: 5;
+}
+
+.hero-title-wrap {
+  background: linear-gradient(160deg, var(--gold-bright) 0%, var(--gold) 50%, var(--gold-pale) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 6vw, 68px);
+  font-weight: 500; font-style: italic;
+  color: var(--cream);
+  text-align: center; line-height: 1.12;
+  max-width: 580px;
+  position: relative; z-index: 5;
+  margin-bottom: 0;
+}
+.hero-title em { font-style: normal; color: var(--gold-bright); }
+
+/* moon phases come here in DOM - between title and divider */
+
+.hero-divider {
+  width: min(240px, 52vw);
+  margin: 16px auto 16px;
+  opacity: 0.9;
+  filter: brightness(1.3) saturate(1.1);
+  position: relative; z-index: 5;
+  display: block;
+}
+
+.hero-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 400; color: var(--mist-dim);
+  text-align: center; max-width: 400px;
+  line-height: 1.9; letter-spacing: 0.03em;
+  position: relative; z-index: 5;
+  margin-top: 0;
+}
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── SHARED ── */
+section { position: relative; z-index: 2; }
+.section-inner { max-width: 960px; margin: 0 auto; padding: 96px 36px; }
+
+.section-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 9px; letter-spacing: 0.45em;
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 60%, var(--gold-pale) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text; text-align: center;
+  margin-bottom: 52px;
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+}
+.section-tag::before,.section-tag::after { content: '✦'; font-size: 7px; opacity: 0.5; }
+
+.what-this-is { background: linear-gradient(180deg, var(--void) 0%, var(--plum-dark) 50%, var(--void) 100%); }
+
+.statement {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 4vw, 46px);
+  font-weight: 500; font-style: italic;
+  color: var(--cream); text-align: center;
+  line-height: 1.25; max-width: 780px; margin: 0 auto 52px;
+}
+.statement em { font-style: normal; color: var(--gold); }
+
+.body-text {
+  font-family: 'Jost', sans-serif;
+  font-size: clamp(15px, 1.8vw, 17px);
+  font-weight: 400; color: var(--mist-dim);
+  line-height: 1.9; max-width: 640px; margin: 0 auto; text-align: center;
+}
+
+.promise { background: var(--void); }
+.promise-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.1); margin-top: 52px;
+}
+.promise-cell { background: var(--plum-dark); padding: 52px 44px; transition: background 0.4s; }
+.promise-cell:hover { background: var(--plum); }
+.promise-num { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.2em; color: var(--gold); margin-bottom: 20px; opacity: 0.8; }
+.promise-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; color: var(--gold-pale); margin-bottom: 16px; line-height: 1.3; }
+.promise-body { font-size: 15px; line-height: 1.85; color: var(--mist-dim); font-weight: 400; }
+
+.offering { background: linear-gradient(180deg, var(--void) 0%, var(--plum-dark) 60%, var(--void) 100%); }
+.offering-card {
+  border: 1px solid rgba(201,168,76,0.2);
+  background: linear-gradient(160deg, rgba(42,22,80,0.6) 0%, rgba(13,10,26,0.95) 60%);
+  padding: 72px 60px; position: relative; max-width: 800px; margin: 0 auto;
+}
+.offering-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent 5%, var(--gold-dim) 30%, var(--gold) 50%, var(--gold-dim) 70%, transparent 95%); }
+.offering-card::after { content: ''; position: absolute; inset: 14px; border: 1px solid rgba(201,168,76,0.06); pointer-events: none; }
+.corner { position: absolute; width: 28px; height: 28px; opacity: 0.35; }
+.corner.tl { top: 10px; left: 10px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+.corner.tr { top: 10px; right: 10px; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+.corner.bl { bottom: 10px; left: 10px; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+.corner.br { bottom: 10px; right: 10px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+.offering-tag { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold); text-align: center; margin-bottom: 32px; }
+.offering-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(30px, 4.5vw, 50px); font-weight: 500; color: var(--cream); text-align: center; line-height: 1.15; margin-bottom: 10px; }
+.offering-sub { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; font-weight: 400; color: var(--mist-dim); text-align: center; margin-bottom: 52px; }
+.rule { width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(201,168,76,0.2), transparent); margin: 44px 0; }
+.features { display: flex; flex-direction: column; gap: 24px; margin-bottom: 48px; }
+.feature { display: grid; grid-template-columns: 18px 1fr; gap: 20px; align-items: start; }
+.feature-mark { color: var(--gold); font-size: 9px; margin-top: 6px; font-family: 'Cinzel', serif; }
+.feature-title { font-size: 15px; color: var(--gold-pale); font-weight: 500; margin-bottom: 5px; }
+.feature-body { font-size: 14px; color: var(--mist-dim); line-height: 1.8; font-weight: 400; }
+.price-block { text-align: center; margin-bottom: 44px; }
+.price-public { font-family: 'Cormorant Garamond', serif; font-size: 60px; font-weight: 400; color: var(--gold-pale); line-height: 1; margin-bottom: 10px; }
+.price-note { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 0.3em; color: var(--mist-dim); margin-bottom: 24px; }
+.price-legacy { display: inline-flex; align-items: center; gap: 16px; border: 1px solid rgba(201,168,76,0.15); padding: 14px 28px; background: rgba(201,168,76,0.04); }
+.legacy-label { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.3em; color: var(--gold-dim); }
+.legacy-sep { width: 1px; height: 22px; background: rgba(201,168,76,0.25); }
+.legacy-price { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold-dim); font-style: italic; }
+.legacy-note { font-size: 14px; color: var(--mist-dim); font-family: 'Cormorant Garamond', serif; font-style: italic; text-align: center; margin-top: 14px; line-height: 1.7; }
+.btn-primary { width: 100%; padding: 20px 32px; background: transparent; border: 1px solid var(--gold); color: var(--gold-pale); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.35em; cursor: pointer; transition: all 0.35s ease; position: relative; overflow: hidden; }
+.btn-primary::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--plum-rich), var(--royal)); transform: translateX(-101%); transition: transform 0.35s ease; }
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.services { background: var(--void); }
+.services-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.08); margin-top: 52px; }
+.tile { background: var(--void); padding: 44px 32px; transition: background 0.3s; position: relative; }
+.tile::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background 0.3s; }
+.tile:hover { background: rgba(42,22,80,0.4); }
+.tile:hover::before { background: linear-gradient(to right, transparent, var(--gold-dim), transparent); }
+.tile-tag { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.35em; color: var(--mist-dim); margin-bottom: 16px; display: block; }
+.tile-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 500; color: var(--cream); margin-bottom: 14px; line-height: 1.3; }
+.tile-body { font-size: 14px; color: var(--mist-dim); line-height: 1.8; margin-bottom: 24px; font-weight: 400; }
+.tile-status { font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.25em; padding: 7px 14px; border: 1px solid rgba(201,168,76,0.2); color: var(--gold-dim); display: inline-block; }
+
+.intake { background: linear-gradient(180deg, var(--void) 0%, var(--plum-dark) 100%); }
+.intake-wrap { border: 1px solid rgba(201,168,76,0.18); max-width: 680px; margin: 0 auto; position: relative; }
+.intake-wrap::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--gold-dim) 30%, var(--gold) 50%, var(--gold-dim) 70%, transparent); }
+.intake-head { background: linear-gradient(160deg, rgba(42,22,80,0.9), rgba(13,10,26,0.95)); padding: 56px 52px 48px; border-bottom: 1px solid rgba(201,168,76,0.1); text-align: center; }
+.intake-key-img { width: 72px; margin-bottom: 24px; filter: drop-shadow(0 0 14px rgba(92,31,168,0.5)); animation: keyFloat 9s ease-in-out infinite; }
+.intake-head h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(26px,4vw,38px); font-weight: 500; color: var(--cream); line-height: 1.25; margin-bottom: 16px; }
+.intake-head p { font-size: 15px; font-weight: 400; color: var(--mist-dim); line-height: 1.75; }
+.intake-form { background: var(--deep); padding: 52px; }
+.step { display: none; animation: riseIn 0.4s ease; }
+.step.active { display: block; }
+.step-dots { display: flex; gap: 10px; justify-content: center; margin-bottom: 44px; }
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--plum); transition: all 0.3s; }
+.dot.active { background: var(--gold); transform: scale(1.6); }
+.dot.done { background: var(--gold-dim); }
+.q-num { font-family: 'Cinzel', serif; font-size: 8.5px; letter-spacing: 0.35em; color: var(--gold-dim); margin-bottom: 14px; }
+.q-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(20px,3vw,27px); font-weight: 500; color: var(--cream); margin-bottom: 8px; line-height: 1.3; }
+.q-hint { font-size: 14px; color: var(--mist-dim); margin-bottom: 30px; line-height: 1.6; }
+.opts { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+.opt { padding: 17px 22px; border: 1px solid rgba(201,168,76,0.12); background: transparent; color: var(--mist); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 400; cursor: pointer; text-align: left; transition: all 0.25s; position: relative; line-height: 1.5; }
+.opt:hover { border-color: rgba(201,168,76,0.35); background: rgba(201,168,76,0.04); color: var(--gold-pale); padding-left: 30px; }
+.opt.sel { border-color: rgba(201,168,76,0.5); background: rgba(92,31,168,0.15); color: var(--gold-pale); padding-left: 30px; }
+.opt.sel::before { content: '✦'; position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--gold); font-size: 9px; }
+.field { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(201,168,76,0.25); color: var(--cream); font-family: 'Cormorant Garamond', serif; font-size: 21px; font-style: italic; padding: 12px 4px; outline: none; transition: border-color 0.3s; margin-bottom: 28px; }
+.field::placeholder { color: var(--mist-dim); }
+.field:focus { border-bottom-color: var(--gold-dim); }
+.textarea { width: 100%; background: transparent; border: 1px solid rgba(201,168,76,0.12); color: var(--cream); font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 400; padding: 18px 20px; outline: none; resize: vertical; min-height: 130px; transition: border-color 0.3s; margin-bottom: 32px; line-height: 1.75; }
+.textarea::placeholder { color: var(--mist-dim); }
+.textarea:focus { border-color: rgba(201,168,76,0.3); }
+.btn { width: 100%; padding: 19px; background: transparent; border: 1px solid var(--gold); color: var(--gold-pale); font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.35em; cursor: pointer; transition: all 0.35s; position: relative; overflow: hidden; }
+.btn::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--plum-rich), var(--royal)); transform: translateX(-101%); transition: transform 0.35s; }
+.btn:hover::before { transform: translateX(0); }
+.btn span { position: relative; z-index: 1; }
+.btn-back { background: none; border: none; color: var(--mist-dim); font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.25em; cursor: pointer; display: block; width: 100%; text-align: center; padding: 12px; transition: color 0.3s; margin-top: 8px; }
+.btn-back:hover { color: var(--gold-dim); }
+.success { display: none; text-align: center; padding: 64px 48px; background: var(--deep); }
+.success.active { display: block; animation: riseIn 0.5s ease; }
+.success-key { width: 72px; margin-bottom: 28px; filter: drop-shadow(0 0 20px rgba(92,31,168,0.6)); animation: keyFloat 8s ease-in-out infinite; }
+.success-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 500; color: var(--cream); margin-bottom: 16px; }
+.success-body { font-size: 16px; color: var(--mist-dim); line-height: 1.8; margin-bottom: 40px; max-width: 400px; margin-left: auto; margin-right: auto; font-weight: 400; }
+.cal-box { border: 1px solid rgba(201,168,76,0.15); padding: 36px; background: rgba(42,22,80,0.2); }
+.cal-box p { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.2em; color: var(--mist-dim); margin-bottom: 16px; }
+.cal-link { display: inline-block; color: var(--gold); text-decoration: none; font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.3em; border: 1px solid rgba(201,168,76,0.3); padding: 14px 32px; transition: all 0.3s; }
+.cal-link:hover { background: rgba(201,168,76,0.08); color: var(--gold-pale); }
+
+footer { border-top: 1px solid rgba(201,168,76,0.07); padding: 52px 32px; text-align: center; }
+.footer-star { color: var(--gold-dim); font-size: 14px; margin-bottom: 18px; display: block; opacity: 0.5; }
+.footer-name { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.4em; color: var(--gold-dim); margin-bottom: 10px; }
+.footer-note { font-size: 12px; color: var(--mist-dim); opacity: 0.85; }
+
+@media (max-width: 640px) {
+  .promise-grid, .services-row { grid-template-columns: 1fr; }
+  .offering-card { padding: 44px 24px; }
+  .intake-head, .intake-form { padding: 36px 24px; }
+  .success { padding: 48px 24px; }
+}
+</style>
+<script src="/consent.js" defer></script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+
+<section id="main-content" tabindex="-1" class="hero" role="main">
+  <div class="hero-bg"></div>
+  <div class="stars" id="stars"></div>
+
+  <div class="arch-wrapper" id="archWrapper">
+    <!-- Arch SVG - height set by JS after content renders -->
+    <svg class="arch-svg" id="archSvg" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Drawn by JS once we know the height -->
+    </svg>
+
+    <div class="arch-content" id="archContent">
+      <!-- Key - larger, transparent padding offset via negative margins -->
+      <div class="hero-key-wrap">
+        <img src="/img/stella-polaris-advisory-logo.webp" alt="Stella Polaris Advisory logo">
+      </div>
+
+      <p class="hero-eyebrow">Relationship Reading &nbsp;·&nbsp; $88</p>
+
+      <h1 class="hero-title">
+        Something feels off.<br>
+        <em>You deserve<br>a clear answer.</em>
+      </h1>
+
+      <!-- Moon phases - above the divider bar -->
+      <div class="moon-strip" id="moonStrip" style="margin-top:16px;"></div>
+
+      <!-- Logo in the gap -->
+      <img src="/img/advisory-ornate-key.webp" class="hero-logo" alt="Ornate key">
+
+      <!-- Divider bar -->
+      <img src="/img/advisory-divider.webp" class="hero-divider" alt="" style="margin-top:4px;">
+
+      <p class="hero-sub">
+        A private relationship reading for you, wherever you are in London, the UK or Europe. For the question you keep asking at 2 a.m. Is this love? Is it over? What am I missing?
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT THIS IS -->
+<section class="what-this-is">
+  <div class="section-inner">
+    <div class="section-tag">Sound Familiar?</div>
+    <p class="statement">
+      Is he cheating?<br>
+      Should I stay or leave?<br>
+      <em>Will they come back?</em>
+    </p>
+    <p class="body-text">
+      You asked your friends. You read every thread. You took the free quizzes. You still don't feel sure. That's normal. When your heart is in it, it's hard to see clearly.<br><br>
+      This reading looks at your birth chart, and theirs if you have it. It shows what this season is stirring up in your love life, where trust is being tested, and when it's a good time to talk, to wait, or to walk away.
+    </p>
+  </div>
+</section>
+
+<!-- PROMISE GRID -->
+<section class="promise">
+  <div class="section-inner">
+    <div class="section-tag">How This Works</div>
+    <div class="promise-grid">
+      <div class="promise-cell">
+        <div class="promise-num">I.</div>
+        <div class="promise-title">Just between us.</div>
+        <div class="promise-body">Your story, your birth details and your reading stay private. Nobody else sees them. Not ever.</div>
+      </div>
+      <div class="promise-cell">
+        <div class="promise-num">II.</div>
+        <div class="promise-title">One clear question.</div>
+        <div class="promise-body">You pick the one question that matters most right now. The whole reading is about that question, so nothing gets watered down.</div>
+      </div>
+      <div class="promise-cell">
+        <div class="promise-num">III.</div>
+        <div class="promise-title">Honest, always.</div>
+        <div class="promise-body">I can't read their phone, and no astrologer can prove cheating. What I can show you is the pattern, the timing, and what your own chart says you need. Then the choice is yours.</div>
+      </div>
+      <div class="promise-cell">
+        <div class="promise-num">IV.</div>
+        <div class="promise-title">A next step you can take.</div>
+        <div class="promise-body">You won't get a vague "trust the universe." You'll get plain words about what to do next, and when.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFERING -->
+<section class="offering">
+  <div class="section-inner">
+    <div class="section-tag">The Reading</div>
+    <div class="offering-card">
+      <div class="corner tl"></div><div class="corner tr"></div>
+      <div class="corner bl"></div><div class="corner br"></div>
+      <div class="offering-tag">Relationship Reading</div>
+      <h2 class="offering-title">Your Love Life, Made Clear.</h2>
+      <p class="offering-sub">One question. Your chart. A straight answer.</p>
+      <div class="rule"></div>
+      <div class="features">
+        <div class="feature"><span class="feature-mark">✦</span><div><div class="feature-title">Bring the question that keeps you up at night</div><div class="feature-body">Stay or go. Cheating or trust. Get back together or move on. Is this the one? You choose, and I answer that one.</div></div></div>
+        <div class="feature"><span class="feature-mark">✦</span><div><div class="feature-title">Your chart, and theirs if you have it</div><div class="feature-body">Your birth date, time and place show how you love and what you need. Add theirs and I can see how you two fit, where you clash, and why.</div></div></div>
+        <div class="feature"><span class="feature-mark">✦</span><div><div class="feature-title">Timing you can use</div><div class="feature-body">When to have the hard talk. When to wait. When the dust is likely to settle. So you stop guessing.</div></div></div>
+        <div class="feature"><span class="feature-mark">✦</span><div><div class="feature-title">Written for you to keep</div><div class="feature-body">A private written reading in plain words, with no jargon. Come back to it whenever you need a reminder of what you saw.</div></div></div>
+      </div>
+      <div class="rule"></div>
+      <div class="price-block">
+        <div class="price-public">$88</div>
+        <div class="price-note">One Question · Written Reading · Private</div>
+      </div>
+      <button class="btn-primary" onclick="scrollToIntake()"><span>Ask Your Question</span></button>
+    </div>
+
+    <div class="section-tag" style="margin-top:80px;">Good to Know</div>
+    <div class="services-row">
+      <div class="tile"><span class="tile-tag">Birth Time</span><div class="tile-name">Don't know yours?</div><div class="tile-body">That's okay. A close guess still helps. With no time at all, I can still read your chart, just with less detail.</div></div>
+      <div class="tile"><span class="tile-tag">Where You Are</span><div class="tile-name">London, the UK or anywhere</div><div class="tile-body">Everything happens by email, so it works wherever you live. You never need to come in.</div></div>
+      <div class="tile"><span class="tile-tag">Bigger Question?</span><div class="tile-name">Want your whole year mapped?</div><div class="tile-body">If love is one part of a bigger season of change, the full Executive Astrological Summary maps the next 12 months.</div><a class="tile-status" href="/advisory">See the $497 Advisory</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTAKE -->
+<section class="intake" id="intake">
+  <div class="section-inner">
+    <div class="section-tag">Start Here</div>
+    <div class="intake-wrap">
+      <div class="intake-head">
+        <img loading="lazy" src="/img/advisory-key.webp" class="intake-key-img" alt="Key">
+        <h2>Tell me what's<br>on your heart.</h2>
+        <p>Four quick questions. Then I'll be in touch to confirm your question and send your next steps.</p>
+      </div>
+      <div class="intake-form" id="intakeForm">
+        <div class="step-dots" id="stepDots"></div>
+        <div class="step active" id="step1">
+          <div class="q-num">Question 01 of 04</div><div class="q-text">What's going on right now?</div><div class="q-hint">Choose the one that feels closest.</div>
+          <div class="opts">
+            <button class="opt" onclick="pick(this,1)">I think my partner might be cheating.</button>
+            <button class="opt" onclick="pick(this,1)">I can't decide if I should stay or leave.</button>
+            <button class="opt" onclick="pick(this,1)">We broke up, and I want to know if they'll come back.</button>
+            <button class="opt" onclick="pick(this,1)">I'm seeing someone new and want to know if this could be real.</button>
+          </div>
+          <button class="btn" id="n1" style="opacity:.35;pointer-events:none;" onclick="go(2)"><span>Continue</span></button>
+        </div>
+        <div class="step" id="step2">
+          <div class="q-num">Question 02 of 04</div><div class="q-text">Do you have your birth time?</div><div class="q-hint">Close is fine. If you know theirs too, add it in the next step.</div>
+          <div class="opts">
+            <button class="opt" onclick="pick(this,2)">Yes, I have my exact birth time.</button>
+            <button class="opt" onclick="pick(this,2)">I have a rough time, within an hour or two.</button>
+            <button class="opt" onclick="pick(this,2)">I know my birth date and place, but not the time.</button>
+            <button class="opt" onclick="pick(this,2)">I don't have a birth time.</button>
+          </div>
+          <button class="btn" id="n2" style="opacity:.35;pointer-events:none;" onclick="go(3)"><span>Continue</span></button>
+          <button class="btn-back" onclick="go(1)">← Back</button>
+        </div>
+        <div class="step" id="step3">
+          <div class="q-num">Question 03 of 04</div><div class="q-text">Tell me your question.</div><div class="q-hint">Share what's happening. If you have their birth date, time and place, add them here.</div>
+          <textarea class="textarea" placeholder="e.g. We've been together four years. Something changed in the spring and I can't tell if it's me or him..."></textarea>
+          <button class="btn" onclick="go(4)"><span>Continue</span></button>
+          <button class="btn-back" onclick="go(2)">← Back</button>
+        </div>
+        <div class="step" id="step4">
+          <div class="q-num">Question 04 of 04</div><div class="q-text">Where should I reach you?</div><div class="q-hint">I'll email you within 48 hours with next steps and how to pay. Your details are never shared.</div>
+          <input type="text" class="field" placeholder="Your name" id="nameField">
+          <input type="email" class="field" placeholder="Your email address" id="emailField" style="margin-top:4px;">
+          <button class="btn" onclick="submitForm()"><span>Send My Question</span></button>
+          <button class="btn-back" onclick="go(3)">← Back</button>
+        </div>
+      </div>
+      <div class="success" id="success">
+        <img loading="lazy" src="/img/advisory-key.webp" class="success-key" alt="Key">
+        <div class="success-title">Got it.</div>
+        <p class="success-body">Your question is in. I'll email you within 48 hours with your next steps and how to pay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-star">✦</span>
+  <div class="footer-name">Stella Polaris Advisory™ · Private Advisory</div>
+  <div class="footer-note">Confidential · For Private Use Only · Not for Redistribution</div>
+<style>.sp-legal{display:block;margin-top:14px;font-size:12px;line-height:1.8;letter-spacing:.04em;opacity:.75;text-align:center}.sp-legal a{color:inherit;text-decoration:underline;text-underline-offset:2px}.sp-legal a:hover{opacity:1}</style>
+  <div class="sp-legal" role="navigation" aria-label="Legal"><a href="/privacy-policy">Privacy Policy</a> &middot; <a href="/terms-of-service">Terms of Service</a> &middot; <a href="/advisory-disclaimer">Advisory Terms &amp; Disclaimer</a></div>
+</footer>
+
+<script>
+// Stars
+const sc=document.getElementById("stars");
+[[1,8,18,.25,5,0],[1.5,14,72,.4,7,1.2],[1,22,38,.2,4,.8],[2,30,85,.35,6,2],[1,38,55,.28,8,1.5],[1.5,46,9,.35,5,3],[1,55,90,.22,6,2],[2,62,30,.38,7,.5],[1,70,66,.25,4.5,1],[1.5,77,47,.35,6,.3],[1,85,80,.2,5.5,2.5],[2,16,52,.32,7,1.8],[1,42,22,.25,4,.7],[1.5,60,13,.38,8,2.2]].forEach(([sz,t,l,op,d,delay])=>{
+  const el=document.createElement("div");el.className="star";
+  el.style.cssText=`width:${sz}px;height:${sz}px;top:${t}%;left:${l}%;--op:${op};--d:${d}s;--delay:${delay}s`;
+  sc.appendChild(el);
+});
+
+// Draw arch SVG to exactly match content height
+function drawArch() {
+  const wrapper = document.getElementById("archWrapper");
+  const svg = document.getElementById("archSvg");
+  const h = wrapper.offsetHeight;
+  const w = wrapper.offsetWidth;
+  const r = w * 0.5; // radius for arch curve
+  // Arch: two vertical lines meeting at a semicircle top
+  // The curve peaks at y=r from top (left=0 to right=w, peak at center)
+  const pad = 20; // inset from wrapper edges
+  svg.style.height = h + "px";
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+
+  // Primary arch path
+  const px = pad, py = r, pw = w - pad;
+  svg.innerHTML = `
+    <path d="M ${px} ${h} L ${px} ${r} Q ${px} ${pad} ${w/2} ${pad} Q ${pw} ${pad} ${pw} ${r} L ${pw} ${h}"
+          stroke="rgba(201,168,76,0.22)" stroke-width="1" fill="none"/>
+    <path d="M ${px+14} ${h} L ${px+14} ${r+8} Q ${px+14} ${pad+16} ${w/2} ${pad+16} Q ${pw-14} ${pad+16} ${pw-14} ${r+8} L ${pw-14} ${h}"
+          stroke="rgba(201,168,76,0.055)" stroke-width="1" fill="none"/>
+    <rect x="${w/2-4}" y="${pad-7}" width="8" height="8" fill="rgba(201,168,76,0.6)" transform="rotate(45 ${w/2} ${pad-3})"/>
+    <rect x="${px-7}" y="${h*0.52-3}" width="6" height="6" fill="rgba(201,168,76,0.25)" transform="rotate(45 ${px-4} ${h*0.52})"/>
+    <rect x="${pw+1}" y="${h*0.52-3}" width="6" height="6" fill="rgba(201,168,76,0.25)" transform="rotate(45 ${pw+4} ${h*0.52})"/>
+  `;
+}
+
+// Wait for fonts + images then draw
+window.addEventListener("load", () => { drawArch(); });
+// Also draw after a short delay for safety
+setTimeout(drawArch, 400);
+
+// Gold SVG moon phases
+const phases = [
+  `<circle cx="8" cy="8" r="7" fill="rgba(140,100,30,0.2)" stroke="#c9a84c" stroke-width="0.8"/>`,
+  `<circle cx="8" cy="8" r="7" fill="rgba(140,100,30,0.1)" stroke="#c9a84c" stroke-width="0.8"/><path d="M8,1 a7,7,0,0,1,0,14 a5,7,0,0,0,0,-14z" fill="#c9a84c"/>`,
+  `<circle cx="8" cy="8" r="7" fill="rgba(140,100,30,0.1)" stroke="#c9a84c" stroke-width="0.8"/><path d="M8,1 a7,7,0,0,1,0,14z" fill="#c9a84c"/>`,
+  `<circle cx="8" cy="8" r="7" fill="#c9a84c" stroke="#c9a84c" stroke-width="0.8"/><path d="M8,1 a7,7,0,0,0,0,14 a3,7,0,0,1,0,-14z" fill="rgba(13,10,26,0.9)"/>`,
+  `<circle cx="8" cy="8" r="7" fill="#c9a84c" stroke="#c9a84c" stroke-width="0.8"/>`,
+  `<circle cx="8" cy="8" r="7" fill="#c9a84c" stroke="#c9a84c" stroke-width="0.8"/><path d="M8,1 a7,7,0,0,1,0,14 a3,7,0,0,0,0,-14z" fill="rgba(13,10,26,0.9)"/>`,
+  `<circle cx="8" cy="8" r="7" fill="rgba(140,100,30,0.1)" stroke="#c9a84c" stroke-width="0.8"/><path d="M8,1 a7,7,0,0,0,0,14z" fill="#c9a84c"/>`,
+  `<circle cx="8" cy="8" r="7" fill="rgba(140,100,30,0.1)" stroke="#c9a84c" stroke-width="0.8"/><path d="M8,1 a7,7,0,0,0,0,14 a5,7,0,0,1,0,-14z" fill="#c9a84c"/>`,
+];
+const ms = document.getElementById("moonStrip");
+phases.forEach(p => {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg","svg");
+  svg.setAttribute("viewBox","0 0 16 16");
+  svg.setAttribute("width","17");
+  svg.setAttribute("height","17");
+  svg.innerHTML = p;
+  ms.appendChild(svg);
+});
+
+// Form
+let cur=1;const total=4;
+const dotsEl=document.getElementById("stepDots");
+for(let i=1;i<=total;i++){const d=document.createElement("div");d.className="dot"+(i===1?" active":"");d.id="d"+i;dotsEl.appendChild(d);}
+function upDots(n){for(let i=1;i<=total;i++){document.getElementById("d"+i).className="dot"+(i===n?" active":i<n?" done":"");}}
+function go(n){document.getElementById("step"+cur).classList.remove("active");cur=n;document.getElementById("step"+cur).classList.add("active");upDots(cur);}
+function pick(el,s){el.parentElement.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel"));el.classList.add("sel");const b=document.getElementById("n"+s);if(b){b.style.opacity="1";b.style.pointerEvents="auto";}}
+async function submitForm() {
+  const name = document.getElementById("nameField").value.trim();
+  const email = document.getElementById("emailField").value.trim();
+  if (!name || !email) return;
+
+  const btn = document.querySelector('#step4 .btn');
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'Submitting...';
+
+  const q1 = 'Relationship Reading ($88): ' + (document.querySelector('#step1 .opt.sel')?.textContent?.trim() || '');
+  const q2 = document.querySelector('#step2 .opt.sel')?.textContent?.trim() || '';
+  const q3 = document.querySelector('#step3 textarea')?.value?.trim() || '';
+
+  const payload = { name, email, q1, q2, q3, page: location.pathname };
+
+  try {
+    await fetch('https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/advisory_inquiries', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzaHF5Z3JjZnN4eGNhbXhpdGJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMzEwNjksImV4cCI6MjA5MjkwNzA2OX0.-qkoQqZHpKfh3QvI5cHqujHClbT5GFXVmDpqGPf_MDI',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) {}
+
+  // Fire email notification - non-blocking, failure is silent to the client
+  fetch('https://wshqygrcfsxxcamxitbs.supabase.co/functions/v1/notify-inquiry', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+
+  document.getElementById("intakeForm").style.display = "none";
+  document.getElementById("success").classList.add("active");
+}
+function scrollToIntake(){document.getElementById("intake").scrollIntoView({behavior:"smooth",block:"start"});}
+</script>
+</body>
+</html>

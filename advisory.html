@@ -370,6 +370,7 @@ footer { border-top: 1px solid rgba(201,168,76,0.07); padding: 52px 32px; text-a
   .success { padding: 48px 24px; }
 }
 </style>
+<script src="/consent.js" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -638,7 +639,7 @@ async function submitForm() {
   const q2 = document.querySelector('#step2 .opt.sel')?.textContent?.trim() || '';
   const q3 = document.querySelector('#step3 textarea')?.value?.trim() || '';
 
-  const payload = { name, email, q1, q2, q3 };
+  const payload = { name, email, q1, q2, q3, page: location.pathname };
 
   try {
     await fetch('https://wshqygrcfsxxcamxitbs.supabase.co/rest/v1/advisory_inquiries', {
